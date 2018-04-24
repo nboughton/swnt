@@ -12,6 +12,7 @@ type colourFunc func(string, ...interface{}) string
 
 var (
 	coords = regexp.MustCompile(`\d,\d`)
+	offset = 5
 )
 
 var mapscii = `   __________                __________                __________                __________               
@@ -102,10 +103,10 @@ func (m Map) SetTxt(row, col int, text, tag1, tag2, techlevel string) {
 			if c+2 < len(line) {
 				crd := strings.Join(m[r][c:c+3], "")
 				if coords.MatchString(crd) && crd == fmt.Sprintf("%d,%d", row, col) {
-					m.print(r+1, c+4-(len(text)/2), text)
-					m.print(r+2, c+4-(len(tag1)/2), tag1)
-					m.print(r+3, c+4-(len(tag2)/2), tag2)
-					m.print(r+4, c+4-(len(techlevel)/2), techlevel)
+					m.print(r+1, c+offset-(len(text)/2), text)
+					m.print(r+2, c+offset-(len(tag1)/2), tag1)
+					m.print(r+3, c+offset-(len(tag2)/2), tag2)
+					m.print(r+4, c+offset-(len(techlevel)/2), techlevel)
 				}
 			}
 		}
@@ -133,10 +134,10 @@ func (m Map) SetTxtColour(row, col int, text, tag1, tag2, techlevel string, colo
 			if c+2 < len(line) {
 				crd := strings.Join(m[r][c:c+3], "")
 				if coords.MatchString(crd) && crd == fmt.Sprintf("%d,%d", row, col) {
-					m.printColour(r+1, c+4-(len(text)/2), text, colour)
-					m.printColour(r+2, c+4-(len(tag1)/2), tag1, colour)
-					m.printColour(r+3, c+4-(len(tag2)/2), tag2, colour)
-					m.printColour(r+4, c+4-(len(techlevel)/2), techlevel, colour)
+					m.printColour(r+1, c+offset-(len(text)/2), text, colour)
+					m.printColour(r+2, c+offset-(len(tag1)/2), tag1, colour)
+					m.printColour(r+3, c+offset-(len(tag2)/2), tag2, colour)
+					m.printColour(r+4, c+offset-(len(techlevel)/2), techlevel, colour)
 				}
 			}
 		}

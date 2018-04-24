@@ -18,7 +18,7 @@ All commands can be queried for their available options with the -h flag. For ex
     Generate content
 
     Usage:
-      swntools new [command]
+      swnt new [command]
 
     Available Commands:
       adventure   Generate an Adventure

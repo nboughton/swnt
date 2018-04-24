@@ -79,7 +79,7 @@ var mapscii = `   __________                __________                __________
               \            /            \            /            \            /            \            /
                \__________/              \__________/              \__________/              \__________/`
 
-// Map represents a byte array of an ascii map
+// Map represents a 2 dimensional string array of the template
 type Map [][]string
 
 // NewMap converts the mapscii raw text into a byte array

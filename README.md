@@ -10,7 +10,9 @@ At present all commands are for generating content. Most useful is likely to be 
     swnt new sector
 
 You can optionally add the -l flag if you want cell text to be coloured according to Tech Level. When you choose to write a sector a new folder will be created and each system
-will be provided with its own folder. This is designed to make it easy to correlate notes on a per system basis and keep things reasonably well organised.
+will be provided with its own folder. This is designed to make it easy to correlate notes on a per system basis and keep things reasonably well organised. Each folder will contain
+a text file with the primary world's rolled information (biosphere, temperature, techlevel... etc.). There is also a 10% possiblity of a secondary world and 30% possibility of a point
+of interest.
 
 ![A generated sector](screenshot.png "A generated sector")
 

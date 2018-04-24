@@ -35,4 +35,4 @@ All commands can be queried for their available options with the -h flag. For ex
 
     Use "swntools new [command] --help" for more information about a command.
 
-This is currently an alpha as I'm probably going to overall some of the code for table layouts and a few other bits and pieces.
+This is currently an alpha as I'm probably going to redesign some of the code for table layouts and a few other bits and pieces.

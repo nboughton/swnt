@@ -12,6 +12,8 @@ At present all commands are for generating content. Most useful is likely to be 
 You can optionally add the -l flag if you want cell text to be coloured according to Tech Level. When you choose to write a sector a new folder will be created and each system
 will be provided with its own folder. This is designed to make it easy to correlate notes on a per system basis and keep things reasonably well organised.
 
+![A generated sector](screenshot.png "A generated sector")
+
 All commands can be queried for their available options with the -h flag. For example:
 
     swnt new -h

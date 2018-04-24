@@ -82,7 +82,7 @@ var mapscii = `   __________                __________                __________
 // Map represents a 2 dimensional string array of the template
 type Map [][]string
 
-// NewMap converts the mapscii raw text into a byte array
+// NewMap converts the mapscii raw text into a Map
 func NewMap() Map {
 	var c Map
 	for row, line := range strings.Split(mapscii, "\n") {
@@ -101,7 +101,6 @@ func (m Map) SetTxt(row, col int, text, tag1, tag2, techlevel string) {
 		for c := range line {
 			if c+2 < len(line) {
 				crd := strings.Join(m[r][c:c+3], "")
-				// found the cell, now overwrite a position 2 chars down and 2 back
 				if coords.MatchString(crd) && crd == fmt.Sprintf("%d,%d", row, col) {
 					m.print(r+1, c+4-(len(text)/2), text)
 					m.print(r+2, c+4-(len(tag1)/2), tag1)

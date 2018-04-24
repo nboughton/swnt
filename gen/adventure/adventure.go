@@ -9,8 +9,8 @@ import (
 	"github.com/fatih/color"
 )
 
-// Generate throws together a random adventure seed using the table available from Stars Without Number
-func Generate(tag string) string {
+// New throws together a random adventure seed using the table available from Stars Without Number
+func New(tag string) string {
 	for _, t := range world.Tags {
 		if t.Name == tag {
 			str := Seed.Roll()

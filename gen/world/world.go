@@ -24,6 +24,11 @@ func (t TagsTable) Roll() string {
 	return fmt.Sprint(t[rand.Intn(len(t))])
 }
 
+// Random selects a random tag (used in Adventure seed generation)
+func (t TagsTable) Random() string {
+	return Tags[rand.Intn(len(Tags))].Name
+}
+
 // Tag represents a complete World Tag structure as extracted from the Stars Without Number core book.
 type Tag struct {
 	Name          string

@@ -30,7 +30,7 @@ import (
 // conflictCmd represents the conflict command
 var conflictCmd = &cobra.Command{
 	Use:   "conflict",
-	Short: "Generate a Conflict",
+	Short: "Generate a Conflict/Problem",
 	Long:  ``,
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Fprintf(tw, conflict.Problem.Roll())

@@ -36,7 +36,7 @@ const (
 // adventureCmd represents the adventure command
 var adventureCmd = &cobra.Command{
 	Use:   "adventure",
-	Short: "Generate an Adventure",
+	Short: "Generate an Adventure seed",
 	Long:  ``,
 	Run: func(cmd *cobra.Command, args []string) {
 		tag, _ := cmd.Flags().GetString(flTag)
@@ -49,7 +49,12 @@ var adventureCmd = &cobra.Command{
 			return
 		}
 
-		fmt.Println(adventure.Generate(tag))
+		if tag == "" {
+			tag = world.Tags.Random()
+		}
+
+		fmt.Println(tag)
+		fmt.Println(adventure.New(tag))
 	},
 }
 

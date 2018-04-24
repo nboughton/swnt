@@ -35,12 +35,20 @@ var worldCmd = &cobra.Command{
 	Short: "Generate a secondary World for a Sector cell",
 	Long:  ``,
 	Run: func(cmd *cobra.Command, args []string) {
-		cltr, _ := cmd.Flags().GetString(flCulture)
+		var (
+			cltr, _ = cmd.Flags().GetString(flCulture)
+			cID     culture.ID
+			err     error
+		)
 
-		cID, err := culture.IDByName(cltr)
-		if err != nil {
-			fmt.Printf("No Culture found for \"%s\", options are %s\n", cltr, strings.Join(culture.Cultures, ", "))
-			return
+		if cltr == "" {
+			cID, cltr = culture.Random()
+		} else {
+			cID, err = culture.IDByName(cltr)
+			if err != nil {
+				fmt.Printf("No Culture found for \"%s\", options are %s\n", cltr, strings.Join(culture.Cultures, ", "))
+				return
+			}
 		}
 
 		fmt.Fprintf(tw, world.New(cID, false).String())

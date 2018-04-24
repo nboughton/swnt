@@ -102,7 +102,7 @@ var sectorCmd = &cobra.Command{
 
 func genSectorName() string {
 	secName := fmt.Sprintf("%s Sector", name.System.Roll())
-	_, err := os.Stat(secName)
+	_, err := os.Stat(secName) // Ensure that there isn't already a sector of this name in the working directory
 	for os.IsExist(err) {
 		secName = fmt.Sprintf("%s Sector", name.System.Roll())
 		_, err = os.Stat(secName)

@@ -1,7 +1,7 @@
 # swnt - Command line tools for Stars Without Number GMs
 
 swnt provides a command line interface to the roll tables and generators found in [Stars Without Number : Revised Edition (free version)](https://www.drivethrurpg.com/product/230009/Stars-Without-Number-Revised-Edition-Free-Version).
-While the code is MIT licensed, all roll table content is the copyright of [Kevin Crawford, Sine Nominee Publishing](https://sinenominepublishing.com/).
+While the code is MIT licensed, all roll table content (except the name.System table) is the copyright of [Kevin Crawford, Sine Nominee Publishing](https://sinenominepublishing.com/).
 
 ## Usage
 

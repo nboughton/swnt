@@ -35,8 +35,6 @@ import (
 )
 
 const (
-	flRows   = "rows"
-	flCols   = "cols"
 	flColour = "colour"
 )
 
@@ -141,7 +139,5 @@ func hexmap(data []*sector.Star, useColour bool, playerMap bool) string {
 
 func init() {
 	newCmd.AddCommand(sectorCmd)
-	sectorCmd.Flags().IntP(flRows, "r", 8, "Set rows")
-	sectorCmd.Flags().IntP(flCols, "c", 10, "Set columns")
 	sectorCmd.Flags().BoolP(flColour, "l", false, "Toggle colour output")
 }

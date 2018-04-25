@@ -280,7 +280,7 @@ var NPCTable = table.OneRoll{
 		},
 	},
 	D6: rollt.List{
-		Name: "Their Background",
+		Name: "Background",
 		Items: []string{
 			"The local underclass or poorest natives",
 			"Common laborers or cube workers",
@@ -291,7 +291,7 @@ var NPCTable = table.OneRoll{
 		},
 	},
 	D8: rollt.List{
-		Name: "Their Role in Society",
+		Name: "Role in Society",
 		Items: []string{
 			"Criminal, thug, thief, swindler",
 			"Menial, cleaner, retail worker, servant",
@@ -304,7 +304,7 @@ var NPCTable = table.OneRoll{
 		},
 	},
 	D10: rollt.List{
-		Name: "Their Biggest Problem",
+		Name: "Biggest Problem",
 		Items: []string{
 			"They have significant debt or money woes",
 			"A loved one is in trouble; reroll for it",
@@ -319,7 +319,7 @@ var NPCTable = table.OneRoll{
 		},
 	},
 	D12: rollt.List{
-		Name: "Their Greatest Desire",
+		Name: "Greatest Desire",
 		Items: []string{
 			"They want a particular romantic partner",
 			"They want money for them or a loved one",

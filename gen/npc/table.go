@@ -5,6 +5,19 @@ import (
 	"github.com/nboughton/swnt/gen/table"
 )
 
+// Reaction of possible reaction rolls for NPCs
+var Reaction = rollt.Table{
+	Name: "Reaction Roll Results",
+	Dice: "2d6",
+	Items: []rollt.Item{
+		{Match: []int{2}, Text: "Hostile, reacting negatively as is plausible"},
+		{Match: []int{3, 4, 5}, Text: "Negative, unfriendly and unhelpful"},
+		{Match: []int{6, 7, 8}, Text: "Neutral, reacting predictably or warily"},
+		{Match: []int{9, 10, 11}, Text: "Positive, potentially cooperative with PCs"},
+		{Match: []int{12}, Text: "Friendly, helpful as is plausible to be"},
+	},
+}
+
 // Manner table
 var Manner = rollt.List{
 	Items: []string{

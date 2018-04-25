@@ -40,7 +40,11 @@ const (
 	flColour = "colour"
 )
 
-var ansRegex = regexp.MustCompile("(?i)^(y|n|r)$")
+var (
+	ansRegex = regexp.MustCompile("(?i)^(y|n|r)$")
+	dirPerm  = os.FileMode(0755)
+	filePerm = os.FileMode(0644)
+)
 
 // sectorCmd represents the sector command
 var sectorCmd = &cobra.Command{
@@ -65,16 +69,16 @@ var sectorCmd = &cobra.Command{
 			if ansRegex.MatchString(ans) {
 				switch ans {
 				case "y":
-					os.Mkdir(secName, 0777)
+					os.Mkdir(secName, dirPerm)
 
 					for _, system := range secData {
 						dir := fmt.Sprintf("%d,%d-%s", system.Row, system.Col, system.Name)
-						os.Mkdir(filepath.Join(secName, dir), 0777)
-						ioutil.WriteFile(filepath.Join(secName, dir, fmt.Sprintf("%s.%s", system.Name, "txt")), []byte(system.String()), 0755)
+						os.Mkdir(filepath.Join(secName, dir), dirPerm)
+						ioutil.WriteFile(filepath.Join(secName, dir, fmt.Sprintf("%s.%s", system.Name, "txt")), []byte(system.String()), filePerm)
 					}
 
-					ioutil.WriteFile(filepath.Join(secName, "map.txt"), []byte(hexmap(secData, false, false)), 0755)
-					ioutil.WriteFile(filepath.Join(secName, "player-map.txt"), []byte(hexmap(secData, false, true)), 0755)
+					ioutil.WriteFile(filepath.Join(secName, "map.txt"), []byte(hexmap(secData, false, false)), filePerm)
+					ioutil.WriteFile(filepath.Join(secName, "player-map.txt"), []byte(hexmap(secData, false, true)), filePerm)
 					fmt.Printf("%s written\n", secName)
 					return
 

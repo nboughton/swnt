@@ -28,7 +28,6 @@ import (
 	"regexp"
 	"strings"
 
-	"github.com/fatih/color"
 	"github.com/nboughton/swnt/gen/name"
 	"github.com/nboughton/swnt/gen/sector"
 	"github.com/nboughton/swnt/haxscii"
@@ -105,6 +104,7 @@ func genSectorName() string {
 }
 
 func hexmap(data []*sector.Star, useColour bool, playerMap bool) string {
+	haxscii.Colour(useColour)
 	h := haxscii.NewMap()
 	for _, s := range data {
 		name, tag1, tag2, tl := s.Name, s.Worlds[0].Tags[0].Name, s.Worlds[0].Tags[1].Name, strings.Split(s.Worlds[0].TechLevel, ",")[0]
@@ -123,10 +123,6 @@ func hexmap(data []*sector.Star, useColour bool, playerMap bool) string {
 			c = haxscii.Green
 		case "TL5":
 			c = haxscii.Cyan
-		}
-
-		if !useColour {
-			color.NoColor = true
 		}
 
 		if playerMap {

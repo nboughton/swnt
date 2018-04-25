@@ -109,20 +109,6 @@ func NewMap() Map {
 	return c
 }
 
-func (m Map) print(startRow, startCol int, text string, colour colourFunc) {
-	for row, col, i := startRow, startCol, 0; i < len(text); col, i = col+1, i+1 {
-		if col < 0 {
-			col = 0
-		}
-
-		if col < len(m[row]) {
-			m[row][col] = colour(string(text[i]))
-		} else {
-			m[row] = append(m[row], colour(string(text[i])))
-		}
-	}
-}
-
 // SetTxt sets the text of a given hex
 func (m Map) SetTxt(row, col int, lines [4]string, color colourFunc) {
 	for r, line := range m {
@@ -139,6 +125,20 @@ func (m Map) SetTxt(row, col int, lines [4]string, color colourFunc) {
 	}
 }
 
+func (m Map) print(startRow, startCol int, text string, colour colourFunc) {
+	for row, col, i := startRow, startCol, 0; i < len(text); col, i = col+1, i+1 {
+		if col < 0 {
+			col = 0
+		}
+
+		if col < len(m[row]) {
+			m[row][col] = colour(string(text[i]))
+		} else {
+			m[row] = append(m[row], colour(string(text[i])))
+		}
+	}
+}
+
 func (m Map) String() string {
 	b := new(bytes.Buffer)
 
@@ -147,4 +147,9 @@ func (m Map) String() string {
 	}
 
 	return b.String()
+}
+
+// Colour toggles the colour output on/off (true/false)
+func Colour(b bool) {
+	color.NoColor = !b
 }

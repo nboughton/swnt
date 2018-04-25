@@ -77,7 +77,7 @@ var sectorCmd = &cobra.Command{
 						ioutil.WriteFile(filepath.Join(secName, dir, fmt.Sprintf("%s.%s", system.Name, "txt")), []byte(system.String()), filePerm)
 					}
 
-					ioutil.WriteFile(filepath.Join(secName, "map.txt"), []byte(hexmap(secData, false, false)), filePerm)
+					ioutil.WriteFile(filepath.Join(secName, "gm-map.txt"), []byte(hexmap(secData, false, false)), filePerm)
 					ioutil.WriteFile(filepath.Join(secName, "player-map.txt"), []byte(hexmap(secData, false, true)), filePerm)
 					fmt.Printf("%s written\n", secName)
 					return

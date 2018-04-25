@@ -50,3 +50,9 @@ All commands can be queried for their available options with the -h flag. For ex
     Use "swntools new [command] --help" for more information about a command.
 
 This is currently an alpha as there are a number of additions and changes to be made.
+
+## FAQ
+
+### Why not make a web app?
+
+Because [Sectors Without Number](https://sectorswithoutnumber.com/) already exists and is an awesome tool. Also, I live on the CLI. It's where I work, where I'm comfortable and I suspect I'm not alone in that. swnt lets me just hammer a few keys and instantly get something back without having to faff around with GUIs and that's how I like it. I also like using screenshots of the player maps as my actual maps in Roll20. It's got that awful 80s retro-scifi look that just burns the retinas in all the right ways.

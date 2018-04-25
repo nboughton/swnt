@@ -3,6 +3,16 @@
 swnt provides a command line interface to the roll tables and generators found in [Stars Without Number : Revised Edition (free version)](https://www.drivethrurpg.com/product/230009/Stars-Without-Number-Revised-Edition-Free-Version).
 While the code is MIT licensed, all roll table content (except the name.System table) is the copyright of [Kevin Crawford, Sine Nominee Publishing](https://sinenominepublishing.com/).
 
+## Installation
+
+You will need the [go compiler](https://golang.org/) to install swnt. Once installed just run
+
+    go get github.com/nboughton/swnt
+    go install github.com/nboughton/swnt
+
+swnt should build on other platforms but I'm not able to test them so I can't guarantee it'll work as expected on anything other than linux. At some point I'll provide
+a binary download and probably an AUR package for Arch Linux.
+
 ## Usage
 
 At present all commands are for generating content. Most useful is likely to be the Sector generator. Generating a new sector is done by issuing the following command:

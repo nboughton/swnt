@@ -57,11 +57,7 @@ var sectorCmd = &cobra.Command{
 		)
 
 		fmt.Println(secName)
-		if colour {
-			fmt.Println(hexmapColor(secData))
-		} else {
-			fmt.Println(hexmap(secData))
-		}
+		fmt.Println(hexmap(secData, colour, false))
 
 		ans := "r"
 		for {
@@ -78,7 +74,8 @@ var sectorCmd = &cobra.Command{
 						ioutil.WriteFile(filepath.Join(secName, dir, fmt.Sprintf("%s.%s", system.Name, "txt")), []byte(system.String()), 0755)
 					}
 
-					ioutil.WriteFile(filepath.Join(secName, "map.txt"), []byte(hexmap(secData)), 0755)
+					ioutil.WriteFile(filepath.Join(secName, "map.txt"), []byte(hexmap(secData, false, false)), 0755)
+					ioutil.WriteFile(filepath.Join(secName, "player-map.txt"), []byte(hexmap(secData, false, true)), 0755)
 					fmt.Printf("%s written\n", secName)
 					return
 
@@ -89,11 +86,7 @@ var sectorCmd = &cobra.Command{
 					secData = sector.NewSector().ByCoords()
 					secName = genSectorName()
 					fmt.Println(secName)
-					if colour {
-						fmt.Println(hexmapColor(secData))
-					} else {
-						fmt.Println(hexmap(secData))
-					}
+					fmt.Println(hexmap(secData, colour, false))
 				}
 			}
 		}
@@ -111,37 +104,36 @@ func genSectorName() string {
 	return secName
 }
 
-// I should probably fold these into a single function at some point
-func hexmap(data []*sector.Star) string {
-	h := haxscii.NewMap()
-	for _, s := range data {
-		h.SetTxt(s.Row, s.Col, s.Name, s.Worlds[0].Tags[0].Name, s.Worlds[0].Tags[1].Name, strings.Split(s.Worlds[0].TechLevel, ",")[0])
-	}
-
-	return h.String()
-}
-
-func hexmapColor(data []*sector.Star) string {
+func hexmap(data []*sector.Star, useColour bool, playerMap bool) string {
 	h := haxscii.NewMap()
 	for _, s := range data {
 		name, tag1, tag2, tl := s.Name, s.Worlds[0].Tags[0].Name, s.Worlds[0].Tags[1].Name, strings.Split(s.Worlds[0].TechLevel, ",")[0]
-		c := color.WhiteString
+		c := haxscii.White // I default to black/dark terminals, this might be problematic for weirdos that use light terms
+
 		switch tl {
 		case "TL0":
-			c = color.WhiteString
+			c = haxscii.White
 		case "TL1":
-			c = color.RedString
+			c = haxscii.Red
 		case "TL2":
-			c = color.YellowString
+			c = haxscii.Yellow
 		case "TL3":
-			c = color.MagentaString
+			c = haxscii.Magenta
 		case "TL4", "TL4+":
-			c = color.GreenString
+			c = haxscii.Green
 		case "TL5":
-			c = color.CyanString
+			c = haxscii.Cyan
 		}
 
-		h.SetTxtColour(s.Row, s.Col, name, tag1, tag2, tl, c)
+		if !useColour {
+			color.NoColor = true
+		}
+
+		if playerMap {
+			h.SetTxt(s.Row, s.Col, [4]string{"", name, "", ""}, c)
+		} else {
+			h.SetTxt(s.Row, s.Col, [4]string{name, tag1, tag2, tl}, c)
+		}
 	}
 
 	return h.String()

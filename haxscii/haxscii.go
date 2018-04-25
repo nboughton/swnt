@@ -6,6 +6,8 @@ import (
 	"fmt"
 	"regexp"
 	"strings"
+
+	"github.com/fatih/color"
 )
 
 type colourFunc func(string, ...interface{}) string
@@ -13,6 +15,17 @@ type colourFunc func(string, ...interface{}) string
 var (
 	coords = regexp.MustCompile(`\d,\d`)
 	offset = 5
+)
+
+// Colour funcs
+var (
+	White   = color.WhiteString
+	Red     = color.RedString
+	Yellow  = color.YellowString
+	Magenta = color.MagentaString
+	Green   = color.GreenString
+	Blue    = color.BlueString
+	Cyan    = color.CyanString
 )
 
 var mapscii = `   __________                __________                __________                __________               
@@ -96,55 +109,7 @@ func NewMap() Map {
 	return c
 }
 
-// SetTxt sets the text of a given hex
-func (m Map) SetTxt(row, col int, text, tag1, tag2, techlevel string) {
-	for r, line := range m {
-		for c := range line {
-			if c+2 < len(line) {
-				crd := strings.Join(m[r][c:c+3], "")
-				if coords.MatchString(crd) && crd == fmt.Sprintf("%d,%d", row, col) {
-					m.print(r+1, c+offset-(len(text)/2), text)
-					m.print(r+2, c+offset-(len(tag1)/2), tag1)
-					m.print(r+3, c+offset-(len(tag2)/2), tag2)
-					m.print(r+4, c+offset-(len(techlevel)/2), techlevel)
-				}
-			}
-		}
-	}
-}
-
-func (m Map) print(startRow, startCol int, text string) {
-	for row, col, i := startRow, startCol, 0; i < len(text); col, i = col+1, i+1 {
-		if col < 0 {
-			col = 0
-		}
-
-		if col < len(m[row]) {
-			m[row][col] = string(text[i])
-		} else {
-			m[row] = append(m[row], string(text[i]))
-		}
-	}
-}
-
-// SetTxtColour sets the text of a given hex
-func (m Map) SetTxtColour(row, col int, text, tag1, tag2, techlevel string, colour colourFunc) {
-	for r, line := range m {
-		for c := range line {
-			if c+2 < len(line) {
-				crd := strings.Join(m[r][c:c+3], "")
-				if coords.MatchString(crd) && crd == fmt.Sprintf("%d,%d", row, col) {
-					m.printColour(r+1, c+offset-(len(text)/2), text, colour)
-					m.printColour(r+2, c+offset-(len(tag1)/2), tag1, colour)
-					m.printColour(r+3, c+offset-(len(tag2)/2), tag2, colour)
-					m.printColour(r+4, c+offset-(len(techlevel)/2), techlevel, colour)
-				}
-			}
-		}
-	}
-}
-
-func (m Map) printColour(startRow, startCol int, text string, colour colourFunc) {
+func (m Map) print(startRow, startCol int, text string, colour colourFunc) {
 	for row, col, i := startRow, startCol, 0; i < len(text); col, i = col+1, i+1 {
 		if col < 0 {
 			col = 0
@@ -154,6 +119,22 @@ func (m Map) printColour(startRow, startCol int, text string, colour colourFunc)
 			m[row][col] = colour(string(text[i]))
 		} else {
 			m[row] = append(m[row], colour(string(text[i])))
+		}
+	}
+}
+
+// SetTxt sets the text of a given hex
+func (m Map) SetTxt(row, col int, lines [4]string, color colourFunc) {
+	for r, line := range m {
+		for c := range line {
+			if c+2 < len(line) {
+				crd := strings.Join(m[r][c:c+3], "")
+				if coords.MatchString(crd) && crd == fmt.Sprintf("%d,%d", row, col) {
+					for i, line := range lines {
+						m.print(r+i+1, c+offset-(len(line)/2), line, color)
+					}
+				}
+			}
 		}
 	}
 }

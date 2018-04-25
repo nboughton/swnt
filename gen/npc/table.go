@@ -20,6 +20,7 @@ var Reaction = rollt.Table{
 
 // Manner table
 var Manner = rollt.List{
+	Name: "Initial Manner",
 	Items: []string{
 		"Ingratiating and cloying",
 		"Grim suspicion of the PCs or their backers",
@@ -46,6 +47,7 @@ var Manner = rollt.List{
 
 // Outcome table
 var Outcome = rollt.List{
+	Name: "Default Deal Outcome",
 	Items: []string{
 		"They’ll screw the PCs over even at their own cost",
 		"They firmly intend to actively betray the PCs",
@@ -72,6 +74,7 @@ var Outcome = rollt.List{
 
 // Motivation table
 var Motivation = rollt.List{
+	Name: "Motivation",
 	Items: []string{
 		"An ambition for greater social status",
 		"Greed for wealth and indulgent riches",
@@ -98,6 +101,7 @@ var Motivation = rollt.List{
 
 // Want table
 var Want = rollt.List{
+	Name: "Want",
 	Items: []string{
 		"Bring them an exotic piece of tech",
 		"Convince someone to meet with the NPC",
@@ -124,6 +128,7 @@ var Want = rollt.List{
 
 // Power table
 var Power = rollt.List{
+	Name: "Power",
 	Items: []string{
 		"They’re just really appealing and sympathetic to PCs",
 		"They have considerable liquid funds",
@@ -150,6 +155,7 @@ var Power = rollt.List{
 
 // Hook table
 var Hook = rollt.List{
+	Name: "Hook",
 	Items: []string{
 		"A particular odd style of dress",
 		"An amputation or other maiming",

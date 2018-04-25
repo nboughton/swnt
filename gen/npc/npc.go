@@ -91,16 +91,16 @@ func New(c culture.ID, g GenderID, isPatron bool) NPC {
 func (n NPC) String() string {
 	buf := new(bytes.Buffer)
 
-	fmt.Fprintf(buf, "Their Name\t:\t%s\n", n.Name)
-	fmt.Fprintf(buf, "Their Culture\t:\t%s\n", n.Culture)
+	fmt.Fprintf(buf, "Name\t:\t%s\n", n.Name)
+	fmt.Fprintf(buf, "Culture\t:\t%s\n", n.Culture)
 	fmt.Fprint(buf, n.NPC)
 	fmt.Fprintln(buf, "\t")
-	fmt.Fprintf(buf, "Initial Manner\t:\t%s\n", n.Manner)
-	fmt.Fprintf(buf, "Default Deal Outcome\t:\t%s\n", n.Outcome)
-	fmt.Fprintf(buf, "Their Motivation\t:\t%s\n", n.Motivation)
-	fmt.Fprintf(buf, "Their Want\t:\t%s\n", n.Want)
-	fmt.Fprintf(buf, "Their Power\t:\t%s\n", n.Power)
-	fmt.Fprintf(buf, "Their Hook\t:\t%s\n", n.Hook)
+	fmt.Fprintf(buf, "%s\t:\t%s\n", Manner.Name, n.Manner)
+	fmt.Fprintf(buf, "%s\t:\t%s\n", Outcome.Name, n.Outcome)
+	fmt.Fprintf(buf, "%s\t:\t%s\n", Motivation.Name, n.Motivation)
+	fmt.Fprintf(buf, "%s\t:\t%s\n", Want.Name, n.Want)
+	fmt.Fprintf(buf, "%s\t:\t%s\n", Power.Name, n.Power)
+	fmt.Fprintf(buf, "%s\t:\t%s\n", Hook.Name, n.Hook)
 
 	fmt.Fprintln(buf, "\t")
 

@@ -32,10 +32,10 @@
   version = "v5.0.1"
 
 [[projects]]
-  branch = "master"
   name = "github.com/nboughton/rollt"
   packages = ["."]
-  revision = "1e9aa0eec11927372752b49e3dc7e24fc3ada05f"
+  revision = "bbc0c51875686872cfaae2663ef7eb5aa74325b5"
+  version = "v0.0.1"
 
 [[projects]]
   name = "github.com/spf13/cobra"

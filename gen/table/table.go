@@ -66,12 +66,12 @@ func (t ThreePartSubTable) String() string {
 
 // OneRoll represents the oft used one-roll systems spread throughout SWN
 type OneRoll struct {
-	D4  NamedList
-	D6  NamedList
-	D8  NamedList
-	D10 NamedList
-	D12 NamedList
-	D20 NamedList
+	D4  rollt.List
+	D6  rollt.List
+	D8  rollt.List
+	D10 rollt.List
+	D12 rollt.List
+	D20 rollt.List
 }
 
 // Roll performs all rolls for a OneRoll and returns the results
@@ -80,40 +80,16 @@ func (o OneRoll) Roll() string {
 		buf = new(bytes.Buffer)
 	)
 
-	fmt.Fprintf(buf, "%s\t:\t%s\n", o.D4.Name, o.D4.Table.Roll())
-	fmt.Fprintf(buf, "%s\t:\t%s\n", o.D6.Name, o.D6.Table.Roll())
-	fmt.Fprintf(buf, "%s\t:\t%s\n", o.D8.Name, o.D8.Table.Roll())
-	fmt.Fprintf(buf, "%s\t:\t%s\n", o.D10.Name, o.D10.Table.Roll())
-	fmt.Fprintf(buf, "%s\t:\t%s\n", o.D12.Name, o.D12.Table.Roll())
-	fmt.Fprintf(buf, "%s\t:\t%s\n", o.D20.Name, o.D20.Table.Roll())
+	fmt.Fprintf(buf, "%s\t:\t%s\n", o.D4.Name, o.D4.Roll())
+	fmt.Fprintf(buf, "%s\t:\t%s\n", o.D6.Name, o.D6.Roll())
+	fmt.Fprintf(buf, "%s\t:\t%s\n", o.D8.Name, o.D8.Roll())
+	fmt.Fprintf(buf, "%s\t:\t%s\n", o.D10.Name, o.D10.Roll())
+	fmt.Fprintf(buf, "%s\t:\t%s\n", o.D12.Name, o.D12.Roll())
+	fmt.Fprintf(buf, "%s\t:\t%s\n", o.D20.Name, o.D20.Roll())
 
 	return buf.String()
 }
 
 func (o OneRoll) String() string {
 	return fmt.Sprintf("%s\n%s\n%s\n%s\n%s\n%s\n", o.D4, o.D6, o.D8, o.D10, o.D12, o.D20)
-}
-
-// NamedList represents a named List. It's kind of obvious
-type NamedList struct {
-	Name  string
-	Table rollt.List
-}
-
-func (n NamedList) String() string {
-	var (
-		buf = new(bytes.Buffer)
-	)
-
-	fmt.Fprintf(buf, "D%d\t|\t%s\n", len(n.Table), n.Name)
-	for i, text := range n.Table {
-		fmt.Fprintf(buf, "%d\t|\t%s\n", i+1, text)
-	}
-
-	return buf.String()
-}
-
-// Roll on the list table
-func (n NamedList) Roll() string {
-	return n.Table.Roll()
 }

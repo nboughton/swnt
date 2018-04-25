@@ -7,18 +7,18 @@ import (
 
 // Urban represents the OneRoll tables for rolling quick encounters
 var Urban = table.OneRoll{
-	D4: table.NamedList{
+	D4: rollt.List{
 		Name: "What's the Conflict About?",
-		Table: rollt.List{
+		Items: []string{
 			"Money, extortion, payment due, debts",
 			"Respect, submission to social authority",
 			"Grudges, ethnic resentment, gang payback",
 			"Politics, religion, or other ideology",
 		},
 	},
-	D6: table.NamedList{
+	D6: rollt.List{
 		Name: "General Venue of the Event",
-		Table: rollt.List{
+		Items: []string{
 			"In the middle of the street",
 			"In a public plaza",
 			"Down a side alley",
@@ -27,9 +27,9 @@ var Urban = table.OneRoll{
 			"At a mass-transit station",
 		},
 	},
-	D8: table.NamedList{
+	D8: rollt.List{
 		Name: "Why are the PCs Involved?",
-		Table: rollt.List{
+		Items: []string{
 			"A sympathetic participant appeals to them",
 			"Ways around it are all dangerous/blocked",
 			"It happens immediately around them",
@@ -40,9 +40,9 @@ var Urban = table.OneRoll{
 			"Responsibility is somehow pinned on them",
 		},
 	},
-	D10: table.NamedList{
+	D10: rollt.List{
 		Name: "What's the Nature of the Event?",
-		Table: rollt.List{
+		Items: []string{
 			"A parade or festival is being disrupted",
 			"Innocents are being assaulted",
 			"An establishment is being robbed",
@@ -55,9 +55,9 @@ var Urban = table.OneRoll{
 			"A religious ceremony is being disrupted",
 		},
 	},
-	D12: table.NamedList{
+	D12: rollt.List{
 		Name: "What Antagonists are Involved?",
-		Table: rollt.List{
+		Items: []string{
 			"A local bully and their thugs",
 			"A ruthless political boss and their zealots",
 			"Violent criminals",
@@ -72,9 +72,9 @@ var Urban = table.OneRoll{
 			"A confused foreigner or backwoodsman",
 		},
 	},
-	D20: table.NamedList{
+	D20: rollt.List{
 		Name: "Relevant Urban Features",
-		Table: rollt.List{
+		Items: []string{
 			"Heavy traffic running through the place",
 			"Music blaring at deafening volumes",
 			"Two groups present that detest each other",
@@ -101,18 +101,18 @@ var Urban = table.OneRoll{
 
 // Wilderness represents the OneRoll tables for generating Wilderness Encounters
 var Wilderness = table.OneRoll{
-	D4: table.NamedList{
+	D4: rollt.List{
 		Name: "Initial Encounter Range",
-		Table: rollt.List{
+		Items: []string{
 			"Visible from a long distance away",
 			"Noticed 1d4 hundred meters away",
 			"Noticed only within 1d6 x 10 meters",
 			"Noticed only when adjacent to the event",
 		},
 	},
-	D6: table.NamedList{
+	D6: rollt.List{
 		Name: "Weather and Lighting",
-		Table: rollt.List{
+		Items: []string{
 			"Takes place in daylight and clear weather",
 			"Daylight, but fog, mist, rain or the like",
 			"Daylight, but harsh seasonal weather",
@@ -121,9 +121,9 @@ var Wilderness = table.OneRoll{
 			"Night, with terrible weather and wind",
 		},
 	},
-	D8: table.NamedList{
+	D8: rollt.List{
 		Name: "Basic Nature of the Encounter",
-		Table: rollt.List{
+		Items: []string{
 			"Attack by pack of hostiles",
 			"Ambush by single lone hostile",
 			"Meet people who don’t want to be met",
@@ -134,9 +134,9 @@ var Wilderness = table.OneRoll{
 			"Meet hostiles that aren’t immediately so",
 		},
 	},
-	D10: table.NamedList{
+	D10: rollt.List{
 		Name: "Types of Friendly Creatures",
-		Table: rollt.List{
+		Items: []string{
 			"Affable but reclusive hermit",
 			"Local herd animal let loose to graze",
 			"Government ranger or circuit judge",
@@ -149,9 +149,9 @@ var Wilderness = table.OneRoll{
 			"Impoverished social exile",
 		},
 	},
-	D12: table.NamedList{
+	D12: rollt.List{
 		Name: "Types of Hostile Creatures",
-		Table: rollt.List{
+		Items: []string{
 			"Bandits in their wilderness hideout",
 			"Dangerous locals looking for easy marks",
 			"Rabid or diseased large predator",
@@ -166,9 +166,9 @@ var Wilderness = table.OneRoll{
 			"Confidence man seeking to gull the PCs",
 		},
 	},
-	D20: table.NamedList{
+	D20: rollt.List{
 		Name: "Specific Nearby Feature of Relevance",
-		Table: rollt.List{
+		Items: []string{
 			"Overgrown homestead",
 			"Stream prone to flash-flooding",
 			"Narrow bridge or beam over deep cleft",

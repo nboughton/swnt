@@ -19,6 +19,10 @@ type Tables []Table
 
 // ByCulture returns a name table that matches the given culture
 func (t Tables) ByCulture(c culture.ID) Table {
+	if c == culture.Any {
+		c, _ = culture.Random()
+	}
+
 	for _, tbl := range t {
 		if tbl.Culture == c {
 			return tbl

@@ -53,13 +53,13 @@ var adventureCmd = &cobra.Command{
 			tag = world.Tags.Random()
 		}
 
-		fmt.Println(tag)
-		fmt.Println(adventure.New(tag))
+		fmt.Fprintln(tw, adventure.New(tag).String())
+		tw.Flush()
 	},
 }
 
 func init() {
 	newCmd.AddCommand(adventureCmd)
-	adventureCmd.Flags().StringP(flTag, "t", "Zombies", "Specify world tag to base roll on.")
+	adventureCmd.Flags().StringP(flTag, "t", "", "Specify world tag to base roll on.")
 	adventureCmd.Flags().BoolP(flTags, "l", false, "List available tags.")
 }

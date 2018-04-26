@@ -83,7 +83,7 @@ func New(c culture.ID, g GenderID, isPatron bool) NPC {
 		n.Gender = g
 	}
 
-	n.Culture, _ = culture.NameByID(c)
+	n.Culture, _ = culture.NameByID(nm.Culture)
 
 	return n
 }

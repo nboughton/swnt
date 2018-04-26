@@ -32,10 +32,10 @@
   version = "v5.0.1"
 
 [[projects]]
-  branch = "master"
   name = "github.com/nboughton/rollt"
   packages = ["."]
-  revision = "d27d49d2bb548e9644ec2d0d8b3a20305f9b7c8a"
+  revision = "61392aeff99afcb582d829a84f5cf88aefb710c9"
+  version = "v0.0.2"
 
 [[projects]]
   name = "github.com/spf13/cobra"
@@ -53,7 +53,7 @@
   branch = "master"
   name = "golang.org/x/sys"
   packages = ["unix"]
-  revision = "79b0c6888797020a994db17c8510466c72fe75d9"
+  revision = "bb9c189858d91f42db229b04d45a4c3d23a7662a"
 
 [solve-meta]
   analyzer-name = "dep"

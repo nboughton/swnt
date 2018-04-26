@@ -12,9 +12,9 @@ type Place struct {
 }
 
 // New roll a new place, default to urban
-func New(wildernss bool) Place {
+func New(wilderness bool) Place {
 	og := ""
-	if wildernss {
+	if wilderness {
 		og = Ongoings.Wilderness.Roll()
 	} else {
 		og = Ongoings.Civilised.Roll()

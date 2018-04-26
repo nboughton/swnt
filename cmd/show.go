@@ -21,8 +21,6 @@
 package cmd
 
 import (
-	"fmt"
-
 	"github.com/spf13/cobra"
 )
 
@@ -31,9 +29,9 @@ var showCmd = &cobra.Command{
 	Use:   "show",
 	Short: "Print the text of a world tag, table text will be added in future",
 	Long:  ``,
-	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("show called")
-	},
+	//Run: func(cmd *cobra.Command, args []string) {
+	//	fmt.Println("show called")
+	//},
 }
 
 func init() {

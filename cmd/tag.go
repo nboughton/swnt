@@ -28,25 +28,37 @@ import (
 	"github.com/spf13/cobra"
 )
 
+const (
+	flDescOnly = "desc-only"
+)
+
 // tagCmd represents the tag command
 var tagCmd = &cobra.Command{
 	Use:   "tag",
 	Short: "Print the text of a world tag",
 	Long:  ``,
 	Run: func(cmd *cobra.Command, args []string) {
+		descOnly, _ := cmd.Flags().GetBool(flDescOnly)
+
 		tag := strings.Join(args, " ")
 		t, err := world.Tags.Find(tag)
 		if err != nil {
 			fmt.Println(err)
 			return
 		}
-		fmt.Fprint(tw, t)
-		tw.Flush()
+
+		if descOnly {
+			fmt.Println(t.Desc)
+		} else {
+			fmt.Fprint(tw, t)
+			tw.Flush()
+		}
 	},
 }
 
 func init() {
 	showCmd.AddCommand(tagCmd)
+	tagCmd.Flags().BoolP(flDescOnly, "d", false, "Print description only")
 	// Here you will define your flags and configuration settings.
 
 	// Cobra supports Persistent Flags which will work for this command

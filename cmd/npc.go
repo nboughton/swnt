@@ -23,7 +23,6 @@ package cmd
 import (
 	"fmt"
 	"math/rand"
-	"strings"
 	"time"
 
 	"github.com/nboughton/swnt/gen/culture"
@@ -48,14 +47,14 @@ var npcCmd = &cobra.Command{
 			gender, _   = cmd.Flags().GetString(flGender)
 			isPatron, _ = cmd.Flags().GetBool(flPatron)
 			err         error
-			cID         culture.ID
 			gID         npc.GenderID
+			cID         culture.Culture
 		)
 
 		if clt == "" {
-			cID, clt = culture.Random()
+			cID = culture.Random()
 		} else {
-			cID, err = culture.IDByName(clt)
+			cID, err = culture.Find(clt)
 			if err != nil {
 				fmt.Println(err)
 				return
@@ -77,7 +76,7 @@ func init() {
 	rand.Seed(time.Now().UnixNano())
 
 	newCmd.AddCommand(npcCmd)
-	npcCmd.Flags().StringP(flCulture, "c", "", "Select Culture, choices are: "+strings.Join(culture.Cultures, ", "))
+	npcCmd.Flags().StringP(flCulture, "c", "any", fmt.Sprintf("Select Culture, choices are: %v", culture.Cultures))
 	npcCmd.Flags().StringP(flGender, "g", "", "Select Gender, choices are m, f, a, y (male, female, androgynous, any")
 	npcCmd.Flags().BoolP(flPatron, "p", false, "NPC is a Patron")
 }

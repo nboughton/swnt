@@ -3,7 +3,6 @@ package world
 import (
 	"bytes"
 	"fmt"
-	"log"
 	"math/rand"
 	"strings"
 	"time"
@@ -63,7 +62,7 @@ func (t Tag) String() string {
 type World struct {
 	Primary      bool
 	Name         string
-	Culture      string
+	Culture      culture.Culture
 	Tags         [2]Tag
 	Atmosphere   string
 	Temperature  string
@@ -77,12 +76,7 @@ type World struct {
 
 // New World, set culture to culture.Any for a random culture and primary to false
 // to include relationship information
-func New(c culture.ID, primary bool) World {
-	ctr, err := culture.NameByID(c)
-	if err != nil {
-		log.Fatal(err)
-	}
-
+func New(c culture.Culture, primary bool) World {
 	t1Idx, t2Idx := rand.Intn(len(Tags)), rand.Intn(len(Tags))
 	for t1Idx == t2Idx { // Ensure the same tag isn't selected twice
 		t2Idx = rand.Intn(len(Tags))
@@ -91,7 +85,7 @@ func New(c culture.ID, primary bool) World {
 	w := World{
 		Primary:     primary,
 		Name:        name.Names.ByCulture(c).Place.Roll(),
-		Culture:     ctr,
+		Culture:     c,
 		Tags:        [2]Tag{Tags[t1Idx], Tags[t2Idx]},
 		Atmosphere:  Atmosphere.Roll(),
 		Temperature: Temperature.Roll(),

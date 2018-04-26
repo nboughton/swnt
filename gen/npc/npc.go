@@ -35,7 +35,7 @@ var gender = map[GenderID]string{
 type NPC struct {
 	Name       string
 	Gender     string
-	Culture    string
+	Culture    culture.Culture
 	Manner     string
 	Outcome    string
 	Motivation string
@@ -48,7 +48,7 @@ type NPC struct {
 }
 
 // New roll a new NPC
-func New(c culture.ID, g GenderID, isPatron bool) NPC {
+func New(c culture.Culture, g GenderID, isPatron bool) NPC {
 	n := NPC{
 		IsPatron:   isPatron,
 		Manner:     Manner.Roll(),
@@ -83,7 +83,7 @@ func New(c culture.ID, g GenderID, isPatron bool) NPC {
 		n.Gender = g
 	}
 
-	n.Culture, _ = culture.NameByID(nm.Culture)
+	n.Culture = c
 
 	return n
 }

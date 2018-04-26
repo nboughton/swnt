@@ -7,7 +7,7 @@ import (
 
 // Table represents the collection of roll lists keyed by cultural background
 type Table struct {
-	Culture culture.ID
+	Culture culture.Culture
 	Male    rollt.List
 	Female  rollt.List
 	Surname rollt.List
@@ -18,9 +18,9 @@ type Table struct {
 type Tables []Table
 
 // ByCulture returns a name table that matches the given culture
-func (t Tables) ByCulture(c culture.ID) Table {
+func (t Tables) ByCulture(c culture.Culture) Table {
 	if c == culture.Any {
-		c, _ = culture.Random()
+		c = culture.Random()
 	}
 
 	for _, tbl := range t {

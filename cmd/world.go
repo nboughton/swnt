@@ -22,7 +22,6 @@ package cmd
 
 import (
 	"fmt"
-	"strings"
 
 	"github.com/nboughton/swnt/gen/culture"
 	"github.com/nboughton/swnt/gen/world"
@@ -36,17 +35,17 @@ var worldCmd = &cobra.Command{
 	Long:  ``,
 	Run: func(cmd *cobra.Command, args []string) {
 		var (
-			cltr, _ = cmd.Flags().GetString(flCulture)
-			cID     culture.ID
-			err     error
+			ctr, _ = cmd.Flags().GetString(flCulture)
+			cID    culture.Culture
+			err    error
 		)
 
-		if cltr == "" {
-			cID, cltr = culture.Random()
+		if ctr == "" {
+			cID = culture.Random()
 		} else {
-			cID, err = culture.IDByName(cltr)
+			cID, err = culture.Find(ctr)
 			if err != nil {
-				fmt.Printf("No Culture found for \"%s\", options are %s\n", cltr, strings.Join(culture.Cultures, ", "))
+				fmt.Printf("No Culture found for \"%s\", options are %v\n", ctr, culture.Cultures)
 				return
 			}
 		}

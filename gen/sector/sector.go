@@ -21,7 +21,7 @@ func init() {
 // Star represents a single Star on the Sector map
 type Star struct {
 	Row, Col int
-	Culture  string
+	Culture  culture.Culture
 	Name     string
 	Worlds   []world.World
 	POIs     []poi.POI
@@ -29,20 +29,20 @@ type Star struct {
 
 // NewStar generates a new Star struct to be added to the map
 func NewStar(r, c int) *Star {
-	cID, ctr := culture.Random()
+	ctr := culture.Random()
 
 	s := &Star{
 		Row:     r,
 		Col:     c,
 		Culture: ctr,
 		Name:    name.System.Roll(),
-		Worlds:  []world.World{world.New(cID, true)},
+		Worlds:  []world.World{world.New(ctr, true)},
 	}
 
 	// Cascading 10% chance of other worlds
 	for rand.Intn(100) < 10 {
-		cID, _ = culture.Random()
-		s.Worlds = append(s.Worlds, world.New(cID, false))
+		ctr = culture.Random()
+		s.Worlds = append(s.Worlds, world.New(ctr, false))
 	}
 
 	// 30% chance of a Point of Interest

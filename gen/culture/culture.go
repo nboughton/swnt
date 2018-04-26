@@ -52,35 +52,3 @@ func Find(name string) (Culture, error) {
 
 	return Culture(""), fmt.Errorf("no culture found for \"%s\"", name)
 }
-
-/*
-// IDByName returns the appropriate ID for string s
-func IDByName(s string) (ID, error) {
-	for id, name := range Cultures {
-		if name == s {
-			return ID(id), nil
-		}
-	}
-
-	if s == "Any" {
-		id, _ := Random()
-		return id, nil
-	}
-
-	return ID(0), fmt.Errorf("No culture found for %s", s)
-}
-
-// NameByID returns the name of a Culture by its ID
-func NameByID(i ID) (string, error) {
-	if int(i) < len(Cultures) {
-		return Cultures[i], nil
-	}
-
-	if i == Any {
-		_, str := Random()
-		return str, nil
-	}
-
-	return "", fmt.Errorf("No culture found for %d", i)
-}
-*/

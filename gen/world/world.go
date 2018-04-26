@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log"
 	"math/rand"
+	"strings"
 	"time"
 
 	"github.com/nboughton/rollt"
@@ -27,6 +28,17 @@ func (t TagsTable) Roll() string {
 // Random selects a random tag (used in Adventure seed generation)
 func (t TagsTable) Random() string {
 	return Tags[rand.Intn(len(Tags))].Name
+}
+
+// Find returns the tag specified. The search is case insensitive for convenience
+func (t TagsTable) Find(name string) (Tag, error) {
+	for _, tag := range t {
+		if strings.ToLower(tag.Name) == strings.ToLower(name) {
+			return tag, nil
+		}
+	}
+
+	return Tag{}, fmt.Errorf("no tag with name \"%s\"", name)
 }
 
 // Tag represents a complete World Tag structure as extracted from the Stars Without Number core book.

@@ -128,7 +128,7 @@ func hexmap(data []*sector.Star, useColour bool, playerMap bool) string {
 		}
 
 		if playerMap {
-			h.SetTxt(s.Row, s.Col, [4]string{"", name, "", ""}, c)
+			h.SetTxt(s.Row, s.Col, [4]string{name, "", "", ""}, c)
 		} else {
 			h.SetTxt(s.Row, s.Col, [4]string{name, tag1, tag2, tl}, c)
 		}

@@ -31,14 +31,13 @@ func New(worldTag string) Adventure {
 		Tag:  tag{Name: worldTag},
 	}
 
-	for _, t := range world.Tags {
-		if t.Name == worldTag {
-			a.Tag.Enemy = color.RedString(t.Enemies.Roll())
-			a.Tag.Friend = color.GreenString(t.Friends.Roll())
-			a.Tag.Thing = color.MagentaString(t.Things.Roll())
-			a.Tag.Place = color.CyanString(t.Places.Roll())
-			a.Tag.Complication = color.YellowString(t.Complications.Roll())
-		}
+	t, err := world.Tags.Find(worldTag)
+	if err == nil {
+		a.Tag.Enemy = color.RedString(t.Enemies.Roll())
+		a.Tag.Friend = color.GreenString(t.Friends.Roll())
+		a.Tag.Thing = color.MagentaString(t.Things.Roll())
+		a.Tag.Place = color.CyanString(t.Places.Roll())
+		a.Tag.Complication = color.YellowString(t.Complications.Roll())
 	}
 
 	return a

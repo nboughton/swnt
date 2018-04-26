@@ -47,7 +47,7 @@ var npcCmd = &cobra.Command{
 			gender, _   = cmd.Flags().GetString(flGender)
 			isPatron, _ = cmd.Flags().GetBool(flPatron)
 			err         error
-			gID         npc.GenderID
+			gID         npc.Gender
 			cID         culture.Culture
 		)
 
@@ -64,7 +64,7 @@ var npcCmd = &cobra.Command{
 		if gender == "" {
 			gID = npc.Any
 		} else {
-			gID = npc.GenderID(byte(gender[0]))
+			gID = npc.Gender(byte(gender[0]))
 		}
 
 		fmt.Fprintf(tw, npc.New(cID, gID, isPatron).String())

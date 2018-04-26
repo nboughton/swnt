@@ -14,17 +14,17 @@ func init() {
 	rand.Seed(time.Now().UnixNano())
 }
 
-type GenderID byte
+type Gender byte
 
-// GenderID ids
+// Gender ids
 const (
-	Male        GenderID = 'm'
-	Female      GenderID = 'f'
-	Androgynous GenderID = 'a'
-	Any         GenderID = 'y'
+	Male        Gender = 'm'
+	Female      Gender = 'f'
+	Androgynous Gender = 'a'
+	Any         Gender = 'y'
 )
 
-var gender = map[GenderID]string{
+var gender = map[Gender]string{
 	Male:        "Male",
 	Female:      "Female",
 	Androgynous: "Andro",
@@ -48,7 +48,7 @@ type NPC struct {
 }
 
 // New roll a new NPC
-func New(c culture.Culture, g GenderID, isPatron bool) NPC {
+func New(ctr culture.Culture, g Gender, isPatron bool) NPC {
 	n := NPC{
 		IsPatron:   isPatron,
 		Manner:     Manner.Roll(),
@@ -64,7 +64,7 @@ func New(c culture.Culture, g GenderID, isPatron bool) NPC {
 		n.Patron = PatronTable.Roll()
 	}
 
-	nm := name.Names.ByCulture(c)
+	nm := name.Names.ByCulture(ctr)
 	switch g {
 	case Male:
 		n.Name = fmt.Sprintf("%s %s", nm.Male.Roll(), nm.Surname.Roll())
@@ -83,7 +83,7 @@ func New(c culture.Culture, g GenderID, isPatron bool) NPC {
 		n.Gender = g
 	}
 
-	n.Culture = c
+	n.Culture = ctr
 
 	return n
 }

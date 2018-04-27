@@ -121,7 +121,7 @@ func NewSector() *Stars {
 
 	for r, c := rand.Intn(s.Rows), rand.Intn(s.Cols); len(s.Systems) <= stars; r, c = rand.Intn(s.Rows), rand.Intn(s.Cols) {
 		if !s.IsActive(r, c) {
-			s.Systems = append(s.Systems, NewStar(r, c, s.uniqueName()))
+			s.Systems = append(s.Systems, NewStar(r, c, s.unusedSystemName()))
 		}
 	}
 
@@ -129,10 +129,10 @@ func NewSector() *Stars {
 }
 
 // UniqueName ensures rolls on the name.System table until it gets a name that is not currently in use.
-func (s *Stars) uniqueName() string {
+func (s *Stars) unusedSystemName() string {
 	n := name.System.Roll()
 	for {
-		if !s.nameUsed(n) {
+		if !s.isNameUsed(n) {
 			return n
 		}
 
@@ -140,7 +140,7 @@ func (s *Stars) uniqueName() string {
 	}
 }
 
-func (s *Stars) nameUsed(n string) bool {
+func (s *Stars) isNameUsed(n string) bool {
 	for _, star := range s.Systems {
 		if star.Name == n {
 			return true

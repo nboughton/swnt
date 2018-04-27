@@ -75,6 +75,7 @@ var sectorCmd = &cobra.Command{
 						ioutil.WriteFile(filepath.Join(secName, dir, fmt.Sprintf("%s.%s", system.Name, "txt")), []byte(system.String()), filePerm)
 					}
 
+					os.Mkdir(filepath.Join(secName, "maps"), dirPerm)
 					ioutil.WriteFile(filepath.Join(secName, "maps", "gm-map.txt"), []byte(hexmap(secData, false, false)), filePerm)
 					ioutil.WriteFile(filepath.Join(secName, "maps", "player-map.txt"), []byte(hexmap(secData, false, true)), filePerm)
 					if colour {

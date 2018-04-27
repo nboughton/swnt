@@ -28,14 +28,14 @@ type Star struct {
 }
 
 // NewStar generates a new Star struct to be added to the map
-func NewStar(r, c int) *Star {
+func NewStar(r, c int, n string) *Star {
 	ctr := culture.Random()
 
 	s := &Star{
 		Row:     r,
 		Col:     c,
 		Culture: ctr,
-		Name:    name.System.Roll(),
+		Name:    n,
 		Worlds:  []world.World{world.New(ctr, true)},
 	}
 
@@ -121,11 +121,33 @@ func NewSector() *Stars {
 
 	for r, c := rand.Intn(s.Rows), rand.Intn(s.Cols); len(s.Systems) <= stars; r, c = rand.Intn(s.Rows), rand.Intn(s.Cols) {
 		if !s.IsActive(r, c) {
-			s.Systems = append(s.Systems, NewStar(r, c))
+			s.Systems = append(s.Systems, NewStar(r, c, s.uniqueName()))
 		}
 	}
 
 	return s
+}
+
+// UniqueName ensures rolls on the name.System table until it gets a name that is not currently in use.
+func (s *Stars) uniqueName() string {
+	n := name.System.Roll()
+	for {
+		if !s.nameUsed(n) {
+			return n
+		}
+
+		n = name.System.Roll()
+	}
+}
+
+func (s *Stars) nameUsed(n string) bool {
+	for _, star := range s.Systems {
+		if star.Name == n {
+			return true
+		}
+	}
+
+	return false
 }
 
 // IsActive checks to see if there is an active Star at r(ow), c(ol)

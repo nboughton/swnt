@@ -56,6 +56,7 @@ var sectorCmd = &cobra.Command{
 			colour, _ = cmd.Flags().GetBool(flColour)
 			secData   = sector.NewSector().ByCoords()
 			secName   = genSectorName()
+			mapDir    = "Maps"
 		)
 
 		fmt.Println(secName)
@@ -76,12 +77,12 @@ var sectorCmd = &cobra.Command{
 						ensure(ioutil.WriteFile(filepath.Join(secName, dir, fmt.Sprintf("%s.%s", system.Name, "txt")), []byte(system.String()), filePerm))
 					}
 
-					ensure(os.Mkdir(filepath.Join(secName, "maps"), dirPerm))
-					ensure(ioutil.WriteFile(filepath.Join(secName, "maps", "gm-map.txt"), []byte(hexmap(secData, false, false)), filePerm))
-					ensure(ioutil.WriteFile(filepath.Join(secName, "maps", "player-map.txt"), []byte(hexmap(secData, false, true)), filePerm))
+					ensure(os.Mkdir(filepath.Join(secName, mapDir), dirPerm))
+					ensure(ioutil.WriteFile(filepath.Join(secName, mapDir, "gm-map.txt"), []byte(hexmap(secData, false, false)), filePerm))
+					ensure(ioutil.WriteFile(filepath.Join(secName, mapDir, "pc-map.txt"), []byte(hexmap(secData, false, true)), filePerm))
 					if colour {
-						ensure(ioutil.WriteFile(filepath.Join(secName, "maps", "gm-map-ansi.txt"), []byte(hexmap(secData, true, false)), filePerm))
-						ensure(ioutil.WriteFile(filepath.Join(secName, "maps", "player-map-ansi.txt"), []byte(hexmap(secData, true, true)), filePerm))
+						ensure(ioutil.WriteFile(filepath.Join(secName, mapDir, "gm-map-ansi.txt"), []byte(hexmap(secData, true, false)), filePerm))
+						ensure(ioutil.WriteFile(filepath.Join(secName, mapDir, "pc-map-ansi.txt"), []byte(hexmap(secData, true, true)), filePerm))
 					}
 					fmt.Printf("%s written\n", secName)
 					return

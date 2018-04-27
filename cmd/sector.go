@@ -23,6 +23,7 @@ package cmd
 import (
 	"fmt"
 	"io/ioutil"
+	"log"
 	"os"
 	"path/filepath"
 	"regexp"
@@ -67,20 +68,20 @@ var sectorCmd = &cobra.Command{
 			if ansRegex.MatchString(ans) {
 				switch ans {
 				case "y":
-					os.Mkdir(secName, dirPerm)
+					ensure(os.Mkdir(secName, dirPerm))
 
 					for _, system := range secData {
 						dir := fmt.Sprintf("%d,%d-%s", system.Row, system.Col, system.Name)
-						os.Mkdir(filepath.Join(secName, dir), dirPerm)
-						ioutil.WriteFile(filepath.Join(secName, dir, fmt.Sprintf("%s.%s", system.Name, "txt")), []byte(system.String()), filePerm)
+						ensure(os.Mkdir(filepath.Join(secName, dir), dirPerm))
+						ensure(ioutil.WriteFile(filepath.Join(secName, dir, fmt.Sprintf("%s.%s", system.Name, "txt")), []byte(system.String()), filePerm))
 					}
 
-					os.Mkdir(filepath.Join(secName, "maps"), dirPerm)
-					ioutil.WriteFile(filepath.Join(secName, "maps", "gm-map.txt"), []byte(hexmap(secData, false, false)), filePerm)
-					ioutil.WriteFile(filepath.Join(secName, "maps", "player-map.txt"), []byte(hexmap(secData, false, true)), filePerm)
+					ensure(os.Mkdir(filepath.Join(secName, "maps"), dirPerm))
+					ensure(ioutil.WriteFile(filepath.Join(secName, "maps", "gm-map.txt"), []byte(hexmap(secData, false, false)), filePerm))
+					ensure(ioutil.WriteFile(filepath.Join(secName, "maps", "player-map.txt"), []byte(hexmap(secData, false, true)), filePerm))
 					if colour {
-						ioutil.WriteFile(filepath.Join(secName, "maps", "gm-map-ansi.txt"), []byte(hexmap(secData, true, false)), filePerm)
-						ioutil.WriteFile(filepath.Join(secName, "maps", "player-map-ansi.txt"), []byte(hexmap(secData, true, true)), filePerm)
+						ensure(ioutil.WriteFile(filepath.Join(secName, "maps", "gm-map-ansi.txt"), []byte(hexmap(secData, true, false)), filePerm))
+						ensure(ioutil.WriteFile(filepath.Join(secName, "maps", "player-map-ansi.txt"), []byte(hexmap(secData, true, true)), filePerm))
 					}
 					fmt.Printf("%s written\n", secName)
 					return
@@ -140,6 +141,12 @@ func hexmap(data []*sector.Star, useColour bool, playerMap bool) string {
 	}
 
 	return h.String()
+}
+
+func ensure(err error) {
+	if err != nil {
+		log.Fatal(err)
+	}
 }
 
 func init() {

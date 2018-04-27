@@ -35,8 +35,7 @@ import (
 )
 
 const (
-	flColour   = "colour"
-	flAnsiMaps = "colour-maps"
+	flColour = "colour"
 )
 
 var (
@@ -53,10 +52,9 @@ var sectorCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		// get flags
 		var (
-			colour, _  = cmd.Flags().GetBool(flColour)
-			ansiMap, _ = cmd.Flags().GetBool(flAnsiMaps)
-			secData    = sector.NewSector().ByCoords()
-			secName    = genSectorName()
+			colour, _ = cmd.Flags().GetBool(flColour)
+			secData   = sector.NewSector().ByCoords()
+			secName   = genSectorName()
 		)
 
 		fmt.Println(secName)
@@ -77,11 +75,11 @@ var sectorCmd = &cobra.Command{
 						ioutil.WriteFile(filepath.Join(secName, dir, fmt.Sprintf("%s.%s", system.Name, "txt")), []byte(system.String()), filePerm)
 					}
 
-					ioutil.WriteFile(filepath.Join(secName, "gm-map.txt"), []byte(hexmap(secData, false, false)), filePerm)
-					ioutil.WriteFile(filepath.Join(secName, "player-map.txt"), []byte(hexmap(secData, false, true)), filePerm)
-					if ansiMap {
-						ioutil.WriteFile(filepath.Join(secName, "gm-map-ansi.txt"), []byte(hexmap(secData, true, false)), filePerm)
-						ioutil.WriteFile(filepath.Join(secName, "player-map-ansi.txt"), []byte(hexmap(secData, true, true)), filePerm)
+					ioutil.WriteFile(filepath.Join(secName, "maps", "gm-map.txt"), []byte(hexmap(secData, false, false)), filePerm)
+					ioutil.WriteFile(filepath.Join(secName, "maps", "player-map.txt"), []byte(hexmap(secData, false, true)), filePerm)
+					if colour {
+						ioutil.WriteFile(filepath.Join(secName, "maps", "gm-map-ansi.txt"), []byte(hexmap(secData, true, false)), filePerm)
+						ioutil.WriteFile(filepath.Join(secName, "maps", "player-map-ansi.txt"), []byte(hexmap(secData, true, true)), filePerm)
 					}
 					fmt.Printf("%s written\n", secName)
 					return
@@ -146,5 +144,4 @@ func hexmap(data []*sector.Star, useColour bool, playerMap bool) string {
 func init() {
 	newCmd.AddCommand(sectorCmd)
 	sectorCmd.Flags().BoolP(flColour, "l", false, "Toggle colour output")
-	sectorCmd.Flags().BoolP(flAnsiMaps, "a", true, "Write copies of the maps with ansi colour codes left in. This allows you cat the file to a terminal to see the map in all its colourful glory")
 }

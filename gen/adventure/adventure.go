@@ -33,11 +33,11 @@ func New(worldTag string) Adventure {
 
 	t, err := world.Tags.Find(worldTag)
 	if err == nil {
-		a.Tag.Enemy = color.RedString(t.Enemies.Roll())
-		a.Tag.Friend = color.GreenString(t.Friends.Roll())
-		a.Tag.Thing = color.MagentaString(t.Things.Roll())
-		a.Tag.Place = color.CyanString(t.Places.Roll())
-		a.Tag.Complication = color.YellowString(t.Complications.Roll())
+		a.Tag.Enemy = t.Enemies.Roll()
+		a.Tag.Friend = t.Friends.Roll()
+		a.Tag.Thing = t.Things.Roll()
+		a.Tag.Place = t.Places.Roll()
+		a.Tag.Complication = t.Complications.Roll()
 	}
 
 	return a
@@ -47,11 +47,11 @@ func (a Adventure) String() string {
 	buf, str := new(bytes.Buffer), a.Seed
 
 	fmt.Fprintf(buf, "Tag: %s\n", a.Tag.Name)
-	str = strings.Replace(str, "Enemy", fmt.Sprintf("Enemy (%s)", a.Tag.Enemy), -1)
-	str = strings.Replace(str, "Friend", fmt.Sprintf("Friend (%s)", a.Tag.Friend), -1)
-	str = strings.Replace(str, "Thing", fmt.Sprintf("Thing (%s)", a.Tag.Thing), -1)
-	str = strings.Replace(str, "Place", fmt.Sprintf("Place (%s)", a.Tag.Place), -1)
-	str = strings.Replace(str, "Complication", fmt.Sprintf("Complication (%s)", a.Tag.Complication), -1)
+	str = strings.Replace(str, "Enemy", color.RedString("Enemy (%s)", a.Tag.Enemy), -1)
+	str = strings.Replace(str, "Friend", color.GreenString("Friend (%s)", a.Tag.Friend), -1)
+	str = strings.Replace(str, "Thing", color.MagentaString("Thing (%s)", a.Tag.Thing), -1)
+	str = strings.Replace(str, "Place", color.CyanString("Place (%s)", a.Tag.Place), -1)
+	str = strings.Replace(str, "Complication", color.YellowString("Complication (%s)", a.Tag.Complication), -1)
 	fmt.Fprintf(buf, "%s", str)
 
 	return buf.String()

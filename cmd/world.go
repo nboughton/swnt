@@ -28,6 +28,10 @@ import (
 	"github.com/spf13/cobra"
 )
 
+const (
+	flExclude = "exclude"
+)
+
 // worldCmd represents the world command
 var worldCmd = &cobra.Command{
 	Use:   "world",
@@ -36,6 +40,7 @@ var worldCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		var (
 			ctr, _ = cmd.Flags().GetString(flCulture)
+			exc, _ = cmd.Flags().GetStringArray(flExclude)
 			cID    culture.Culture
 			err    error
 		)
@@ -50,7 +55,7 @@ var worldCmd = &cobra.Command{
 			}
 		}
 
-		fmt.Fprintf(tw, world.New(cID, false).String())
+		fmt.Fprintf(tw, world.New(cID, false, exc).String())
 		tw.Flush()
 	},
 }
@@ -58,4 +63,5 @@ var worldCmd = &cobra.Command{
 func init() {
 	newCmd.AddCommand(worldCmd)
 	worldCmd.Flags().StringP(flCulture, "c", "", "Set Culture of world")
+	worldCmd.Flags().StringArrayP(flExclude, "x", []string{}, "Exclude tags (-x zombies -x \"regional hegemon\" etc)")
 }

@@ -40,6 +40,32 @@ func (t TagsTable) Find(name string) (Tag, error) {
 	return Tag{}, fmt.Errorf("no tag with name \"%s\"", name)
 }
 
+func selectTags(exclude []string) (Tag, Tag) {
+	var t TagsTable
+	for _, tag := range Tags {
+		if !tag.match(exclude) {
+			t = append(t, tag)
+		}
+	}
+
+	t1Idx, t2Idx := rand.Intn(len(t)), rand.Intn(len(t))
+	for t1Idx == t2Idx { // Ensure the same tag isn't selected twice
+		t2Idx = rand.Intn(len(t))
+	}
+
+	return t[t1Idx], t[t2Idx]
+}
+
+func (t Tag) match(s []string) bool {
+	for _, x := range s {
+		if strings.ToLower(t.Name) == strings.ToLower(x) {
+			return true
+		}
+	}
+
+	return false
+}
+
 // Tag represents a complete World Tag structure as extracted from the Stars Without Number core book.
 type Tag struct {
 	Name          string
@@ -76,17 +102,14 @@ type World struct {
 
 // New World, set culture to culture.Any for a random culture and primary to false
 // to include relationship information
-func New(c culture.Culture, primary bool) World {
-	t1Idx, t2Idx := rand.Intn(len(Tags)), rand.Intn(len(Tags))
-	for t1Idx == t2Idx { // Ensure the same tag isn't selected twice
-		t2Idx = rand.Intn(len(Tags))
-	}
+func New(c culture.Culture, primary bool, exclude []string) World {
+	t1, t2 := selectTags(exclude)
 
 	w := World{
 		Primary:     primary,
 		Name:        name.Names.ByCulture(c).Place.Roll(),
 		Culture:     c,
-		Tags:        [2]Tag{Tags[t1Idx], Tags[t2Idx]},
+		Tags:        [2]Tag{t1, t2},
 		Atmosphere:  Atmosphere.Roll(),
 		Temperature: Temperature.Roll(),
 		Population:  Population.Roll(),

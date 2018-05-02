@@ -53,10 +53,11 @@ var sectorCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		// get flags
 		var (
-			colour, _ = cmd.Flags().GetBool(flColour)
-			secData   = sector.NewSector().ByCoords()
-			secName   = genSectorName()
-			mapDir    = "Maps"
+			colour, _      = cmd.Flags().GetBool(flColour)
+			excludeTags, _ = cmd.Flags().GetStringArray(flExclude)
+			secData        = sector.NewSector(excludeTags).ByCoords()
+			secName        = genSectorName()
+			mapDir         = "Maps"
 		)
 
 		fmt.Println(secName)
@@ -91,7 +92,7 @@ var sectorCmd = &cobra.Command{
 					return
 
 				case "r":
-					secData = sector.NewSector().ByCoords()
+					secData = sector.NewSector(excludeTags).ByCoords()
 					secName = genSectorName()
 					fmt.Println(secName)
 					fmt.Println(hexmap(secData, colour, false))
@@ -153,4 +154,5 @@ func ensure(err error) {
 func init() {
 	newCmd.AddCommand(sectorCmd)
 	sectorCmd.Flags().BoolP(flColour, "l", false, "Toggle colour output")
+	sectorCmd.Flags().StringArrayP(flExclude, "x", []string{}, "Exclude tags (-x zombies -x \"regional hegemon\" etc)")
 }

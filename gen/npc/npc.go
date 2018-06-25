@@ -43,6 +43,7 @@ type NPC struct {
 	Power      string
 	Hook       string
 	NPC        string
+	Reaction   string
 	IsPatron   bool
 	Patron     string
 }
@@ -57,6 +58,7 @@ func New(ctr culture.Culture, g Gender, isPatron bool) NPC {
 		Want:       Want.Roll(),
 		Power:      Power.Roll(),
 		Hook:       Hook.Roll(),
+		Reaction:   Reaction.Roll(),
 		NPC:        NPCTable.Roll(),
 	}
 
@@ -101,6 +103,7 @@ func (n NPC) String() string {
 	fmt.Fprintf(buf, "%s\t:\t%s\n", Want.Name, n.Want)
 	fmt.Fprintf(buf, "%s\t:\t%s\n", Power.Name, n.Power)
 	fmt.Fprintf(buf, "%s\t:\t%s\n", Hook.Name, n.Hook)
+	fmt.Fprintf(buf, "%s\t:\t%s\n", Reaction.Name, n.Reaction)
 
 	fmt.Fprintln(buf, "\t")
 

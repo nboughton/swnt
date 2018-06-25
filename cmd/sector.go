@@ -37,6 +37,8 @@ import (
 
 const (
 	flColour = "colour"
+	flPoi    = "poi-chance"
+	flOW     = "other-worlds-chance"
 )
 
 var (
@@ -53,11 +55,13 @@ var sectorCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		// get flags
 		var (
-			colour, _      = cmd.Flags().GetBool(flColour)
-			excludeTags, _ = cmd.Flags().GetStringArray(flExclude)
-			secData        = sector.NewSector(excludeTags).ByCoords()
-			secName        = genSectorName()
-			mapDir         = "Maps"
+			colour, _           = cmd.Flags().GetBool(flColour)
+			excludeTags, _      = cmd.Flags().GetStringArray(flExclude)
+			poiChance, _        = cmd.Flags().GetInt(flPoi)
+			otherWorldChance, _ = cmd.Flags().GetInt(flOW)
+			secData             = sector.NewSector(excludeTags, poiChance, otherWorldChance).ByCoords()
+			secName             = genSectorName()
+			mapDir              = "Maps"
 		)
 
 		fmt.Println(secName)
@@ -92,7 +96,7 @@ var sectorCmd = &cobra.Command{
 					return
 
 				case "r":
-					secData = sector.NewSector(excludeTags).ByCoords()
+					secData = sector.NewSector(excludeTags, poiChance, otherWorldChance).ByCoords()
 					secName = genSectorName()
 					fmt.Println(secName)
 					fmt.Println(hexmap(secData, colour, false))
@@ -155,4 +159,6 @@ func init() {
 	newCmd.AddCommand(sectorCmd)
 	sectorCmd.Flags().BoolP(flColour, "l", false, "Toggle colour output")
 	sectorCmd.Flags().StringArrayP(flExclude, "x", []string{}, "Exclude tags (-x zombies -x \"regional hegemon\" etc)")
+	sectorCmd.Flags().IntP(flPoi, "p", 30, "Set % chance of a POI being generated for any given star in the sector")
+	sectorCmd.Flags().IntP(flOW, "o", 10, "Set % chance for a secondary world to be generated for any given star in the sector")
 }

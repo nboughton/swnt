@@ -1,6 +1,7 @@
 package culture
 
 import (
+	"bytes"
 	"fmt"
 	"math/rand"
 	"strings"
@@ -51,4 +52,13 @@ func Find(name string) (Culture, error) {
 	}
 
 	return Culture(""), fmt.Errorf("no culture found for \"%s\"", name)
+}
+
+func (c Culture) String() string {
+	buf := new(bytes.Buffer)
+
+	fmt.Fprintf(buf, "%s\n", string(c))
+
+	return buf.String()
+
 }

@@ -36,6 +36,7 @@ All commands can be queried for their available options with the -h flag. For ex
     Available Commands:
       adventure   Generate an Adventure
       conflict    Generate a Conflict
+      culture     Generate a Culture
       encounter   Generate a quick encounter
       npc         Generate a NPC
       place       Generate a place

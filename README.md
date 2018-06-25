@@ -35,6 +35,7 @@ All commands can be queried for their available options with the -h flag. For ex
 
     Available Commands:
       adventure   Generate an Adventure
+      alien       Generate an Alien
       conflict    Generate a Conflict
       culture     Generate a Culture
       encounter   Generate a quick encounter
@@ -47,7 +48,7 @@ All commands can be queried for their available options with the -h flag. For ex
     Flags:
       -h, --help   help for new
 
-    Use "swntools new [command] --help" for more information about a command.
+    Use "swnt new [command] --help" for more information about a command.
 
 This is currently an alpha as there are a number of additions and changes to be made.
 

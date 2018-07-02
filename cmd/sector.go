@@ -36,9 +36,11 @@ import (
 )
 
 const (
-	flColour = "colour"
-	flPoi    = "poi-chance"
-	flOW     = "other-worlds-chance"
+	flColour    = "colour"
+	flPoi       = "poi-chance"
+	flOW        = "other-worlds-chance"
+	flSecHeight = "sector-height"
+	flSecWidth  = "sector-width"
 )
 
 var (
@@ -59,13 +61,23 @@ var sectorCmd = &cobra.Command{
 			excludeTags, _      = cmd.Flags().GetStringArray(flExclude)
 			poiChance, _        = cmd.Flags().GetInt(flPoi)
 			otherWorldChance, _ = cmd.Flags().GetInt(flOW)
-			secData             = sector.NewSector(excludeTags, poiChance, otherWorldChance).ByCoords()
-			secName             = genSectorName()
-			mapDir              = "Maps"
+			secHeight, _        = cmd.Flags().GetInt(flSecHeight)
+			secWidth, _         = cmd.Flags().GetInt(flSecWidth)
+		)
+
+		if secHeight > 99 || secWidth > 99 {
+			fmt.Println("Sectors larger than 99 hexes in either direction are not currently supported")
+			return
+		}
+
+		var (
+			secData = sector.NewSector(secHeight, secWidth, excludeTags, poiChance, otherWorldChance).ByCoords()
+			secName = genSectorName()
+			mapDir  = "Maps"
 		)
 
 		fmt.Println(secName)
-		fmt.Println(hexmap(secData, colour, false))
+		fmt.Println(hexmap(secHeight, secWidth, secData, colour, false))
 
 		ans := "r"
 		for {
@@ -83,11 +95,11 @@ var sectorCmd = &cobra.Command{
 					}
 
 					ensure(os.Mkdir(filepath.Join(secName, mapDir), dirPerm))
-					ensure(ioutil.WriteFile(filepath.Join(secName, mapDir, "gm-map.txt"), []byte(hexmap(secData, false, false)), filePerm))
-					ensure(ioutil.WriteFile(filepath.Join(secName, mapDir, "pc-map.txt"), []byte(hexmap(secData, false, true)), filePerm))
+					ensure(ioutil.WriteFile(filepath.Join(secName, mapDir, "gm-map.txt"), []byte(hexmap(secHeight, secWidth, secData, false, false)), filePerm))
+					ensure(ioutil.WriteFile(filepath.Join(secName, mapDir, "pc-map.txt"), []byte(hexmap(secHeight, secWidth, secData, false, true)), filePerm))
 					if colour {
-						ensure(ioutil.WriteFile(filepath.Join(secName, mapDir, "gm-map-ansi.txt"), []byte(hexmap(secData, true, false)), filePerm))
-						ensure(ioutil.WriteFile(filepath.Join(secName, mapDir, "pc-map-ansi.txt"), []byte(hexmap(secData, true, true)), filePerm))
+						ensure(ioutil.WriteFile(filepath.Join(secName, mapDir, "gm-map-ansi.txt"), []byte(hexmap(secHeight, secWidth, secData, true, false)), filePerm))
+						ensure(ioutil.WriteFile(filepath.Join(secName, mapDir, "pc-map-ansi.txt"), []byte(hexmap(secHeight, secWidth, secData, true, true)), filePerm))
 					}
 					fmt.Printf("%s written\n", secName)
 					return
@@ -96,10 +108,10 @@ var sectorCmd = &cobra.Command{
 					return
 
 				case "r":
-					secData = sector.NewSector(excludeTags, poiChance, otherWorldChance).ByCoords()
+					secData = sector.NewSector(secHeight, secWidth, excludeTags, poiChance, otherWorldChance).ByCoords()
 					secName = genSectorName()
 					fmt.Println(secName)
-					fmt.Println(hexmap(secData, colour, false))
+					fmt.Println(hexmap(secHeight, secWidth, secData, colour, false))
 				}
 			}
 		}
@@ -117,9 +129,9 @@ func genSectorName() string {
 	return secName
 }
 
-func hexmap(data []*sector.Star, useColour bool, playerMap bool) string {
+func hexmap(height, width int, data []*sector.Star, useColour bool, playerMap bool) string {
 	haxscii.Colour(useColour)
-	h := haxscii.NewMap()
+	h := haxscii.NewMap(height, width)
 	for _, s := range data {
 		name, tag1, tag2, tl := s.Name, s.Worlds[0].Tags[0].Name, s.Worlds[0].Tags[1].Name, strings.Split(s.Worlds[0].TechLevel, ",")[0]
 		c := haxscii.White // I default to black/dark terminals, this might be problematic for weirdos that use light terms
@@ -161,4 +173,6 @@ func init() {
 	sectorCmd.Flags().StringArrayP(flExclude, "x", []string{}, "Exclude tags (-x zombies -x \"regional hegemon\" etc)")
 	sectorCmd.Flags().IntP(flPoi, "p", 30, "Set % chance of a POI being generated for any given star in the sector")
 	sectorCmd.Flags().IntP(flOW, "o", 10, "Set % chance for a secondary world to be generated for any given star in the sector")
+	sectorCmd.Flags().IntP(flSecHeight, "e", 10, "Set height of sector in hexes")
+	sectorCmd.Flags().IntP(flSecWidth, "w", 8, "Set width of sector in hexes")
 }

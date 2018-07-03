@@ -1,7 +1,6 @@
 package religion
 
 import (
-	"github.com/nboughton/num"
 	"github.com/nboughton/rollt"
 )
 
@@ -44,9 +43,9 @@ var Leadership = rollt.Table{
 	Name: "Leadership",
 	Dice: "1d6",
 	Items: []rollt.Item{
-		{Match: num.Set{1, 2}, Text: "Patriarch/Matriarch. A single leader determines doctrine for the entire religion, possibly in consultation with other clerics."},
-		{Match: num.Set{3, 4}, Text: "Council. A group of the oldest and most revered clergy determine the course of the faith."},
-		{Match: num.Set{5}, Text: "Democracy. Every member has an equal voice in matters of faith, with doctrine usually decided at regular church- wide councils."},
-		{Match: num.Set{6}, Text: "No universal leadership. Roll again to determine how each region governs itself. If another 6 is rolled, this faith has no hierarchy."},
+		{Match: []int{1, 2}, Text: "Patriarch/Matriarch. A single leader determines doctrine for the entire religion, possibly in consultation with other clerics."},
+		{Match: []int{3, 4}, Text: "Council. A group of the oldest and most revered clergy determine the course of the faith."},
+		{Match: []int{5}, Text: "Democracy. Every member has an equal voice in matters of faith, with doctrine usually decided at regular church- wide councils."},
+		{Match: []int{6}, Text: "No universal leadership. Roll again to determine how each region governs itself. If another 6 is rolled, this faith has no hierarchy."},
 	},
 }

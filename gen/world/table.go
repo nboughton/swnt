@@ -1,7 +1,6 @@
 package world
 
 import (
-	"github.com/nboughton/num"
 	"github.com/nboughton/rollt"
 )
 
@@ -57,13 +56,13 @@ var (
 	Atmosphere = rollt.Table{
 		Dice: "2d6",
 		Items: []rollt.Item{
-			{Match: num.Set{2}, Text: "Corrosive, damaging to foreign objects"},
-			{Match: num.Set{3}, Text: "Inert gas, useless for respiration"},
-			{Match: num.Set{4}, Text: "Airless or thin to the point of suffocation"},
-			{Match: num.Set{5, 6, 7, 8, 9}, Text: "Breathable mix"},
-			{Match: num.Set{10}, Text: "Thick, but breathable with a pressure mask"},
-			{Match: num.Set{11}, Text: "Invasive, penetrating suit seals"},
-			{Match: num.Set{12}, Text: "Both corrosive and invasive in its effect"},
+			{Match: []int{2}, Text: "Corrosive, damaging to foreign objects"},
+			{Match: []int{3}, Text: "Inert gas, useless for respiration"},
+			{Match: []int{4}, Text: "Airless or thin to the point of suffocation"},
+			{Match: []int{5, 6, 7, 8, 9}, Text: "Breathable mix"},
+			{Match: []int{10}, Text: "Thick, but breathable with a pressure mask"},
+			{Match: []int{11}, Text: "Invasive, penetrating suit seals"},
+			{Match: []int{12}, Text: "Both corrosive and invasive in its effect"},
 		},
 	}
 
@@ -71,13 +70,13 @@ var (
 	Biosphere = rollt.Table{
 		Dice: "2d6",
 		Items: []rollt.Item{
-			{Match: num.Set{2}, Text: "Remnant biosphere"},
-			{Match: num.Set{3}, Text: "Microbial life forms exist"},
-			{Match: num.Set{4, 5}, Text: "No native biosphere"},
-			{Match: num.Set{6, 7, 8}, Text: "Human-miscible biosphere"},
-			{Match: num.Set{9, 10}, Text: "Immiscible biosphere"},
-			{Match: num.Set{11}, Text: "Hybrid biosphere"},
-			{Match: num.Set{12}, Text: "Engineered biosphere"},
+			{Match: []int{2}, Text: "Remnant biosphere"},
+			{Match: []int{3}, Text: "Microbial life forms exist"},
+			{Match: []int{4, 5}, Text: "No native biosphere"},
+			{Match: []int{6, 7, 8}, Text: "Human-miscible biosphere"},
+			{Match: []int{9, 10}, Text: "Immiscible biosphere"},
+			{Match: []int{11}, Text: "Hybrid biosphere"},
+			{Match: []int{12}, Text: "Engineered biosphere"},
 		},
 	}
 
@@ -85,13 +84,13 @@ var (
 	Temperature = rollt.Table{
 		Dice: "2d6",
 		Items: []rollt.Item{
-			{Match: num.Set{2}, Text: "Frozen, locked in perpetual ice"},
-			{Match: num.Set{3}, Text: "Cold, dominated by glaciers and tundra"},
-			{Match: num.Set{4, 5}, Text: "Variable cold with temperate places"},
-			{Match: num.Set{6, 7, 8}, Text: "Temperate, Earthlike in its ranges"},
-			{Match: num.Set{9, 10}, Text: "Variable warm, with temperate places"},
-			{Match: num.Set{11}, Text: "Warm, tropical and hotter in places"},
-			{Match: num.Set{12}, Text: "Burning, intolerably hot on its surface"},
+			{Match: []int{2}, Text: "Frozen, locked in perpetual ice"},
+			{Match: []int{3}, Text: "Cold, dominated by glaciers and tundra"},
+			{Match: []int{4, 5}, Text: "Variable cold with temperate places"},
+			{Match: []int{6, 7, 8}, Text: "Temperate, Earthlike in its ranges"},
+			{Match: []int{9, 10}, Text: "Variable warm, with temperate places"},
+			{Match: []int{11}, Text: "Warm, tropical and hotter in places"},
+			{Match: []int{12}, Text: "Burning, intolerably hot on its surface"},
 		},
 	}
 
@@ -99,13 +98,13 @@ var (
 	TechLevel = rollt.Table{
 		Dice: "2d6",
 		Items: []rollt.Item{
-			{Match: num.Set{2}, Text: "TL0, neolithic-level technology"},
-			{Match: num.Set{3}, Text: "TL1, medieval technology"},
-			{Match: num.Set{4, 5}, Text: "TL2, early Industrial Age tech"},
-			{Match: num.Set{6, 7, 8}, Text: "TL4, modern postech"},
-			{Match: num.Set{9, 10}, Text: "TL3, tech like that of present-day Earth"},
-			{Match: num.Set{11}, Text: "TL4+, postech with specialties"},
-			{Match: num.Set{12}, Text: "TL5, pretech with surviving infrastructure"},
+			{Match: []int{2}, Text: "TL0, neolithic-level technology"},
+			{Match: []int{3}, Text: "TL1, medieval technology"},
+			{Match: []int{4, 5}, Text: "TL2, early Industrial Age tech"},
+			{Match: []int{6, 7, 8}, Text: "TL4, modern postech"},
+			{Match: []int{9, 10}, Text: "TL3, tech like that of present-day Earth"},
+			{Match: []int{11}, Text: "TL4+, postech with specialties"},
+			{Match: []int{12}, Text: "TL5, pretech with surviving infrastructure"},
 		},
 	}
 
@@ -113,13 +112,13 @@ var (
 	Population = rollt.Table{
 		Dice: "2d6",
 		Items: []rollt.Item{
-			{Match: num.Set{2}, Text: "Failed colony"},
-			{Match: num.Set{3}, Text: "Outpost"},
-			{Match: num.Set{4, 5}, Text: "Fewer than a million inhabitants"},
-			{Match: num.Set{6, 7, 8}, Text: "Several million inhabitants"},
-			{Match: num.Set{9, 10}, Text: "Hundreds of millions of inhabitants"},
-			{Match: num.Set{11}, Text: "Billions of inhabitants"},
-			{Match: num.Set{12}, Text: "Alien inhabitants"},
+			{Match: []int{2}, Text: "Failed colony"},
+			{Match: []int{3}, Text: "Outpost"},
+			{Match: []int{4, 5}, Text: "Fewer than a million inhabitants"},
+			{Match: []int{6, 7, 8}, Text: "Several million inhabitants"},
+			{Match: []int{9, 10}, Text: "Hundreds of millions of inhabitants"},
+			{Match: []int{11}, Text: "Billions of inhabitants"},
+			{Match: []int{12}, Text: "Alien inhabitants"},
 		},
 	}
 

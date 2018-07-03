@@ -102,7 +102,7 @@ var vl = rollt.Table{
 var con = rollt.List{
 	Name: "consonants",
 	Items: []string{"b", "c", "d", "f", "g", "h", "j", "k", "l", "m", "n", "p", "q", "r", "s", "t", "v", "w", "x", "z",
-		"ch", "gh", "kh", "ph", "rh", "sh", "th", "qu", "ck"},
+		"ch", "gh", "kh", "ph", "rh", "sh", "th", "qu"},
 }
 
 // Generate creates a random name by combining alternating vowels and consonants

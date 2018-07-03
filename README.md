@@ -42,6 +42,7 @@ All commands can be queried for their available options with the -h flag. For ex
       npc         Generate a NPC
       place       Generate a place
       poi         Generate a Point of Interest
+      religion    Generate a Religion
       sector      Create the skeleton of a Sector
       world       Generate a secondary World for a Sector cell
 

@@ -5,6 +5,7 @@ import (
 	"bytes"
 	"fmt"
 	"regexp"
+	"strconv"
 	"strings"
 
 	"github.com/fatih/color"
@@ -28,81 +29,81 @@ var (
 	Cyan    = color.CyanString
 )
 
-func strToMatrix(s string) [][]string {
-	var m [][]string
-
-	for row, line := range strings.Split(s, "\n") {
-		m = append(m, []string{})
-		for _, char := range line {
-			m[row] = append(m[row], string(char))
-		}
-	}
-
-	return m
-}
-
 func genCrdText(row, col int) string {
-	rStr, cStr := fmt.Sprintf("%d", row), fmt.Sprintf("%d", col)
+	rStr, cStr := strconv.Itoa(row), strconv.Itoa(col)
 	if row < 10 {
-		rStr = fmt.Sprintf("0%d", row)
+		rStr = "0" + rStr
 	}
 	if col < 10 {
-		cStr = fmt.Sprintf("0%d", col)
+		cStr = "0" + cStr
 	}
 
 	return fmt.Sprintf("%s,%s", rStr, cStr)
 }
 
 type cell struct {
-	text        string
+	text        [][]string
 	widthTop    int
 	widthMiddle int
 	height      int
 }
 
-func newCell(row, col int) cell {
-	c := cell{
-		text: `  \__________/  
-  /r         \  
- /            \ 
+/* A cell:
+`  \__________/
+  /r         \
+ /            \
 /              \
 \              /
- \            / 
-  \__________/  `,
+ \            /
+	\__________/  `,
+*/
+
+func newCell(row, col int) *cell {
+	c := &cell{
+		text: [][]string{
+			{" ", " ", `\`, "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "/", " ", " "},
+			{" ", " ", "/", "r", " ", " ", " ", " ", " ", " ", " ", " ", " ", `\`, " ", " "},
+			{" ", "/", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", `\`, " "},
+			{"/", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", `\`},
+			{`\`, " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", "/"},
+			{" ", `\`, " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", "/", " "},
+			{" ", " ", `\`, "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "/", " ", " "},
+		},
 		height:      7,
 		widthTop:    10,
 		widthMiddle: 16,
 	}
 
-	return c.setCrds(row, col)
+	c.setCrds(row, col)
+
+	return c
 }
 
-func (c cell) setCrds(row, col int) cell {
+func (c *cell) setCrds(row, col int) *cell {
 	text := genCrdText(row, col)
-	strA := strings.Split(c.text, "")
 
-	// Rewrite values into new array as strings are immutable.
-	for i, char := range strA {
-		if string(char) == "r" {
-			for j, sub := range text {
-				strA[i+j] = string(sub)
+	for row := range c.text {
+		for col, char := range c.text[row] {
+			if char == "r" {
+				for j, sub := range text {
+					c.text[row][col+j] = string(sub)
+				}
+				return c
 			}
-			break
 		}
 	}
 
-	c.text = strings.Join(strA, "")
 	return c
 }
 
 // Return string array of column characters
-func (c cell) col(n int) []string {
-	if n > c.widthMiddle {
+func (c *cell) col(n int) []string {
+	if n < 0 || n >= c.widthMiddle {
 		return []string{}
 	}
 
 	chars := []string{}
-	for _, row := range strToMatrix(c.text) {
+	for _, row := range c.text {
 		chars = append(chars, row[n])
 	}
 
@@ -110,12 +111,12 @@ func (c cell) col(n int) []string {
 }
 
 // Return string array of row characters
-func (c cell) row(n int) []string {
-	if n > c.height {
+func (c *cell) row(n int) []string {
+	if n < 0 || n >= c.height {
 		return []string{}
 	}
 
-	return strToMatrix(c.text)[n]
+	return c.text[n]
 }
 
 // Map represents a 2 dimensional string matrix of the template
@@ -181,12 +182,14 @@ func (m Map) blankCell(row, col, rLabel, cLabel int) Map {
 
 // SetTxt sets the text of a given hex
 func (m Map) SetTxt(row, col int, lines [4]string, color colourFunc) {
+	crds := genCrdText(row, col)
+	cLen := len(crds)
 
 	for r, line := range m {
 		for c := range line {
 			if c+len(lines) < len(line) {
-				crd := strings.Join(m[r][c:c+5], "") // TODO: allocate 5 as a variable that is calculated from crdString
-				if coords.MatchString(crd) && crd == genCrdText(row, col) {
+				crd := strings.Join(m[r][c:c+cLen], "")
+				if coords.MatchString(crd) && crd == crds {
 					for i, line := range lines {
 						m.print(r+i+1, c+offset-(len(line)/2), line, color)
 					}

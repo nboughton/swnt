@@ -41,6 +41,18 @@ func strToMatrix(s string) [][]string {
 	return m
 }
 
+func genCrdText(row, col int) string {
+	rStr, cStr := fmt.Sprintf("%d", row), fmt.Sprintf("%d", col)
+	if row < 10 {
+		rStr = fmt.Sprintf("0%d", row)
+	}
+	if col < 10 {
+		cStr = fmt.Sprintf("0%d", col)
+	}
+
+	return fmt.Sprintf("%s,%s", rStr, cStr)
+}
+
 type cell struct {
 	text        string
 	widthTop    int
@@ -67,18 +79,12 @@ func newCell(row, col int) cell {
 
 func (c cell) setCrds(row, col int) cell {
 	text := genCrdText(row, col)
-	strA := make([]string, len(c.text))
+	strA := strings.Split(c.text, "")
 
-	// Write string Array
-	for i, char := range c.text {
-		strA[i] = string(char)
-	}
-
-	// Rewrite values
+	// Rewrite values into new array as strings are immutable.
 	for i, char := range strA {
 		if string(char) == "r" {
 			for j, sub := range text {
-				//fmt.Println(i+j, string(sub), strA[i+j])
 				strA[i+j] = string(sub)
 			}
 			break
@@ -87,18 +93,6 @@ func (c cell) setCrds(row, col int) cell {
 
 	c.text = strings.Join(strA, "")
 	return c
-}
-
-func genCrdText(row, col int) string {
-	rStr, cStr := fmt.Sprintf("%d", row), fmt.Sprintf("%d", col)
-	if row < 10 {
-		rStr = fmt.Sprintf("0%d", row)
-	}
-	if col < 10 {
-		cStr = fmt.Sprintf("0%d", col)
-	}
-
-	return fmt.Sprintf("%s,%s", rStr, cStr)
 }
 
 // Return string array of column characters
@@ -129,10 +123,13 @@ type Map [][]string
 
 // NewMap generates a mapscii template so that text can be superimposed on it
 func NewMap(height, width int) Map {
-	cl := newCell(0, 0)
-	h := (height * (cl.height - 1)) + cl.height/2 + 1 // Shared borders reduce total height
-	w := width * (cl.widthMiddle - 2)
-	m := make(Map, h)
+	var (
+		cl    = newCell(0, 0) // Use a cell as a reference
+		wDiff = (cl.widthMiddle - cl.widthTop) / 2
+		w     = (width * (cl.widthMiddle - wDiff)) + wDiff
+		h     = (height * (cl.height - 1)) + cl.height/2 + 1 // Shared borders reduce total height
+		m     = make(Map, h)
+	)
 
 	// Create blank template space
 	for r := 0; r < h; r++ {
@@ -168,7 +165,7 @@ func (m Map) blankCell(row, col, rLabel, cLabel int) Map {
 
 	for cellRow := 0; cellRow < cl.height; cellRow++ {
 		for _, char := range cl.row(cellRow) {
-			if r >= len(m) || c >= len(m[r]) { // Bounds check, motherfucker.
+			if r >= len(m) || c >= len(m[r]) { // Bounds check matrices references
 				return m
 			}
 
@@ -187,8 +184,8 @@ func (m Map) SetTxt(row, col int, lines [4]string, color colourFunc) {
 
 	for r, line := range m {
 		for c := range line {
-			if c+4 < len(line) {
-				crd := strings.Join(m[r][c:c+5], "")
+			if c+len(lines) < len(line) {
+				crd := strings.Join(m[r][c:c+5], "") // TODO: allocate 5 as a variable that is calculated from crdString
 				if coords.MatchString(crd) && crd == genCrdText(row, col) {
 					for i, line := range lines {
 						m.print(r+i+1, c+offset-(len(line)/2), line, color)

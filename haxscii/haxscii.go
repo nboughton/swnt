@@ -42,7 +42,7 @@ func strToMatrix(s string) [][]string {
 }
 
 type cell struct {
-	raw         string
+	text        string
 	widthTop    int
 	widthMiddle int
 	height      int
@@ -50,7 +50,7 @@ type cell struct {
 
 func newCell(row, col int) cell {
 	c := cell{
-		raw: `  \__________/  
+		text: `  \__________/  
   /r         \  
  /            \ 
 /              \
@@ -67,10 +67,10 @@ func newCell(row, col int) cell {
 
 func (c cell) setCrds(row, col int) cell {
 	text := genCrdText(row, col)
-	strA := make([]string, len(c.raw))
+	strA := make([]string, len(c.text))
 
 	// Write string Array
-	for i, char := range c.raw {
+	for i, char := range c.text {
 		strA[i] = string(char)
 	}
 
@@ -85,7 +85,7 @@ func (c cell) setCrds(row, col int) cell {
 		}
 	}
 
-	c.raw = strings.Join(strA, "")
+	c.text = strings.Join(strA, "")
 	return c
 }
 
@@ -108,7 +108,7 @@ func (c cell) col(n int) []string {
 	}
 
 	chars := []string{}
-	for _, row := range strToMatrix(c.raw) {
+	for _, row := range strToMatrix(c.text) {
 		chars = append(chars, row[n])
 	}
 
@@ -121,7 +121,7 @@ func (c cell) row(n int) []string {
 		return []string{}
 	}
 
-	return strToMatrix(c.raw)[n]
+	return strToMatrix(c.text)[n]
 }
 
 // Map represents a 2 dimensional string matrix of the template

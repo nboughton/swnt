@@ -48,19 +48,6 @@ type cell struct {
 	height      int
 }
 
-var tmpl = cell{
-	raw: `  \__________/  
-  /rr,cc     \  
- /            \ 
-/              \
-\              /
- \            / 
-  \__________/  `,
-	height:      7,
-	widthTop:    10,
-	widthMiddle: 16,
-}
-
 func newCell(row, col int) cell {
 	c := cell{
 		raw: `  \__________/  
@@ -94,6 +81,7 @@ func (c cell) setCrds(row, col int) cell {
 				//fmt.Println(i+j, string(sub), strA[i+j])
 				strA[i+j] = string(sub)
 			}
+			break
 		}
 	}
 
@@ -136,13 +124,14 @@ func (c cell) row(n int) []string {
 	return strToMatrix(c.raw)[n]
 }
 
-// Map represents a 2 dimensional string array of the template
+// Map represents a 2 dimensional string matrix of the template
 type Map [][]string
 
 // NewMap generates a mapscii template so that text can be superimposed on it
 func NewMap(height, width int) Map {
-	h := (height * (tmpl.height - 1)) + tmpl.height/2 + 1 // Shared borders reduce total height
-	w := width * (tmpl.widthMiddle - 2)
+	cl := newCell(0, 0)
+	h := (height * (cl.height - 1)) + cl.height/2 + 1 // Shared borders reduce total height
+	w := width * (cl.widthMiddle - 2)
 	m := make(Map, h)
 
 	// Create blank template space
@@ -154,17 +143,17 @@ func NewMap(height, width int) Map {
 	}
 
 	for r := 0; r < height; r++ {
-		row := r * (tmpl.height - 1)
+		row := r * (cl.height - 1)
 
 		for c := 0; c < width; c++ {
-			col := c * (tmpl.widthMiddle - 3)
+			col := c * (cl.widthMiddle - 3)
 			if c%2 != 0 {
-				row = r*(tmpl.height-1) + tmpl.height/2
+				row = r*(cl.height-1) + cl.height/2
 			}
 
 			m.blankCell(row, col, r, c)
 			if c%2 != 0 {
-				row = row - tmpl.height/2
+				row = row - cl.height/2
 			}
 		}
 	}
@@ -172,7 +161,7 @@ func NewMap(height, width int) Map {
 	return m
 }
 
-// blankCell sets writes a blank cell over the map coordinate space listed
+// blankCell writes a blank cell to the Map matrix
 func (m Map) blankCell(row, col, rLabel, cLabel int) Map {
 	r, c := row, col
 	cl := newCell(rLabel, cLabel)

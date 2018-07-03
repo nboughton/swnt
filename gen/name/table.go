@@ -1,6 +1,7 @@
 package name
 
 import (
+	"math/rand"
 	"strings"
 
 	"github.com/nboughton/rollt"
@@ -107,7 +108,7 @@ var con = rollt.List{
 // Generate creates a random name by combining alternating vowels and consonants
 func Generate(ln int) string {
 	name := ""
-	for i := 0; i <= ln; i++ {
+	for i := rand.Intn(2); i <= ln; i++ {
 		if i%2 != 0 {
 			name += con.Roll()
 		} else {

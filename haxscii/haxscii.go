@@ -1,10 +1,8 @@
-// Package haxscii is a simple libary that overlays cell text over a static template
+// Package haxscii is a simple libary that overlays cell text over a generated ascii hex map
 package haxscii
 
 import (
-	//"bytes"
 	"fmt"
-	"regexp"
 	"strconv"
 	"strings"
 
@@ -14,7 +12,6 @@ import (
 type colourFunc func(string, ...interface{}) string
 
 var (
-	coords = regexp.MustCompile(`\d{2},\d{2}`)
 	offset = 5
 )
 
@@ -155,11 +152,13 @@ func (m Map) SetTxt(row, col int, lines [4]string, color colourFunc) {
 	crds := genCrdText(row, col)
 	cLen := len(crds)
 
+	// TODO: This is a performance bottleneck. Find a more efficient way to locate
+	// starting coords for printing to cells
 	for r, line := range m {
 		for c := range line {
 			if c+len(lines) < len(line) {
 				crd := strings.Join(m[r][c:c+cLen], "")
-				if coords.MatchString(crd) && crd == crds {
+				if crd == crds {
 					for i, line := range lines {
 						m.print(r+i+1, c+offset-(len(line)/2), line, color)
 					}

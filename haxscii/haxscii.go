@@ -2,7 +2,7 @@
 package haxscii
 
 import (
-	"bytes"
+	//"bytes"
 	"fmt"
 	"regexp"
 	"strconv"
@@ -42,10 +42,12 @@ func genCrdText(row, col int) string {
 }
 
 type cell struct {
-	text        [][]string
-	widthTop    int
-	widthMiddle int
-	height      int
+	text     [][]string
+	widthTop int
+	widthMid int
+	height   int
+	crdsRow  int // Set the row/col to align the coords to
+	crdsCol  int
 }
 
 /* A cell:
@@ -62,16 +64,18 @@ func newCell(row, col int) *cell {
 	c := &cell{
 		text: [][]string{
 			{" ", " ", `\`, "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "/", " ", " "},
-			{" ", " ", "/", "r", " ", " ", " ", " ", " ", " ", " ", " ", " ", `\`, " ", " "},
+			{" ", " ", "/", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", `\`, " ", " "},
 			{" ", "/", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", `\`, " "},
 			{"/", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", `\`},
 			{`\`, " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", "/"},
 			{" ", `\`, " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", "/", " "},
 			{" ", " ", `\`, "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "/", " ", " "},
 		},
-		height:      7,
-		widthTop:    10,
-		widthMiddle: 16,
+		height:   7,
+		widthTop: 10,
+		widthMid: 16,
+		crdsRow:  1,
+		crdsCol:  3,
 	}
 
 	c.setCrds(row, col)
@@ -79,44 +83,10 @@ func newCell(row, col int) *cell {
 	return c
 }
 
-func (c *cell) setCrds(row, col int) *cell {
-	text := genCrdText(row, col)
-
-	for row := range c.text {
-		for col, char := range c.text[row] {
-			if char == "r" {
-				for j, sub := range text {
-					c.text[row][col+j] = string(sub)
-				}
-				return c
-			}
-		}
+func (c *cell) setCrds(row, col int) {
+	for i, sub := range genCrdText(row, col) {
+		c.text[c.crdsRow][c.crdsCol+i] = string(sub)
 	}
-
-	return c
-}
-
-// Return string array of column characters
-func (c *cell) col(n int) []string {
-	if n < 0 || n >= c.widthMiddle {
-		return []string{}
-	}
-
-	chars := []string{}
-	for _, row := range c.text {
-		chars = append(chars, row[n])
-	}
-
-	return chars
-}
-
-// Return string array of row characters
-func (c *cell) row(n int) []string {
-	if n < 0 || n >= c.height {
-		return []string{}
-	}
-
-	return c.text[n]
 }
 
 // Map represents a 2 dimensional string matrix of the template
@@ -126,8 +96,8 @@ type Map [][]string
 func NewMap(height, width int) Map {
 	var (
 		cl    = newCell(0, 0) // Use a cell as a reference
-		wDiff = (cl.widthMiddle - cl.widthTop) / 2
-		w     = (width * (cl.widthMiddle - wDiff)) + wDiff
+		wDiff = (cl.widthMid - cl.widthTop) / 2
+		w     = (width * (cl.widthMid - wDiff)) + wDiff
 		h     = (height * (cl.height - 1)) + cl.height/2 + 1 // Shared borders reduce total height
 		m     = make(Map, h)
 	)
@@ -144,12 +114,12 @@ func NewMap(height, width int) Map {
 		row := r * (cl.height - 1)
 
 		for c := 0; c < width; c++ {
-			col := c * (cl.widthMiddle - 3)
+			col := c * (cl.widthMid - 3)
 			if c%2 != 0 {
 				row = r*(cl.height-1) + cl.height/2
 			}
 
-			m.blankCell(row, col, r, c)
+			m.emptyCell(row, col, r, c)
 			if c%2 != 0 {
 				row = row - cl.height/2
 			}
@@ -159,13 +129,13 @@ func NewMap(height, width int) Map {
 	return m
 }
 
-// blankCell writes a blank cell to the Map matrix
-func (m Map) blankCell(row, col, rLabel, cLabel int) Map {
+// emptyCell writes a blank cell to the Map matrix
+func (m Map) emptyCell(row, col, rLabel, cLabel int) Map {
 	r, c := row, col
 	cl := newCell(rLabel, cLabel)
 
 	for cellRow := 0; cellRow < cl.height; cellRow++ {
-		for _, char := range cl.row(cellRow) {
+		for _, char := range cl.text[cellRow] {
 			if r >= len(m) || c >= len(m[r]) { // Bounds check matrices references
 				return m
 			}
@@ -214,13 +184,13 @@ func (m Map) print(startRow, startCol int, text string, colour colourFunc) {
 }
 
 func (m Map) String() string {
-	b := new(bytes.Buffer)
+	s := ""
 
 	for _, line := range m {
-		fmt.Fprintf(b, "%s\n", strings.Join(line, ""))
+		s += strings.Join(line, "") + "\n"
 	}
 
-	return b.String()
+	return s
 }
 
 // Colour toggles the colour output on/off (true/false)

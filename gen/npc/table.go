@@ -1,6 +1,7 @@
 package npc
 
 import (
+	"github.com/nboughton/num"
 	"github.com/nboughton/rollt"
 	"github.com/nboughton/swnt/gen/table"
 )
@@ -10,11 +11,11 @@ var Reaction = rollt.Table{
 	Name: "Reaction Roll Results",
 	Dice: "2d6",
 	Items: []rollt.Item{
-		{Match: []int{2}, Text: "Hostile, reacting negatively as is plausible"},
-		{Match: []int{3, 4, 5}, Text: "Negative, unfriendly and unhelpful"},
-		{Match: []int{6, 7, 8}, Text: "Neutral, reacting predictably or warily"},
-		{Match: []int{9, 10, 11}, Text: "Positive, potentially cooperative with PCs"},
-		{Match: []int{12}, Text: "Friendly, helpful as is plausible to be"},
+		{Match: num.Set{2}, Text: "Hostile, reacting negatively as is plausible"},
+		{Match: num.Set{3, 4, 5}, Text: "Negative, unfriendly and unhelpful"},
+		{Match: num.Set{6, 7, 8}, Text: "Neutral, reacting predictably or warily"},
+		{Match: num.Set{9, 10, 11}, Text: "Positive, potentially cooperative with PCs"},
+		{Match: num.Set{12}, Text: "Friendly, helpful as is plausible to be"},
 	},
 }
 

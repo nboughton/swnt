@@ -40,6 +40,7 @@ All commands can be queried for their available options with the -h flag. For ex
       corporation Generate a Corporation
       culture     Generate a Culture
       encounter   Generate a quick encounter
+      heresy      Generate a Heresy
       npc         Generate a NPC
       place       Generate a place
       poi         Generate a Point of Interest

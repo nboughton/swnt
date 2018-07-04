@@ -149,22 +149,18 @@ func (m Map) emptyCell(row, col, rLabel, cLabel int) Map {
 
 // SetTxt sets the text of a given hex
 func (m Map) SetTxt(row, col int, lines [4]string, color colourFunc) {
-	crds := genCrdText(row, col)
-	cLen := len(crds)
+	cl := newCell(0, 0)
 
-	// TODO: This is a performance bottleneck. Find a more efficient way to locate
-	// starting coords for printing to cells
-	for r, line := range m {
-		for c := range line {
-			if c+len(lines) < len(line) {
-				crd := strings.Join(m[r][c:c+cLen], "")
-				if crd == crds {
-					for i, line := range lines {
-						m.print(r+i+1, c+offset-(len(line)/2), line, color)
-					}
-				}
-			}
-		}
+	// Define row and column based on the same calculations used to place blank
+	// cells
+	r := row*(cl.height-1) + cl.crdsRow
+	if col%2 != 0 {
+		r += cl.height / 2
+	}
+
+	c := col*(cl.widthMid-3) + cl.crdsCol
+	for i, line := range lines {
+		m.print(r+i+1, c+offset-(len(line)/2), line, color)
 	}
 }
 

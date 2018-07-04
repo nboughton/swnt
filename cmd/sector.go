@@ -65,8 +65,8 @@ var sectorCmd = &cobra.Command{
 			secWidth, _         = cmd.Flags().GetInt(flSecWidth)
 		)
 
-		if secHeight > 99 || secWidth > 99 {
-			fmt.Println("Sectors larger than 99 hexes in either direction are not currently supported")
+		if secHeight < 2 || secHeight > 99 || secWidth < 2 || secWidth > 99 {
+			fmt.Println("Sectors larger than 99, or smaller than 2, hexes in either direction are not supported")
 			return
 		}
 

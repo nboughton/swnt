@@ -136,7 +136,7 @@ func (s *Stars) systemName() string {
 			return n
 		}
 
-		n = name.Generate(rand.Intn(6) + 3)
+		n = name.Generate(rand.Intn(4) + 3)
 	}
 }
 

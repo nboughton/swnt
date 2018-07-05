@@ -84,8 +84,8 @@ var SocialStructure = rollt.Table{
 		{Match: []int{2}, Text: "Monarchic"},
 		{Match: []int{3}, Text: "Tribal"},
 		{Match: []int{4}, Text: "Oligarchic"},
-		{Match: []int{5, 6}, Text: "Multipolar Competitive", Action: actionSocialStructure}, // TODO: Roll to expand
-		{Match: []int{7, 8}, Text: "Multipolar Cooperative", Action: actionSocialStructure}, // TODO: Roll to expand
+		{Match: []int{5, 6}, Text: "Multipolar Competitive", Action: actionSocialStructure},
+		{Match: []int{7, 8}, Text: "Multipolar Cooperative", Action: actionSocialStructure},
 	},
 }
 

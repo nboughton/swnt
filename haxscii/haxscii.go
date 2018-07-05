@@ -149,16 +149,19 @@ func (m Map) emptyCell(row, col, rLabel, cLabel int) Map {
 
 // SetTxt sets the text of a given hex
 func (m Map) SetTxt(row, col int, lines [4]string, color colourFunc) {
-	cl := newCell(0, 0)
-
 	// Define row and column based on the same calculations used to place blank
 	// cells
+	var (
+		cl    = newCell(0, 0)
+		wDiff = (cl.widthMid - cl.widthTop) / 2
+	)
+
 	r := row*(cl.height-1) + cl.crdsRow
 	if col%2 != 0 {
 		r += cl.height / 2
 	}
 
-	c := col*(cl.widthMid-3) + cl.crdsCol
+	c := col*(cl.widthMid-wDiff) + cl.crdsCol
 	for i, line := range lines {
 		m.print(r+i+1, c+offset-(len(line)/2), line, color)
 	}

@@ -21,7 +21,7 @@ var Evolution = rollt.List{
 
 // OriginTradition SWN Revised Free Edition p193
 var OriginTradition = rollt.List{
-	Name: "Evolution",
+	Name: "Origin",
 	Items: []string{
 		"Paganism",
 		"Roman Catholicism",

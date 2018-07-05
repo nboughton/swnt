@@ -2,9 +2,7 @@ package table
 
 import (
 	"bytes"
-	//"encoding/json"
 	"fmt"
-	//"io/ioutil"
 	"math/rand"
 	"time"
 
@@ -13,14 +11,6 @@ import (
 
 func init() {
 	rand.Seed(time.Now().UnixNano())
-}
-
-// Table interface is used to define all tables that can be rolled or printed.
-// Currently unused but might be useful at a later date.
-type Table interface {
-	Label() string
-	Roll() string
-	String() string
 }
 
 // ThreePart represents a relatively common structure for multi-layer tables in
@@ -56,8 +46,8 @@ func (t ThreePart) String() string {
 // ThreePartSubTable represent the subtables of a ThreePart
 type ThreePartSubTable struct {
 	Name      string
-	SubTable1 rollt.List
-	SubTable2 rollt.List
+	SubTable1 rollt.Able
+	SubTable2 rollt.Able
 }
 
 // String satisfies the Stringer interface for threePartSubTables
@@ -67,12 +57,12 @@ func (t ThreePartSubTable) String() string {
 
 // OneRoll represents the oft used one-roll systems spread throughout SWN
 type OneRoll struct {
-	D4  Table
-	D6  Table
-	D8  Table
-	D10 Table
-	D12 Table
-	D20 Table
+	D4  rollt.Able
+	D6  rollt.Able
+	D8  rollt.Able
+	D10 rollt.Able
+	D12 rollt.Able
+	D20 rollt.Able
 }
 
 // Roll performs all rolls for a OneRoll and returns the results

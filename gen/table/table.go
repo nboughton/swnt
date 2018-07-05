@@ -18,6 +18,7 @@ func init() {
 // Table interface is used to define all tables that can be rolled or printed.
 // Currently unused but might be useful at a later date.
 type Table interface {
+	Label() string
 	Roll() string
 	String() string
 }
@@ -66,12 +67,12 @@ func (t ThreePartSubTable) String() string {
 
 // OneRoll represents the oft used one-roll systems spread throughout SWN
 type OneRoll struct {
-	D4  rollt.List
-	D6  rollt.List
-	D8  rollt.List
-	D10 rollt.List
-	D12 rollt.List
-	D20 rollt.List
+	D4  Table
+	D6  Table
+	D8  Table
+	D10 Table
+	D12 Table
+	D20 Table
 }
 
 // Roll performs all rolls for a OneRoll and returns the results
@@ -80,12 +81,12 @@ func (o OneRoll) Roll() string {
 		buf = new(bytes.Buffer)
 	)
 
-	fmt.Fprintf(buf, "%s\t:\t%s\n", o.D4.Name, o.D4.Roll())
-	fmt.Fprintf(buf, "%s\t:\t%s\n", o.D6.Name, o.D6.Roll())
-	fmt.Fprintf(buf, "%s\t:\t%s\n", o.D8.Name, o.D8.Roll())
-	fmt.Fprintf(buf, "%s\t:\t%s\n", o.D10.Name, o.D10.Roll())
-	fmt.Fprintf(buf, "%s\t:\t%s\n", o.D12.Name, o.D12.Roll())
-	fmt.Fprintf(buf, "%s\t:\t%s\n", o.D20.Name, o.D20.Roll())
+	fmt.Fprintf(buf, "%s\t:\t%s\n", o.D4.Label(), o.D4.Roll())
+	fmt.Fprintf(buf, "%s\t:\t%s\n", o.D6.Label(), o.D6.Roll())
+	fmt.Fprintf(buf, "%s\t:\t%s\n", o.D8.Label(), o.D8.Roll())
+	fmt.Fprintf(buf, "%s\t:\t%s\n", o.D10.Label(), o.D10.Roll())
+	fmt.Fprintf(buf, "%s\t:\t%s\n", o.D12.Label(), o.D12.Roll())
+	fmt.Fprintf(buf, "%s\t:\t%s\n", o.D20.Label(), o.D20.Roll())
 
 	return buf.String()
 }

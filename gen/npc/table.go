@@ -285,15 +285,20 @@ var NPCTable = table.OneRoll{
 			"Middle-aged or elderly",
 		},
 	},
-	D6: rollt.List{
+	D6: rollt.Table{
 		Name: "Background",
-		Items: []string{
-			"The local underclass or poorest natives",
-			"Common laborers or cube workers",
-			"Aspiring bourgeoise or upper class",
-			"The elite of this society",
-			"Minority or foreigners; reroll on 1d4",
-			"Offworlders or exotics; reroll on 1d4",
+		Dice: "1d6",
+		Items: []rollt.Item{
+			{Match: []int{1}, Text: "The local underclass or poorest natives"},
+			{Match: []int{2}, Text: "Common laborers or cube workers"},
+			{Match: []int{3}, Text: "Aspiring bourgeoise or upper class"},
+			{Match: []int{4}, Text: "The elite of this society"},
+			{Match: []int{5}, Text: "Minority or foreigners"},
+			{Match: []int{6}, Text: "Offworlders or exotics"},
+		},
+		Reroll: rollt.Reroll{
+			Dice:  "1d4",
+			Match: []int{5, 6},
 		},
 	},
 	D8: rollt.List{

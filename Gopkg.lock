@@ -34,8 +34,8 @@
 [[projects]]
   name = "github.com/nboughton/rollt"
   packages = ["."]
-  revision = "61392aeff99afcb582d829a84f5cf88aefb710c9"
-  version = "v0.0.2"
+  revision = "501cb62822b7925a6c6d633f2d560742794067e6"
+  version = "v0.1.1"
 
 [[projects]]
   name = "github.com/spf13/cobra"
@@ -53,11 +53,11 @@
   branch = "master"
   name = "golang.org/x/sys"
   packages = ["unix"]
-  revision = "7138fd3d9dc8335c567ca206f4333fb75eb05d56"
+  revision = "151529c776cdc58ddbe7963ba9af779f3577b419"
 
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "8e0ba5642483c435e09e54de1142104a30bfcec2ae01c63da984f0273ba9768c"
+  inputs-digest = "09d1fd2545b47d66d79ffd88981df5b789d030d1fcb0e6968280fe156f4ad408"
   solver-name = "gps-cdcl"
   solver-version = 1

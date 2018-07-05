@@ -21,20 +21,20 @@ type Corporation struct {
 
 // New Corporation with random characteristics
 func New() Corporation {
-	corporation := Corporation{
+	c := Corporation{
 		Name:               Name.Roll(),
 		Organization:       Organization.Roll(),
 		Business:           Business.Roll(),
 		ReputationAndRumor: ReputationAndRumor.Roll(),
 	}
-	return corporation
+	return c
 }
 
-func (corporation Corporation) String() string {
+func (c Corporation) String() string {
 	buf := new(bytes.Buffer)
 
-	fmt.Fprintf(buf, "%s\t:\t%s %s\n", Name.Name, corporation.Name, corporation.Organization)
-	fmt.Fprintf(buf, "%s\t:\t%s\n", Business.Name, corporation.Business)
-	fmt.Fprintf(buf, "%s\t:\t%s", ReputationAndRumor.Name, corporation.ReputationAndRumor)
+	fmt.Fprintf(buf, "%s\t:\t%s %s\n", Name.Name, c.Name, c.Organization)
+	fmt.Fprintf(buf, "%s\t:\t%s\n", Business.Name, c.Business)
+	fmt.Fprintf(buf, "%s\t:\t%s", ReputationAndRumor.Name, c.ReputationAndRumor)
 	return buf.String()
 }

@@ -20,19 +20,19 @@ type Alien struct {
 
 // New Alien with random characteristics
 func New() Alien {
-	alien := Alien{
+	a := Alien{
 		Body:            Body.Roll(),
 		Lense:           Lense.Roll(),
 		SocialStructure: SocialStructure.Roll(),
 	}
-	return alien
+	return a
 }
 
-func (alien Alien) String() string {
+func (a Alien) String() string {
 	buf := new(bytes.Buffer)
 
-	fmt.Fprintf(buf, "%s\t:\t%s\n", Body.Name, alien.Body)
-	fmt.Fprintf(buf, "%s\t:\t%s\n", Lense.Name, alien.Lense)
-	fmt.Fprintf(buf, "%s\t:\t%s\n", SocialStructure.Name, alien.SocialStructure)
+	fmt.Fprintf(buf, "%s\t:\t%s\n", Body.Name, a.Body)
+	fmt.Fprintf(buf, "%s\t:\t%s\n", Lense.Name, a.Lense)
+	fmt.Fprintf(buf, "%s\t:\t%s\n", SocialStructure.Name, a.SocialStructure)
 	return buf.String()
 }

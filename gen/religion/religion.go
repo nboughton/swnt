@@ -20,19 +20,20 @@ type Religion struct {
 
 // New Religion with random characteristics
 func New() Religion {
-	religion := Religion{
+	r := Religion{
 		Evolution:       Evolution.Roll(),
 		Leadership:      Leadership.Roll(),
 		OriginTradition: OriginTradition.Roll(),
 	}
-	return religion
+	return r
 }
 
-func (religion Religion) String() string {
+func (r Religion) String() string {
 	buf := new(bytes.Buffer)
 
-	fmt.Fprintf(buf, "%s\t:\t%s\n", Evolution.Name, religion.Evolution)
-	fmt.Fprintf(buf, "%s\t:\t%s\n", Leadership.Name, religion.Leadership)
-	fmt.Fprintf(buf, "%s\t:\t%s", OriginTradition.Name, religion.OriginTradition)
+	fmt.Fprintf(buf, "%s\t:\t%s", OriginTradition.Name, r.OriginTradition)
+	fmt.Fprintf(buf, "%s\t:\t%s\n", Evolution.Name, r.Evolution)
+	fmt.Fprintf(buf, "%s\t:\t%s\n", Leadership.Name, r.Leadership)
+
 	return buf.String()
 }

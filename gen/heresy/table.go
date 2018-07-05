@@ -21,7 +21,7 @@ var Founder = rollt.List{
 
 // MajorHeresy SWN Revised Free Edition p194
 var MajorHeresy = rollt.List{
-	Name: "MajorHeresy",
+	Name: "Major Heresy",
 	Items: []string{
 		"Manichaeanism: the sect believes in harsh austerities and rejection of matter as something profane and evil",
 		"Donatism: the sect believes that clergy must be personally pure and holy in order to be legitimate",

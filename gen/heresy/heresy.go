@@ -21,21 +21,21 @@ type Heresy struct {
 
 // New Heresy with random characteristics
 func New() Heresy {
-	heresy := Heresy{
+	h := Heresy{
 		Founder:     Founder.Roll(),
 		MajorHeresy: MajorHeresy.Roll(),
 		Attitude:    Attitude.Roll(),
 		Quirk:       Quirk.Roll(),
 	}
-	return heresy
+	return h
 }
 
-func (heresy Heresy) String() string {
+func (h Heresy) String() string {
 	buf := new(bytes.Buffer)
 
-	fmt.Fprintf(buf, "%s\t:\t%s\n", Founder.Name, heresy.Founder)
-	fmt.Fprintf(buf, "%s\t:\t%s\n", MajorHeresy.Name, heresy.MajorHeresy)
-	fmt.Fprintf(buf, "%s\t:\t%s\n", Attitude.Name, heresy.Attitude)
-	fmt.Fprintf(buf, "%s\t:\t%s", Quirk.Name, heresy.Quirk)
+	fmt.Fprintf(buf, "%s\t:\t%s\n", Founder.Name, h.Founder)
+	fmt.Fprintf(buf, "%s\t:\t%s\n", MajorHeresy.Name, h.MajorHeresy)
+	fmt.Fprintf(buf, "%s\t:\t%s\n", Attitude.Name, h.Attitude)
+	fmt.Fprintf(buf, "%s\t:\t%s", Quirk.Name, h.Quirk)
 	return buf.String()
 }

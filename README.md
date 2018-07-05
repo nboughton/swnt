@@ -36,6 +36,7 @@ All commands can be queried for their available options with the -h flag. For ex
     Available Commands:
       adventure   Generate an Adventure
       alien       Generate an Alien
+      beast       Generate a Beast
       conflict    Generate a Conflict
       corporation Generate a Corporation
       culture     Generate a Culture

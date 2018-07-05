@@ -1,6 +1,7 @@
 package beast
 
 import (
+	"fmt"
 	"strings"
 
 	"github.com/nboughton/rollt"
@@ -114,8 +115,15 @@ var MainWeapon = rollt.Table{
 	Items: []rollt.Item{
 		{Match: []int{1}, Text: "Teeth or mandibles"},
 		{Match: []int{2}, Text: "Claws"},
-		{Match: []int{3}, Text: "Poison"},
-		{Match: []int{4}, Text: "Harmful discharge"},
+		{Match: []int{3}, Text: "Poison", Action: func() string {
+			return fmt.Sprintf("\n\tEffect:\t%s\n\tOnset:\t%s\n\tDuration:\t%s",
+				Poison.Effect.Roll(),
+				Poison.Onset.Roll(),
+				Poison.Duration.Roll())
+		}},
+		{Match: []int{4}, Text: "Harmful discharge", Action: func() string {
+			return HarmfulDischarges.Roll()
+		}},
 		{Match: []int{5}, Text: "Pincers"},
 		{Match: []int{6}, Text: "Horns"},
 	},

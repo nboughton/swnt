@@ -3,15 +3,9 @@ package religion
 import (
 	"bytes"
 	"fmt"
-	"math/rand"
-	"time"
 )
 
-func init() {
-	rand.Seed(time.Now().UnixNano())
-}
-
-// Religion
+// Religion is pretty self explanatory
 type Religion struct {
 	Evolution       string
 	Leadership      string

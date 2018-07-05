@@ -68,7 +68,7 @@ var Organization = rollt.List{
 	},
 }
 
-// Organization SWN Revised Free Edition p192
+// Business SWN Revised Free Edition p192
 var Business = rollt.List{
 	Name: "Business",
 	Items: []string{

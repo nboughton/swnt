@@ -3,13 +3,7 @@ package alien
 import (
 	"bytes"
 	"fmt"
-	"math/rand"
-	"time"
 )
-
-func init() {
-	rand.Seed(time.Now().UnixNano())
-}
 
 // Alien with a Body
 type Alien struct {

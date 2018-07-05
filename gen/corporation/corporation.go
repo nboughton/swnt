@@ -3,13 +3,7 @@ package corporation
 import (
 	"bytes"
 	"fmt"
-	"math/rand"
-	"time"
 )
-
-func init() {
-	rand.Seed(time.Now().UnixNano())
-}
 
 // Corporation with a Body
 type Corporation struct {

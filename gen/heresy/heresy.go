@@ -3,13 +3,7 @@ package heresy
 import (
 	"bytes"
 	"fmt"
-	"math/rand"
-	"time"
 )
-
-func init() {
-	rand.Seed(time.Now().UnixNano())
-}
 
 // Heresy with a Body
 type Heresy struct {
@@ -37,5 +31,6 @@ func (h Heresy) String() string {
 	fmt.Fprintf(buf, "%s\t:\t%s\n", MajorHeresy.Name, h.MajorHeresy)
 	fmt.Fprintf(buf, "%s\t:\t%s\n", Attitude.Name, h.Attitude)
 	fmt.Fprintf(buf, "%s\t:\t%s", Quirk.Name, h.Quirk)
+
 	return buf.String()
 }

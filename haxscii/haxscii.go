@@ -128,8 +128,7 @@ func NewMap(height, width int) Map {
 
 // emptyCell writes a blank cell to the Map matrix
 func (m Map) emptyCell(row, col, rLabel, cLabel int) Map {
-	r, c := row, col
-	cl := newCell(rLabel, cLabel)
+	r, c, cl := row, col, newCell(rLabel, cLabel)
 
 	for cellRow := 0; cellRow < cl.height; cellRow++ {
 		for _, char := range cl.text[cellRow] {
@@ -154,14 +153,14 @@ func (m Map) SetTxt(row, col int, lines [4]string, color colourFunc) {
 	var (
 		cl    = newCell(0, 0)
 		wDiff = (cl.widthMid - cl.widthTop) / 2
+		r     = row*(cl.height-1) + cl.crdsRow
+		c     = col*(cl.widthMid-wDiff) + cl.crdsCol
 	)
 
-	r := row*(cl.height-1) + cl.crdsRow
 	if col%2 != 0 {
 		r += cl.height / 2
 	}
 
-	c := col*(cl.widthMid-wDiff) + cl.crdsCol
 	for i, line := range lines {
 		m.print(r+i+1, c+offset-(len(line)/2), line, color)
 	}

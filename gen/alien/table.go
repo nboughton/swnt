@@ -1,12 +1,25 @@
 package alien
 
 import (
+	"math/rand"
+	"strings"
+	"time"
+
 	"github.com/nboughton/rollt"
 )
+
+var reg = rollt.NewRegistry()
+
+func init() {
+	rand.Seed(time.Now().UnixNano())
+	reg.Add(Body)
+	reg.Add(SocialStructure)
+}
 
 // Body SWN Revised Free Edition p203
 var Body = rollt.Table{
 	Name: "Body",
+	ID:   "alien.Body",
 	Dice: "1d6",
 	Items: []rollt.Item{
 		{Match: []int{1}, Text: "Avian, bat-like, pterodactylian"},
@@ -14,7 +27,22 @@ var Body = rollt.Table{
 		{Match: []int{3}, Text: "Insectile, beetle-like, spiderish, wasp-like"},
 		{Match: []int{4}, Text: "Mammalian, furred or bare-skinned"},
 		{Match: []int{5}, Text: "Exotic, composed of some novel substance"},
-		{Match: []int{6}, Text: "Hybrid of two or more types"},
+		{Match: []int{6}, Text: "Hybrid of two or more types", Action: func() string {
+			tbl, _ := reg.Get("alien.Body")
+			tbl.Dice = "1d5"
+
+			types, res := 2+rand.Intn(4), make(map[string]bool)
+			for len(res) < types {
+				res[tbl.Roll()] = true
+			}
+
+			text := []string{}
+			for k := range res {
+				text = append(text, k)
+			}
+
+			return "\n\t\t" + strings.Join(text, "\n\t\t")
+		}},
 	},
 }
 
@@ -49,13 +77,31 @@ var Lense = rollt.Table{
 // SocialStructure from SWN Revised Free Edition p207
 var SocialStructure = rollt.Table{
 	Name: "Social Structure",
+	ID:   "alien.SocialStructure",
 	Dice: "1d8",
 	Items: []rollt.Item{
 		{Match: []int{1}, Text: "Democratic"},
 		{Match: []int{2}, Text: "Monarchic"},
 		{Match: []int{3}, Text: "Tribal"},
 		{Match: []int{4}, Text: "Oligarchic"},
-		{Match: []int{5, 6}, Text: "Multipolar Competitive"}, // TODO: Roll to expand
-		{Match: []int{7, 8}, Text: "Multipolar Cooperative"}, // TODO: Roll to expand
+		{Match: []int{5, 6}, Text: "Multipolar Competitive", Action: actionSocialStructure}, // TODO: Roll to expand
+		{Match: []int{7, 8}, Text: "Multipolar Cooperative", Action: actionSocialStructure}, // TODO: Roll to expand
 	},
+}
+
+func actionSocialStructure() string {
+	tbl, _ := reg.Get("alien.SocialStructure")
+	tbl.Dice = "1d4"
+
+	types, res := 2+rand.Intn(3), make(map[string]bool)
+	for len(res) < types {
+		res[tbl.Roll()] = true
+	}
+
+	text := []string{}
+	for k := range res {
+		text = append(text, k)
+	}
+
+	return strings.Join(text, ", ")
 }

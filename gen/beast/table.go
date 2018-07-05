@@ -15,7 +15,7 @@ func init() {
 // BasicAnimalFeatures is pretty fucking self-explanatory
 var BasicAnimalFeatures = rollt.Table{
 	Name: "Basic Animal Features",
-	ID:   "Beast-1.1",
+	ID:   "beast.BasicAnimalFeatures",
 	Dice: "1d10",
 	Items: []rollt.Item{
 		{Match: []int{1}, Text: "Amphibian, froggish or newtlike"},
@@ -27,7 +27,7 @@ var BasicAnimalFeatures = rollt.Table{
 		{Match: []int{7}, Text: "Spider, many-legged and fat"},
 		{Match: []int{8}, Text: "Exotic, made of wholly alien elements"},
 		{Match: []int{9, 10}, Text: "Mixed", Action: func() string {
-			tbl, _ := reg.Get("Beast-1.1")
+			tbl, _ := reg.Get("beast.BasicAnimalFeatures")
 			tbl.Dice = "1d8"
 
 			res := make(map[string]bool)

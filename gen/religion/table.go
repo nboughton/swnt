@@ -1,8 +1,18 @@
 package religion
 
 import (
+	"math/rand"
+	"time"
+
 	"github.com/nboughton/rollt"
 )
+
+var reg = rollt.NewRegistry()
+
+func init() {
+	rand.Seed(time.Now().UnixNano())
+	reg.Add(Leadership)
+}
 
 // Evolution SWN Revised Free Edition p193
 var Evolution = rollt.List{
@@ -41,11 +51,21 @@ var OriginTradition = rollt.List{
 // Leadership SWN Revised Free Edition p193
 var Leadership = rollt.Table{
 	Name: "Leadership",
+	ID:   "religion.Leadership",
 	Dice: "1d6",
 	Items: []rollt.Item{
 		{Match: []int{1, 2}, Text: "Patriarch/Matriarch. A single leader determines doctrine for the entire religion, possibly in consultation with other clerics."},
 		{Match: []int{3, 4}, Text: "Council. A group of the oldest and most revered clergy determine the course of the faith."},
 		{Match: []int{5}, Text: "Democracy. Every member has an equal voice in matters of faith, with doctrine usually decided at regular church- wide councils."},
-		{Match: []int{6}, Text: "No universal leadership. Roll again to determine how each region governs itself. If another 6 is rolled, this faith has no hierarchy."},
+		{Match: []int{6}, Text: "No universal leadership", Action: func() string {
+			tbl, _ := reg.Get("religion.Leadership")
+			tbl.Dice = "1d5"
+
+			if rand.Intn(6)+1 == 6 {
+				return ""
+			}
+
+			return "Each region governed independently by a " + tbl.Roll()
+		}},
 	},
 }

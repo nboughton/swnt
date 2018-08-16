@@ -150,3 +150,10 @@ func (w World) String() string {
 
 	return buf.String()
 }
+
+// Markdown returns world as a Markdown table
+func (w World) Markdown() string {
+	var buf = new(bytes.Buffer)
+
+	return buf.String()
+}

@@ -56,7 +56,6 @@ var sectorCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		// get flags
 		var (
-			colour, _           = cmd.Flags().GetBool(flColour)
 			excludeTags, _      = cmd.Flags().GetStringArray(flExclude)
 			poiChance, _        = cmd.Flags().GetInt(flPoi)
 			otherWorldChance, _ = cmd.Flags().GetInt(flOW)
@@ -76,7 +75,7 @@ var sectorCmd = &cobra.Command{
 		)
 
 		fmt.Println(secName)
-		fmt.Println(export.Hexmap(secData, colour, false))
+		fmt.Println(export.Hexmap(secData, true, false))
 
 		ans := "r"
 		for {
@@ -110,7 +109,7 @@ var sectorCmd = &cobra.Command{
 					secData = sector.NewSector(secHeight, secWidth, excludeTags, poiChance, otherWorldChance)
 					secName = genSectorName()
 					fmt.Println(secName)
-					fmt.Println(export.Hexmap(secData, colour, false))
+					fmt.Println(export.Hexmap(secData, true, false))
 				}
 			}
 		}
@@ -130,11 +129,10 @@ func genSectorName() string {
 
 func init() {
 	newCmd.AddCommand(sectorCmd)
-	sectorCmd.Flags().BoolP(flColour, "l", false, "Toggle colour output")
 	sectorCmd.Flags().StringArrayP(flExclude, "x", []string{}, "Exclude tags (-x zombies -x \"regional hegemon\" etc)")
 	sectorCmd.Flags().IntP(flPoi, "p", 30, "Set % chance of a POI being generated for any given star in the sector")
 	sectorCmd.Flags().IntP(flOW, "o", 10, "Set % chance for a secondary world to be generated for any given star in the sector")
 	sectorCmd.Flags().IntP(flSecHeight, "e", 10, "Set height of sector in hexes")
 	sectorCmd.Flags().IntP(flSecWidth, "w", 8, "Set width of sector in hexes")
-	sectorCmd.Flags().String(flExport, "text", "Set export formats. (--export text,hugo,json) format types must be comma separated without spaces")
+	sectorCmd.Flags().String(flExport, "text", "Set export formats. (--export text,hugo,json) format types must be comma separated without spaces. The Hugo export is still under development.")
 }

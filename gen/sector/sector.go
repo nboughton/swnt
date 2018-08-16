@@ -85,14 +85,21 @@ func (s *Star) String() string {
 
 // Markdown returns the contents of a Star formatted as Markdown
 func (s *Star) Markdown() string {
-	var (
-		buf = new(bytes.Buffer)
-	)
+	var buf = new(bytes.Buffer)
 
-	fmt.Fprintf(buf, "# %s\n", s.Name)
-	fmt.Fprintf(buf, "\n")
-	fmt.Fprintf(buf, "| Overview |    |\n| --- | --- |\n")
-	fmt.Fprintf(buf, "| Coords | %d,%d |", s.Row, s.Col)
+	fmt.Fprintf(buf, "## Coords:  %d,%d\n\n", s.Row, s.Col)
+	fmt.Fprintf(buf, "### Primary World\n\n")
+	fmt.Fprintf(buf, s.Worlds[0].Markdown())
+
+	for i, w := range s.Worlds[1:] {
+		fmt.Fprintf(buf, "### World %d\n\n", i+2)
+		fmt.Fprintf(buf, w.Markdown())
+	}
+
+	for _, p := range s.POIs {
+		fmt.Fprintf(buf, "### Point of Interest\n\n")
+		fmt.Fprintf(buf, p.Markdown())
+	}
 
 	return buf.String()
 }

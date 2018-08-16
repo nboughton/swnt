@@ -155,5 +155,22 @@ func (w World) String() string {
 func (w World) Markdown() string {
 	var buf = new(bytes.Buffer)
 
+	fmt.Fprintf(buf, "| %s | |\n| --- | --- |\n", w.Name)
+	fmt.Fprintf(buf, "| Atmosphere | %s |\n", w.Atmosphere)
+	fmt.Fprintf(buf, "| Temperature | %s |\n", w.Temperature)
+	fmt.Fprintf(buf, "| Biosphere | %s |\n", w.Biosphere)
+	fmt.Fprintf(buf, "| Population | %s |\n", w.Population)
+	fmt.Fprintf(buf, "| Culture | %s |\n", w.Culture)
+	fmt.Fprintf(buf, "| Tech Level | %s |\n", w.TechLevel)
+	fmt.Fprintf(buf, "| **Tags** | |\n")
+	fmt.Fprintf(buf, "| %s | %s |\n", w.Tags[0].Name, w.Tags[0].Desc)
+	fmt.Fprintf(buf, "| %s | %s |\n", w.Tags[1].Name, w.Tags[1].Desc)
+
+	if !w.Primary {
+		fmt.Fprintf(buf, "| %s | %s |\n", Other.Origin.Name, w.Origin)
+		fmt.Fprintf(buf, "| %s | %s |\n", Other.Relationship.Name, w.Relationship)
+		fmt.Fprintf(buf, "| %s | %s |\n", Other.Contact.Name, w.Contact)
+	}
+
 	return buf.String()
 }

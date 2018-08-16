@@ -38,3 +38,14 @@ func (p POI) String() string {
 
 	return buf.String()
 }
+
+// Markdown returns the POI as a Markdown table
+func (p POI) Markdown() string {
+	buf := new(bytes.Buffer)
+
+	fmt.Fprintf(buf, "| %s | |\n| --- | --- |\n", p.Point)
+	fmt.Fprintf(buf, "| %s | %s |\n", Table.Headers[1], p.Occupied)
+	fmt.Fprintf(buf, "| %s | %s |\n", Table.Headers[2], p.Situation)
+
+	return buf.String()
+}

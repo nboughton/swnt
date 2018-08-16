@@ -83,6 +83,20 @@ func (s *Star) String() string {
 	return buf.String()
 }
 
+// Markdown returns the contents of a Star formatted as Markdown
+func (s *Star) Markdown() string {
+	var (
+		buf = new(bytes.Buffer)
+	)
+
+	fmt.Fprintf(buf, "# %s\n", s.Name)
+	fmt.Fprintf(buf, "\n")
+	fmt.Fprintf(buf, "| Overview |    |\n| --- | --- |\n")
+	fmt.Fprintf(buf, "| Coords | %d,%d |", s.Row, s.Col)
+
+	return buf.String()
+}
+
 // Stars represents the generated collection of Stars that will be used to populate a hex grid
 type Stars struct {
 	Rows, Cols int

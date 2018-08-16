@@ -22,16 +22,14 @@ package cmd
 
 import (
 	"fmt"
-	"io/ioutil"
 	"log"
 	"os"
-	"path/filepath"
 	"regexp"
 	"strings"
 
+	"github.com/nboughton/swnt/export"
 	"github.com/nboughton/swnt/gen/name"
 	"github.com/nboughton/swnt/gen/sector"
-	"github.com/nboughton/swnt/haxscii"
 	"github.com/spf13/cobra"
 )
 
@@ -41,6 +39,7 @@ const (
 	flOW        = "other-worlds-chance"
 	flSecHeight = "sector-height"
 	flSecWidth  = "sector-width"
+	flExport    = "export"
 )
 
 var (
@@ -63,6 +62,7 @@ var sectorCmd = &cobra.Command{
 			otherWorldChance, _ = cmd.Flags().GetInt(flOW)
 			secHeight, _        = cmd.Flags().GetInt(flSecHeight)
 			secWidth, _         = cmd.Flags().GetInt(flSecWidth)
+			exportTypes, _      = cmd.Flags().GetString(flExport)
 		)
 
 		if secHeight < 2 || secHeight > 99 || secWidth < 2 || secWidth > 99 {
@@ -71,13 +71,12 @@ var sectorCmd = &cobra.Command{
 		}
 
 		var (
-			secData = sector.NewSector(secHeight, secWidth, excludeTags, poiChance, otherWorldChance).ByCoords()
+			secData = sector.NewSector(secHeight, secWidth, excludeTags, poiChance, otherWorldChance)
 			secName = genSectorName()
-			mapDir  = "Maps"
 		)
 
 		fmt.Println(secName)
-		fmt.Println(hexmap(secHeight, secWidth, secData, colour, false))
+		fmt.Println(export.Hexmap(secData, colour, false))
 
 		ans := "r"
 		for {
@@ -86,32 +85,32 @@ var sectorCmd = &cobra.Command{
 			if ansRegex.MatchString(ans) {
 				switch ans {
 				case "y":
-					ensure(os.Mkdir(secName, dirPerm))
-
-					for _, system := range secData {
-						dir := fmt.Sprintf("%d,%d-%s", system.Row, system.Col, system.Name)
-						ensure(os.Mkdir(filepath.Join(secName, dir), dirPerm))
-						ensure(ioutil.WriteFile(filepath.Join(secName, dir, fmt.Sprintf("%s.%s", system.Name, "txt")), []byte(system.String()), filePerm))
+					if err := os.Mkdir(secName, dirPerm); err != nil {
+						log.Fatal(err)
 					}
 
-					ensure(os.Mkdir(filepath.Join(secName, mapDir), dirPerm))
-					ensure(ioutil.WriteFile(filepath.Join(secName, mapDir, "gm-map.txt"), []byte(hexmap(secHeight, secWidth, secData, false, false)), filePerm))
-					ensure(ioutil.WriteFile(filepath.Join(secName, mapDir, "pc-map.txt"), []byte(hexmap(secHeight, secWidth, secData, false, true)), filePerm))
-					if colour {
-						ensure(ioutil.WriteFile(filepath.Join(secName, mapDir, "gm-map-ansi.txt"), []byte(hexmap(secHeight, secWidth, secData, true, false)), filePerm))
-						ensure(ioutil.WriteFile(filepath.Join(secName, mapDir, "pc-map-ansi.txt"), []byte(hexmap(secHeight, secWidth, secData, true, true)), filePerm))
+					if err := os.Chdir(secName); err != nil {
+						log.Fatal(err)
 					}
-					fmt.Printf("%s written\n", secName)
+
+					for _, t := range strings.Split(exportTypes, ",") {
+						if ex := export.New(t, secName, secData); ex != nil {
+							if err := ex.Write(); err != nil {
+								log.Fatal(err)
+							}
+						}
+					}
+
 					return
 
 				case "n":
 					return
 
 				case "r":
-					secData = sector.NewSector(secHeight, secWidth, excludeTags, poiChance, otherWorldChance).ByCoords()
+					secData = sector.NewSector(secHeight, secWidth, excludeTags, poiChance, otherWorldChance)
 					secName = genSectorName()
 					fmt.Println(secName)
-					fmt.Println(hexmap(secHeight, secWidth, secData, colour, false))
+					fmt.Println(export.Hexmap(secData, colour, false))
 				}
 			}
 		}
@@ -129,44 +128,6 @@ func genSectorName() string {
 	return secName
 }
 
-func hexmap(height, width int, data []*sector.Star, useColour bool, playerMap bool) string {
-	haxscii.Colour(useColour)
-	h := haxscii.NewMap(height, width)
-	for _, s := range data {
-		name, tag1, tag2, tl := s.Name, s.Worlds[0].Tags[0].Name, s.Worlds[0].Tags[1].Name, strings.Split(s.Worlds[0].TechLevel, ",")[0]
-		c := haxscii.White // I default to black/dark terminals, this might be problematic for weirdos that use light terms
-
-		switch tl {
-		case "TL0":
-			c = haxscii.White
-		case "TL1":
-			c = haxscii.Red
-		case "TL2":
-			c = haxscii.Yellow
-		case "TL3":
-			c = haxscii.Magenta
-		case "TL4", "TL4+":
-			c = haxscii.Green
-		case "TL5":
-			c = haxscii.Cyan
-		}
-
-		if playerMap {
-			h.SetTxt(s.Row, s.Col, [4]string{name, "", "", ""}, c)
-		} else {
-			h.SetTxt(s.Row, s.Col, [4]string{name, tag1, tag2, tl}, c)
-		}
-	}
-
-	return h.String()
-}
-
-func ensure(err error) {
-	if err != nil {
-		log.Fatal(err)
-	}
-}
-
 func init() {
 	newCmd.AddCommand(sectorCmd)
 	sectorCmd.Flags().BoolP(flColour, "l", false, "Toggle colour output")
@@ -175,4 +136,5 @@ func init() {
 	sectorCmd.Flags().IntP(flOW, "o", 10, "Set % chance for a secondary world to be generated for any given star in the sector")
 	sectorCmd.Flags().IntP(flSecHeight, "e", 10, "Set height of sector in hexes")
 	sectorCmd.Flags().IntP(flSecWidth, "w", 8, "Set width of sector in hexes")
+	sectorCmd.Flags().String(flExport, "text", "Set export formats. (--export text,hugo,json) format types must be comma separated without spaces")
 }

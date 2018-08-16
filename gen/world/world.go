@@ -172,5 +172,7 @@ func (w World) Markdown() string {
 		fmt.Fprintf(buf, "| %s | %s |\n", Other.Contact.Name, w.Contact)
 	}
 
+	fmt.Fprintln(buf)
+
 	return buf.String()
 }

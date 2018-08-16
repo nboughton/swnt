@@ -45,7 +45,7 @@ func (p POI) Markdown() string {
 
 	fmt.Fprintf(buf, "| %s | |\n| --- | --- |\n", p.Point)
 	fmt.Fprintf(buf, "| %s | %s |\n", Table.Headers[1], p.Occupied)
-	fmt.Fprintf(buf, "| %s | %s |\n", Table.Headers[2], p.Situation)
+	fmt.Fprintf(buf, "| %s | %s |\n\n", Table.Headers[2], p.Situation)
 
 	return buf.String()
 }

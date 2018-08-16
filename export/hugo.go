@@ -101,6 +101,24 @@ func (h *Hugo) Write() error {
 		if _, err := f.Write([]byte(star.Markdown())); err != nil {
 			return err
 		}
+
+		f.Close()
+	}
+
+	// Print hexmap to index.md
+	o, err = exec.Command("hugo", "new", "_index.md").CombinedOutput()
+	if err != nil {
+		return err
+	}
+	fmt.Println(string(o))
+
+	f, err := os.OpenFile("content/_index.md", os.O_APPEND|os.O_WRONLY, filePerm)
+	if err != nil {
+		return err
+	}
+
+	if _, err := f.Write([]byte("# " + h.Name + "\n\n```\n" + Hexmap(h.Stars, false, false) + "\n```")); err != nil {
+		return err
 	}
 
 	return os.Chdir(wdir)

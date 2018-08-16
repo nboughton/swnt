@@ -72,7 +72,7 @@ func (h *Hugo) Write() error {
 	}
 
 	fmt.Println("Copying in default archetype...")
-	_, err = exec.Command("cp", "themes/archetypes/default.md", "archetypes/").CombinedOutput()
+	_, err = exec.Command("cp", "themes/docdock/archetypes/default.md", "archetypes/").CombinedOutput()
 	if err != nil {
 		return err
 	}

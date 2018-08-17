@@ -167,6 +167,7 @@ func (w World) Markdown() string {
 	fmt.Fprintf(buf, "| %s | %s |\n", w.Tags[1].Name, w.Tags[1].Desc)
 
 	if !w.Primary {
+		fmt.Fprintf(buf, "| **Origins** | |\n")
 		fmt.Fprintf(buf, "| %s | %s |\n", Other.Origin.Name, w.Origin)
 		fmt.Fprintf(buf, "| %s | %s |\n", Other.Relationship.Name, w.Relationship)
 		fmt.Fprintf(buf, "| %s | %s |\n", Other.Contact.Name, w.Contact)

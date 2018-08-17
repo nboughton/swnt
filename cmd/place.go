@@ -22,8 +22,10 @@ package cmd
 
 import (
 	"fmt"
+	"strings"
 
-	"github.com/nboughton/swnt/gen/place"
+	"github.com/nboughton/swnt/content/format"
+	"github.com/nboughton/swnt/content/place"
 	"github.com/spf13/cobra"
 )
 
@@ -34,9 +36,20 @@ var placeCmd = &cobra.Command{
 	Long:  ``,
 	Run: func(cmd *cobra.Command, args []string) {
 		w, _ := cmd.Flags().GetBool(flWilderness)
+		fmc, _ := cmd.Flags().GetString(flFormat)
 
-		fmt.Fprintf(tw, place.New(w).String())
-		tw.Flush()
+		p := place.New(w)
+		for _, f := range strings.Split(fmc, ",") {
+			fID, err := format.Find(f)
+			if err != nil {
+				fmt.Println(err)
+				return
+			}
+
+			fmt.Fprintf(tw, p.Format(fID))
+			fmt.Fprintln(tw)
+			tw.Flush()
+		}
 	},
 }
 

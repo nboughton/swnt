@@ -23,7 +23,7 @@ package cmd
 import (
 	"fmt"
 
-	"github.com/nboughton/swnt/gen/npc"
+	"github.com/nboughton/swnt/content/npc"
 	"github.com/spf13/cobra"
 )
 

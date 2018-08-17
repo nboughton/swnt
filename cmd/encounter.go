@@ -22,13 +22,11 @@ package cmd
 
 import (
 	"fmt"
+	"strings"
 
-	"github.com/nboughton/swnt/gen/encounter"
+	"github.com/nboughton/swnt/content/encounter"
+	"github.com/nboughton/swnt/content/format"
 	"github.com/spf13/cobra"
-)
-
-const (
-	flWilderness = "wilderness"
 )
 
 // encounterCmd represents the encounter command
@@ -38,17 +36,31 @@ var encounterCmd = &cobra.Command{
 	Long:  ``,
 	Run: func(cmd *cobra.Command, args []string) {
 		wild, _ := cmd.Flags().GetBool(flWilderness)
+		fmc, _ := cmd.Flags().GetString(flFormat)
 
+		e := [][]string{}
 		if wild {
-			fmt.Fprint(tw, encounter.Wilderness.Roll())
+			e = encounter.Wilderness.Roll()
 		} else {
-			fmt.Fprint(tw, encounter.Urban.Roll())
+			e = encounter.Urban.Roll()
 		}
-		tw.Flush()
+
+		for _, f := range strings.Split(fmc, ",") {
+			fID, err := format.Find(f)
+			if err != nil {
+				fmt.Println(err)
+				return
+			}
+
+			fmt.Fprintf(tw, format.Table(fID, true, "Encounter", e))
+			fmt.Fprintln(tw)
+			tw.Flush()
+		}
 	},
 }
 
 func init() {
 	newCmd.AddCommand(encounterCmd)
 	encounterCmd.Flags().BoolP(flWilderness, "w", false, "Set encounter type to Wilderness (default is Urban)")
+	encounterCmd.Flags().StringP(flFormat, "f", "text", "Set output format. (--format text,markdown)")
 }

@@ -23,17 +23,13 @@ package cmd
 import (
 	"fmt"
 	"math/rand"
+	"strings"
 	"time"
 
-	"github.com/nboughton/swnt/gen/culture"
-	"github.com/nboughton/swnt/gen/npc"
+	"github.com/nboughton/swnt/content/culture"
+	"github.com/nboughton/swnt/content/format"
+	"github.com/nboughton/swnt/content/npc"
 	"github.com/spf13/cobra"
-)
-
-const (
-	flCulture = "culture"
-	flGender  = "gender"
-	flPatron  = "is-patron"
 )
 
 // npcCmd represents the person command
@@ -46,6 +42,7 @@ var npcCmd = &cobra.Command{
 			clt, _      = cmd.Flags().GetString(flCulture)
 			gender, _   = cmd.Flags().GetString(flGender)
 			isPatron, _ = cmd.Flags().GetBool(flPatron)
+			fmc, _      = cmd.Flags().GetString(flFormat)
 			err         error
 			gID         npc.Gender
 			cID         culture.Culture
@@ -67,8 +64,18 @@ var npcCmd = &cobra.Command{
 			gID = npc.Gender(byte(gender[0]))
 		}
 
-		fmt.Fprintf(tw, npc.New(cID, gID, isPatron).String())
-		tw.Flush()
+		n := npc.New(cID, gID, isPatron)
+		for _, f := range strings.Split(fmc, ",") {
+			fID, err := format.Find(f)
+			if err != nil {
+				fmt.Println(err)
+				return
+			}
+
+			fmt.Fprintf(tw, n.Format(fID))
+			fmt.Fprintln(tw)
+			tw.Flush()
+		}
 	},
 }
 

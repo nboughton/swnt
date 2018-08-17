@@ -24,12 +24,8 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/nboughton/swnt/gen/world"
+	"github.com/nboughton/swnt/content/world"
 	"github.com/spf13/cobra"
-)
-
-const (
-	flDescOnly = "desc-only"
 )
 
 // tagCmd represents the tag command
@@ -59,13 +55,4 @@ var tagCmd = &cobra.Command{
 func init() {
 	showCmd.AddCommand(tagCmd)
 	tagCmd.Flags().BoolP(flDescOnly, "d", false, "Print description only")
-	// Here you will define your flags and configuration settings.
-
-	// Cobra supports Persistent Flags which will work for this command
-	// and all subcommands, e.g.:
-	// tagCmd.PersistentFlags().String("foo", "", "A help for foo")
-
-	// Cobra supports local flags which will only run when this command
-	// is called directly, e.g.:
-	// tagCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }

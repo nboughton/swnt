@@ -22,8 +22,10 @@ package cmd
 
 import (
 	"fmt"
+	"strings"
 
-	"github.com/nboughton/swnt/gen/poi"
+	"github.com/nboughton/swnt/content/format"
+	"github.com/nboughton/swnt/content/poi"
 	"github.com/spf13/cobra"
 )
 
@@ -33,8 +35,20 @@ var poiCmd = &cobra.Command{
 	Short: "Generate a Point of Interest",
 	Long:  ``,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Fprintf(tw, poi.New().String())
-		tw.Flush()
+		fmc, _ := cmd.Flags().GetString(flFormat)
+
+		p := poi.New()
+		for _, f := range strings.Split(fmc, ",") {
+			fID, err := format.Find(f)
+			if err != nil {
+				fmt.Println(err)
+				return
+			}
+
+			fmt.Fprintf(tw, p.Format(fID))
+			fmt.Fprintln(tw)
+			tw.Flush()
+		}
 	},
 }
 

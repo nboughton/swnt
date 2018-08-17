@@ -4,7 +4,7 @@ import (
 	"os"
 	"strings"
 
-	"github.com/nboughton/swnt/gen/sector"
+	"github.com/nboughton/swnt/content/sector"
 	"github.com/nboughton/swnt/haxscii"
 )
 

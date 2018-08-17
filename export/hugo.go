@@ -5,7 +5,8 @@ import (
 	"os"
 	"os/exec"
 
-	"github.com/nboughton/swnt/gen/sector"
+	"github.com/nboughton/swnt/content/format"
+	"github.com/nboughton/swnt/content/sector"
 )
 
 // Hugo represents the Exporter for Hugo projects
@@ -98,7 +99,7 @@ func (h *Hugo) Write() error {
 			return err
 		}
 
-		if _, err := f.Write([]byte(star.Markdown())); err != nil {
+		if _, err := f.Write([]byte(star.Format(format.MARKDOWN))); err != nil {
 			return err
 		}
 

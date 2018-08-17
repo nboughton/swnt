@@ -5,7 +5,8 @@ import (
 	"io/ioutil"
 	"os"
 
-	"github.com/nboughton/swnt/gen/sector"
+	"github.com/nboughton/swnt/content/format"
+	"github.com/nboughton/swnt/content/sector"
 )
 
 // Text represents the Exporter for text based output
@@ -34,7 +35,7 @@ func (t *Text) Write() error {
 	}
 
 	for _, system := range t.Stars.Systems {
-		ioutil.WriteFile(starsDir+"/"+system.Name+".txt", []byte(system.String()), filePerm)
+		ioutil.WriteFile(starsDir+"/"+system.Name+".txt", []byte(system.Format(format.TEXT)), filePerm)
 	}
 
 	mapDir := "Maps"

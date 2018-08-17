@@ -22,8 +22,10 @@ package cmd
 
 import (
 	"fmt"
+	"strings"
 
-	"github.com/nboughton/swnt/gen/alien"
+	"github.com/nboughton/swnt/content/alien"
+	"github.com/nboughton/swnt/content/format"
 	"github.com/spf13/cobra"
 )
 
@@ -33,9 +35,19 @@ var alienCmd = &cobra.Command{
 	Short: "Generate an Alien",
 	Long:  ``,
 	Run: func(cmd *cobra.Command, args []string) {
+		fmc, _ := cmd.Flags().GetString(flFormat)
 
-		fmt.Fprintln(tw, alien.New())
-		tw.Flush()
+		for _, f := range strings.Split(fmc, ",") {
+			fID, err := format.Find(f)
+			if err != nil {
+				fmt.Println(err)
+				return
+			}
+
+			fmt.Fprintf(tw, alien.New().Format(fID))
+			fmt.Fprintln(tw)
+			tw.Flush()
+		}
 	},
 }
 

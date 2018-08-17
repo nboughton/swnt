@@ -22,8 +22,10 @@ package cmd
 
 import (
 	"fmt"
+	"strings"
 
-	"github.com/nboughton/swnt/gen/conflict"
+	"github.com/nboughton/swnt/content/conflict"
+	"github.com/nboughton/swnt/content/format"
 	"github.com/spf13/cobra"
 )
 
@@ -33,10 +35,23 @@ var conflictCmd = &cobra.Command{
 	Short: "Generate a Conflict/Problem",
 	Long:  ``,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Fprintf(tw, conflict.Problem.Roll())
-		fmt.Fprintf(tw, "The Restraint\t:\t%s\n", conflict.Restraint.Roll())
-		fmt.Fprintf(tw, "The Twist\t:\t%s\n", conflict.Twist.Roll())
-		tw.Flush()
+		fmc, _ := cmd.Flags().GetString(flFormat)
+
+		for _, f := range strings.Split(fmc, ",") {
+			fID, err := format.Find(f)
+			if err != nil {
+				fmt.Println(err)
+				return
+			}
+
+			fmt.Fprintf(tw, format.Table(fID, true, "Conflict", conflict.Problem.Roll()))
+			fmt.Fprintf(tw, format.Table(fID, false, "", [][]string{
+				{"The Restraint", conflict.Restraint.Roll()},
+				{"The Twist", conflict.Twist.Roll()},
+			}))
+			fmt.Fprintln(tw)
+			tw.Flush()
+		}
 	},
 }
 

@@ -27,19 +27,10 @@ import (
 	"regexp"
 	"strings"
 
+	"github.com/nboughton/swnt/content/name"
+	"github.com/nboughton/swnt/content/sector"
 	"github.com/nboughton/swnt/export"
-	"github.com/nboughton/swnt/gen/name"
-	"github.com/nboughton/swnt/gen/sector"
 	"github.com/spf13/cobra"
-)
-
-const (
-	flColour    = "colour"
-	flPoi       = "poi-chance"
-	flOW        = "other-worlds-chance"
-	flSecHeight = "sector-height"
-	flSecWidth  = "sector-width"
-	flExport    = "export"
 )
 
 var (
@@ -134,5 +125,5 @@ func init() {
 	sectorCmd.Flags().IntP(flOW, "o", 10, "Set % chance for a secondary world to be generated for any given star in the sector")
 	sectorCmd.Flags().IntP(flSecHeight, "e", 10, "Set height of sector in hexes")
 	sectorCmd.Flags().IntP(flSecWidth, "w", 8, "Set width of sector in hexes")
-	sectorCmd.Flags().String(flExport, "text", "Set export formats. (--export text,hugo,json) format types must be comma separated without spaces. The Hugo export is still under development.")
+	sectorCmd.Flags().String(flExport, "text", "Set export formats. (--export text,hugo,json) format types must be comma separated without spaces.")
 }

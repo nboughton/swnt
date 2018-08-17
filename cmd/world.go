@@ -22,14 +22,12 @@ package cmd
 
 import (
 	"fmt"
+	"strings"
 
-	"github.com/nboughton/swnt/gen/culture"
-	"github.com/nboughton/swnt/gen/world"
+	"github.com/nboughton/swnt/content/culture"
+	"github.com/nboughton/swnt/content/format"
+	"github.com/nboughton/swnt/content/world"
 	"github.com/spf13/cobra"
-)
-
-const (
-	flExclude = "exclude"
 )
 
 // worldCmd represents the world command
@@ -41,6 +39,7 @@ var worldCmd = &cobra.Command{
 		var (
 			ctr, _ = cmd.Flags().GetString(flCulture)
 			exc, _ = cmd.Flags().GetStringArray(flExclude)
+			fmc, _ = cmd.Flags().GetString(flFormat)
 			cID    culture.Culture
 			err    error
 		)
@@ -55,8 +54,18 @@ var worldCmd = &cobra.Command{
 			}
 		}
 
-		fmt.Fprintf(tw, world.New(cID, false, exc).String())
-		tw.Flush()
+		w := world.New(cID, false, exc)
+		for _, f := range strings.Split(fmc, ",") {
+			fID, err := format.Find(f)
+			if err != nil {
+				fmt.Println(err)
+				return
+			}
+
+			fmt.Fprintf(tw, w.Format(fID))
+			fmt.Fprintln(tw)
+			tw.Flush()
+		}
 	},
 }
 

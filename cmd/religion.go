@@ -22,8 +22,10 @@ package cmd
 
 import (
 	"fmt"
+	"strings"
 
-	"github.com/nboughton/swnt/gen/religion"
+	"github.com/nboughton/swnt/content/format"
+	"github.com/nboughton/swnt/content/religion"
 	"github.com/spf13/cobra"
 )
 
@@ -33,9 +35,20 @@ var religionCmd = &cobra.Command{
 	Short: "Generate a Religion",
 	Long:  ``,
 	Run: func(cmd *cobra.Command, args []string) {
+		fmc, _ := cmd.Flags().GetString(flFormat)
 
-		fmt.Fprintln(tw, religion.New())
-		tw.Flush()
+		r := religion.New()
+		for _, f := range strings.Split(fmc, ",") {
+			fID, err := format.Find(f)
+			if err != nil {
+				fmt.Println(err)
+				return
+			}
+
+			fmt.Fprintf(tw, r.Format(fID))
+			fmt.Fprintln(tw)
+			tw.Flush()
+		}
 	},
 }
 

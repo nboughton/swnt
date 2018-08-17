@@ -4,7 +4,7 @@ import (
 	"fmt"
 
 	"github.com/nboughton/go-utils/json/file"
-	"github.com/nboughton/swnt/gen/sector"
+	"github.com/nboughton/swnt/content/sector"
 )
 
 // JSON represents the Exporter for JSON data

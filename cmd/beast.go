@@ -22,8 +22,10 @@ package cmd
 
 import (
 	"fmt"
+	"strings"
 
-	"github.com/nboughton/swnt/gen/beast"
+	"github.com/nboughton/swnt/content/beast"
+	"github.com/nboughton/swnt/content/format"
 	"github.com/spf13/cobra"
 )
 
@@ -33,21 +35,22 @@ var beastCmd = &cobra.Command{
 	Short: "Generate a Beast",
 	Long:  ``,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Fprintln(tw, beast.New())
-		tw.Flush()
+		fmc, _ := cmd.Flags().GetString(flFormat)
+
+		for _, f := range strings.Split(fmc, ",") {
+			fID, err := format.Find(f)
+			if err != nil {
+				fmt.Println(err)
+				return
+			}
+
+			fmt.Fprintf(tw, beast.New().Format(fID))
+			fmt.Fprintln(tw)
+			tw.Flush()
+		}
 	},
 }
 
 func init() {
 	newCmd.AddCommand(beastCmd)
-
-	// Here you will define your flags and configuration settings.
-
-	// Cobra supports Persistent Flags which will work for this command
-	// and all subcommands, e.g.:
-	// beastCmd.PersistentFlags().String("foo", "", "A help for foo")
-
-	// Cobra supports local flags which will only run when this command
-	// is called directly, e.g.:
-	// beastCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }

@@ -23,14 +23,9 @@ package cmd
 import (
 	"fmt"
 
-	"github.com/nboughton/swnt/gen/adventure"
-	"github.com/nboughton/swnt/gen/world"
+	"github.com/nboughton/swnt/content/adventure"
+	"github.com/nboughton/swnt/content/world"
 	"github.com/spf13/cobra"
-)
-
-const (
-	flTag  = "tag"
-	flTags = "tags"
 )
 
 // adventureCmd represents the adventure command

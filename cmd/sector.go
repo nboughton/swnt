@@ -24,7 +24,6 @@ import (
 	"fmt"
 	"log"
 	"os"
-	"regexp"
 	"strings"
 
 	"github.com/nboughton/swnt/content/name"
@@ -34,7 +33,6 @@ import (
 )
 
 var (
-	ansRegex = regexp.MustCompile("(?i)^(y|n|r)$")
 	dirPerm  = os.FileMode(0755)
 	filePerm = os.FileMode(0644)
 )
@@ -72,36 +70,34 @@ var sectorCmd = &cobra.Command{
 		for {
 			fmt.Printf("Write Sector? [y]es, [n]o, [r]eroll: [%s] ", ans)
 			fmt.Scanf("%s", &ans)
-			if ansRegex.MatchString(ans) {
-				switch ans {
-				case "y":
-					if err := os.Mkdir(secName, dirPerm); err != nil {
-						log.Fatal(err)
-					}
+			switch ans {
+			case "y":
+				if err := os.Mkdir(secName, dirPerm); err != nil {
+					log.Fatal(err)
+				}
 
-					if err := os.Chdir(secName); err != nil {
-						log.Fatal(err)
-					}
+				if err := os.Chdir(secName); err != nil {
+					log.Fatal(err)
+				}
 
-					for _, t := range strings.Split(exportTypes, ",") {
-						if ex := export.New(t, secName, secData); ex != nil {
-							if err := ex.Write(); err != nil {
-								log.Fatal(err)
-							}
+				for _, t := range strings.Split(exportTypes, ",") {
+					if ex := export.New(t, secName, secData); ex != nil {
+						if err := ex.Write(); err != nil {
+							log.Fatal(err)
 						}
 					}
-
-					return
-
-				case "n":
-					return
-
-				case "r":
-					secData = sector.NewSector(secHeight, secWidth, excludeTags, poiChance, otherWorldChance)
-					secName = genSectorName()
-					fmt.Println(secName)
-					fmt.Println(export.Hexmap(secData, true, false))
 				}
+
+				return
+
+			case "n":
+				return
+
+			case "r":
+				secData = sector.NewSector(secHeight, secWidth, excludeTags, poiChance, otherWorldChance)
+				secName = genSectorName()
+				fmt.Println(secName)
+				fmt.Println(export.Hexmap(secData, true, false))
 			}
 		}
 	},

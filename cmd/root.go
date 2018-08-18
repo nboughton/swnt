@@ -27,6 +27,24 @@ import (
 	"github.com/spf13/cobra"
 )
 
+const (
+	flExclude    = "exclude"
+	flFormat     = "format"
+	flDescOnly   = "desc-only"
+	flColour     = "colour"
+	flPoi        = "poi-chance"
+	flOW         = "other-worlds-chance"
+	flSecHeight  = "sector-height"
+	flSecWidth   = "sector-width"
+	flExport     = "export"
+	flCulture    = "culture"
+	flGender     = "gender"
+	flPatron     = "is-patron"
+	flWilderness = "wilderness"
+	flTag        = "tag"
+	flTags       = "tags"
+)
+
 // RootCmd represents the base command when called without any subcommands
 var RootCmd = &cobra.Command{
 	Use:   "swnt",

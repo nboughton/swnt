@@ -4,7 +4,6 @@ import (
 	"bytes"
 	"fmt"
 	"math/rand"
-	"sort"
 	"time"
 
 	"github.com/nboughton/swnt/content/culture"
@@ -28,21 +27,21 @@ type Star struct {
 }
 
 // NewStar generates a new Star struct to be added to the map
-func NewStar(r, c int, n string, e []string, poiChance, otherWorldChance int) *Star {
+func NewStar(row, col int, name string, exclude []string, poiChance, otherWorldChance int) *Star {
 	ctr := culture.Random()
 
 	s := &Star{
-		Row:     r,
-		Col:     c,
+		Row:     row,
+		Col:     col,
 		Culture: ctr,
-		Name:    n,
-		Worlds:  []world.World{world.New(ctr, true, e)},
+		Name:    name,
+		Worlds:  []world.World{world.New(ctr, true, exclude)},
 	}
 
 	// Cascading 10% chance of other worlds
 	for rand.Intn(100) < otherWorldChance {
 		ctr = culture.Random()
-		s.Worlds = append(s.Worlds, world.New(ctr, false, e))
+		s.Worlds = append(s.Worlds, world.New(ctr, false, exclude))
 	}
 
 	// 30% chance of a Point of Interest
@@ -84,25 +83,6 @@ type Stars struct {
 	Systems    []*Star
 }
 
-type byCoord []*Star
-
-func (b byCoord) Len() int { return len(b) }
-func (b byCoord) Less(i, j int) bool {
-	if b[i].Row == b[j].Row {
-		return b[i].Col < b[j].Col
-	}
-
-	return b[i].Row < b[j].Row
-}
-func (b byCoord) Swap(i, j int) { b[i], b[j] = b[j], b[i] }
-
-// ByCoords returns a sorted array of star systems ordered by coordinates.
-func (s *Stars) ByCoords() []*Star {
-	b := byCoord(s.Systems)
-	sort.Sort(b)
-	return b
-}
-
 // NewSector returns a blank Sector struct and generates tag information according to the guidelines
 // in pages 133 - 177 of Stars Without Number (Revised Edition).
 func NewSector(rows, cols int, excludeTags []string, poiChance, otherWorldChance int) *Stars {
@@ -114,9 +94,9 @@ func NewSector(rows, cols int, excludeTags []string, poiChance, otherWorldChance
 	cells := s.Rows * s.Cols
 	stars := (rand.Intn(cells/4) / 2) + (cells / 4)
 
-	for r, c := rand.Intn(s.Rows), rand.Intn(s.Cols); len(s.Systems) <= stars; r, c = rand.Intn(s.Rows), rand.Intn(s.Cols) {
-		if !s.IsActive(r, c) {
-			s.Systems = append(s.Systems, NewStar(r, c, s.systemName(), excludeTags, poiChance, otherWorldChance))
+	for row, col := rand.Intn(s.Rows), rand.Intn(s.Cols); len(s.Systems) <= stars; row, col = rand.Intn(s.Rows), rand.Intn(s.Cols) {
+		if !s.active(row, col) {
+			s.Systems = append(s.Systems, NewStar(row, col, s.systemName(), excludeTags, poiChance, otherWorldChance))
 		}
 	}
 
@@ -145,10 +125,10 @@ func (s *Stars) nameUsed(n string) bool {
 	return false
 }
 
-// IsActive checks to see if there is an active Star at r(ow), c(ol)
-func (s *Stars) IsActive(r, c int) bool {
+// active checks to see if there is an active Star at r(ow), c(ol)
+func (s *Stars) active(row, col int) bool {
 	for _, star := range s.Systems {
-		if star.Row == r && star.Col == c {
+		if star.Row == row && star.Col == col {
 			return true
 		}
 	}

@@ -121,5 +121,5 @@ func init() {
 	sectorCmd.Flags().IntP(flOW, "o", 10, "Set % chance for a secondary world to be generated for any given star in the sector")
 	sectorCmd.Flags().IntP(flSecHeight, "e", 10, "Set height of sector in hexes")
 	sectorCmd.Flags().IntP(flSecWidth, "w", 8, "Set width of sector in hexes")
-	sectorCmd.Flags().String(flExport, "text", "Set export formats. (--export text,hugo,json) format types must be comma separated without spaces.")
+	sectorCmd.Flags().String(flExport, "text,json", "Set export formats. Format types must be comma separated without spaces. Supported formats are text, json and hugo")
 }

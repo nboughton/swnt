@@ -36,3 +36,7 @@ func (a Alien) Format(t format.OutputType) string {
 
 	return buf.String()
 }
+
+func (a Alien) String() string {
+	return a.Format(format.TEXT)
+}

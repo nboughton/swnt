@@ -24,9 +24,9 @@ import (
 	"fmt"
 	"strings"
 
+	"github.com/nboughton/swnt/content"
 	"github.com/nboughton/swnt/content/culture"
 	"github.com/nboughton/swnt/content/format"
-	"github.com/nboughton/swnt/content/world"
 	"github.com/spf13/cobra"
 )
 
@@ -54,7 +54,7 @@ var worldCmd = &cobra.Command{
 			}
 		}
 
-		w := world.New(cID, false, exc)
+		w := content.NewWorld(cID, false, exc)
 		for _, f := range strings.Split(fmc, ",") {
 			fID, err := format.Find(f)
 			if err != nil {

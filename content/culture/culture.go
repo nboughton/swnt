@@ -40,17 +40,17 @@ func Random() Culture {
 
 // Find returns the correct constant or an error if it does not exist
 func Find(name string) (Culture, error) {
-	if strings.ToLower(name) == strings.ToLower(string(Any)) {
+	if strings.ToLower(name) == strings.ToLower(Any.String()) || name == "" {
 		return Random(), nil
 	}
 
 	for _, c := range Cultures {
-		if strings.ToLower(string(c)) == strings.ToLower(name) {
+		if strings.ToLower(c.String()) == strings.ToLower(name) {
 			return c, nil
 		}
 	}
 
-	return Culture(""), fmt.Errorf("no culture found for \"%s\"", name)
+	return Culture(""), fmt.Errorf("no culture found for \"%s\", options available are %s", name, Cultures)
 }
 
 func (c Culture) String() string {

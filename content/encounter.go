@@ -1,12 +1,43 @@
-package encounter
+package content
 
 import (
 	"github.com/nboughton/rollt"
+	"github.com/nboughton/swnt/content/format"
 	"github.com/nboughton/swnt/content/table"
 )
 
+// Encounter represents an encounter
+type Encounter struct {
+	Type   string
+	Fields [][]string
+}
+
+// NewEncounter creates a new encounter
+func NewEncounter(wilderness bool) Encounter {
+	if wilderness {
+		return Encounter{
+			Type:   "Wilderness",
+			Fields: wildernessEncounterTable.Roll(),
+		}
+	}
+
+	return Encounter{
+		Type:   "Urban",
+		Fields: urbanEncounterTable.Roll(),
+	}
+}
+
+// Format e as output type t
+func (e Encounter) Format(t format.OutputType) string {
+	return format.Table(t, true, e.Type+" Encounter", e.Fields)
+}
+
+func (e Encounter) String() string {
+	return e.Format(format.TEXT)
+}
+
 // Urban represents the OneRoll tables for rolling quick encounters
-var Urban = table.OneRoll{
+var urbanEncounterTable = table.OneRoll{
 	D4: rollt.List{
 		Name: "What's the Conflict About?",
 		Items: []string{
@@ -100,7 +131,7 @@ var Urban = table.OneRoll{
 }
 
 // Wilderness represents the OneRoll tables for generating Wilderness Encounters
-var Wilderness = table.OneRoll{
+var wildernessEncounterTable = table.OneRoll{
 	D4: rollt.List{
 		Name: "Initial Encounter Range",
 		Items: []string{

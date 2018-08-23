@@ -24,8 +24,8 @@ import (
 	"fmt"
 	"strings"
 
+	"github.com/nboughton/swnt/content"
 	"github.com/nboughton/swnt/content/format"
-	"github.com/nboughton/swnt/content/poi"
 	"github.com/spf13/cobra"
 )
 
@@ -37,7 +37,7 @@ var poiCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		fmc, _ := cmd.Flags().GetString(flFormat)
 
-		p := poi.New()
+		p := content.NewPOI()
 		for _, f := range strings.Split(fmc, ",") {
 			fID, err := format.Find(f)
 			if err != nil {

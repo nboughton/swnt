@@ -1,13 +1,54 @@
-package poi
+package content
 
 import (
+	"bytes"
+	"fmt"
+	"math/rand"
+
 	"github.com/nboughton/rollt"
+	"github.com/nboughton/swnt/content/format"
 	"github.com/nboughton/swnt/content/table"
 )
 
+// POI Point of Interest
+type POI struct {
+	Point     string
+	Occupied  string
+	Situation string
+}
+
+// NewPOI roll a new point of interest
+func NewPOI() POI {
+	t := poiTable.Tables[rand.Intn(len(poiTable.Tables))]
+
+	return POI{
+		Point:     t.Name,
+		Occupied:  t.SubTable1.Roll(),
+		Situation: t.SubTable2.Roll(),
+	}
+}
+
+// Format returns the POI formatted as type t
+func (p POI) Format(t format.OutputType) string {
+	buf := new(bytes.Buffer)
+
+	fmt.Fprintf(buf, format.Table(t, true, p.Point, [][]string{
+		{poiTable.Headers[1], p.Occupied},
+		{poiTable.Headers[2], p.Situation},
+	}))
+
+	return buf.String()
+}
+
+func (p POI) String() string {
+	return p.Format(format.TEXT)
+}
+
+/*************** TABLES ***************/
+
 // Table represents the linked roll tables for Point of Interest generation as described in
 // Stars Without Number (Revised Edition) pg 171
-var Table = table.ThreePart{
+var poiTable = table.ThreePart{
 	Headers: [3]string{"A Point", "Occupied By", "With This Situation"},
 	Tables: []table.ThreePartSubTable{
 		{

@@ -24,7 +24,7 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/nboughton/swnt/content/encounter"
+	"github.com/nboughton/swnt/content"
 	"github.com/nboughton/swnt/content/format"
 	"github.com/spf13/cobra"
 )
@@ -38,13 +38,7 @@ var encounterCmd = &cobra.Command{
 		wild, _ := cmd.Flags().GetBool(flWilderness)
 		fmc, _ := cmd.Flags().GetString(flFormat)
 
-		e := [][]string{}
-		if wild {
-			e = encounter.Wilderness.Roll()
-		} else {
-			e = encounter.Urban.Roll()
-		}
-
+		e := content.NewEncounter(wild)
 		for _, f := range strings.Split(fmc, ",") {
 			fID, err := format.Find(f)
 			if err != nil {
@@ -52,7 +46,7 @@ var encounterCmd = &cobra.Command{
 				return
 			}
 
-			fmt.Fprintf(tw, format.Table(fID, true, "Encounter", e))
+			fmt.Fprintf(tw, e.Format(fID))
 			fmt.Fprintln(tw)
 			tw.Flush()
 		}

@@ -26,9 +26,10 @@ import (
 	"strings"
 	"time"
 
+	"github.com/nboughton/swnt/content"
 	"github.com/nboughton/swnt/content/culture"
 	"github.com/nboughton/swnt/content/format"
-	"github.com/nboughton/swnt/content/npc"
+	"github.com/nboughton/swnt/content/gender"
 	"github.com/spf13/cobra"
 )
 
@@ -40,31 +41,25 @@ var npcCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		var (
 			clt, _      = cmd.Flags().GetString(flCulture)
-			gender, _   = cmd.Flags().GetString(flGender)
+			gdr, _      = cmd.Flags().GetString(flGender)
 			isPatron, _ = cmd.Flags().GetBool(flPatron)
 			fmc, _      = cmd.Flags().GetString(flFormat)
 			err         error
-			gID         npc.Gender
-			cID         culture.Culture
 		)
 
-		if clt == "" {
-			cID = culture.Random()
-		} else {
-			cID, err = culture.Find(clt)
-			if err != nil {
-				fmt.Println(err)
-				return
-			}
+		cID, err := culture.Find(clt)
+		if err != nil {
+			fmt.Println(err)
+			return
 		}
 
-		if gender == "" {
-			gID = npc.Any
-		} else {
-			gID = npc.Gender(byte(gender[0]))
+		gID, err := gender.Find(gdr)
+		if err != nil {
+			fmt.Println(err)
+			return
 		}
 
-		n := npc.New(cID, gID, isPatron)
+		n := content.NewNPC(cID, gID, isPatron)
 		for _, f := range strings.Split(fmc, ",") {
 			fID, err := format.Find(f)
 			if err != nil {
@@ -84,6 +79,6 @@ func init() {
 
 	newCmd.AddCommand(npcCmd)
 	npcCmd.Flags().StringP(flCulture, "c", "any", fmt.Sprintf("Select Culture, choices are: %v", culture.Cultures))
-	npcCmd.Flags().StringP(flGender, "g", "", "Select Gender, choices are m, f, a, y (male, female, androgynous, any")
+	npcCmd.Flags().StringP(flGender, "g", "", fmt.Sprintf("Select Gender, choices are: %v", gender.Genders))
 	npcCmd.Flags().BoolP(flPatron, "p", false, "NPC is a Patron")
 }

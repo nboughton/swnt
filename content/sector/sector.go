@@ -6,11 +6,10 @@ import (
 	"math/rand"
 	"time"
 
+	"github.com/nboughton/swnt/content"
 	"github.com/nboughton/swnt/content/culture"
 	"github.com/nboughton/swnt/content/format"
 	"github.com/nboughton/swnt/content/name"
-	"github.com/nboughton/swnt/content/poi"
-	"github.com/nboughton/swnt/content/world"
 )
 
 func init() {
@@ -22,8 +21,8 @@ type Star struct {
 	Row, Col int
 	Culture  culture.Culture
 	Name     string
-	Worlds   []world.World
-	POIs     []poi.POI
+	Worlds   []content.World
+	POIs     []content.POI
 }
 
 // NewStar generates a new Star struct to be added to the map
@@ -35,18 +34,18 @@ func NewStar(row, col int, name string, exclude []string, poiChance, otherWorldC
 		Col:     col,
 		Culture: ctr,
 		Name:    name,
-		Worlds:  []world.World{world.New(ctr, true, exclude)},
+		Worlds:  []content.World{content.NewWorld(ctr, true, exclude)},
 	}
 
 	// Cascading 10% chance of other worlds
 	for rand.Intn(100) < otherWorldChance {
 		ctr = culture.Random()
-		s.Worlds = append(s.Worlds, world.New(ctr, false, exclude))
+		s.Worlds = append(s.Worlds, content.NewWorld(ctr, false, exclude))
 	}
 
 	// 30% chance of a Point of Interest
 	if rand.Intn(100) < poiChance {
-		s.POIs = append(s.POIs, poi.New())
+		s.POIs = append(s.POIs, content.NewPOI())
 	}
 
 	return s

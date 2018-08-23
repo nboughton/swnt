@@ -23,8 +23,8 @@ package cmd
 import (
 	"fmt"
 
+	"github.com/nboughton/swnt/content"
 	"github.com/nboughton/swnt/content/adventure"
-	"github.com/nboughton/swnt/content/world"
 	"github.com/spf13/cobra"
 )
 
@@ -38,14 +38,14 @@ var adventureCmd = &cobra.Command{
 		list, _ := cmd.Flags().GetBool(flTags)
 
 		if list {
-			for _, t := range world.Tags {
+			for _, t := range content.Tags {
 				fmt.Println(t.Name)
 			}
 			return
 		}
 
 		if tag == "" {
-			tag = world.Tags.Random()
+			tag = content.Tags.Random()
 		}
 
 		fmt.Fprintln(tw, adventure.New(tag).String())

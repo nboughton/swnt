@@ -5,17 +5,12 @@ import (
 	"fmt"
 	"math/rand"
 	"strings"
-	"time"
 
 	"github.com/nboughton/rollt"
 	"github.com/nboughton/swnt/content/culture"
 	"github.com/nboughton/swnt/content/format"
 	"github.com/nboughton/swnt/content/name"
 )
-
-func init() {
-	rand.Seed(time.Now().UnixNano())
-}
 
 // TagsTable represents the collection of Tags
 type TagsTable []Tag

@@ -3,9 +3,14 @@ package name
 import (
 	"math/rand"
 	"strings"
+	"time"
 
 	"github.com/nboughton/rollt"
 )
+
+func init() {
+	rand.Seed(time.Now().UnixNano())
+}
 
 // Name generator. This is a primitive first effort that will be refined over time
 var vl = rollt.Table{

@@ -6,7 +6,7 @@ import (
 	"strings"
 
 	"github.com/fatih/color"
-	"github.com/nboughton/swnt/content/world"
+	"github.com/nboughton/swnt/content"
 )
 
 // Adventure represents the elements of an Adventure outline
@@ -31,7 +31,7 @@ func New(worldTag string) Adventure {
 		Tag:  tag{Name: worldTag},
 	}
 
-	t, err := world.Tags.Find(worldTag)
+	t, err := content.Tags.Find(worldTag)
 	if err == nil {
 		a.Tag.Enemy = t.Enemies.Roll()
 		a.Tag.Friend = t.Friends.Roll()

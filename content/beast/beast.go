@@ -53,6 +53,7 @@ func New() Beast {
 	return b
 }
 
+// Format output as format type t
 func (b Beast) Format(t format.OutputType) string {
 	buf := new(bytes.Buffer)
 
@@ -67,4 +68,8 @@ func (b Beast) Format(t format.OutputType) string {
 	}))
 
 	return buf.String()
+}
+
+func (b Beast) String() string {
+	return b.Format(format.TEXT)
 }

@@ -23,7 +23,7 @@ package cmd
 import (
 	"fmt"
 
-	"github.com/nboughton/swnt/content/npc"
+	"github.com/nboughton/swnt/content"
 	"github.com/spf13/cobra"
 )
 
@@ -33,7 +33,7 @@ var reactCmd = &cobra.Command{
 	Short: "Make a reaction roll for an NPC",
 	Long:  ``,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println(npc.Reaction.Roll())
+		fmt.Println(content.Reaction.Roll())
 	},
 }
 

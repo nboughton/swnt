@@ -24,7 +24,7 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/nboughton/swnt/content/conflict"
+	"github.com/nboughton/swnt/content"
 	"github.com/nboughton/swnt/content/format"
 	"github.com/spf13/cobra"
 )
@@ -37,6 +37,7 @@ var conflictCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		fmc, _ := cmd.Flags().GetString(flFormat)
 
+		c := content.NewConflict()
 		for _, f := range strings.Split(fmc, ",") {
 			fID, err := format.Find(f)
 			if err != nil {
@@ -44,11 +45,7 @@ var conflictCmd = &cobra.Command{
 				return
 			}
 
-			fmt.Fprintf(tw, format.Table(fID, true, "Conflict", conflict.Problem.Roll()))
-			fmt.Fprintf(tw, format.Table(fID, false, "", [][]string{
-				{"The Restraint", conflict.Restraint.Roll()},
-				{"The Twist", conflict.Twist.Roll()},
-			}))
+			fmt.Fprintf(tw, c.Format(fID))
 			fmt.Fprintln(tw)
 			tw.Flush()
 		}

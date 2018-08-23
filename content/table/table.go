@@ -8,6 +8,9 @@ import (
 	"github.com/nboughton/rollt"
 )
 
+// Registry of tables
+var Registry = rollt.NewRegistry()
+
 func init() {
 	rand.Seed(time.Now().UnixNano())
 }

@@ -24,7 +24,7 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/nboughton/swnt/content/world"
+	"github.com/nboughton/swnt/content"
 	"github.com/spf13/cobra"
 )
 
@@ -37,7 +37,7 @@ var tagCmd = &cobra.Command{
 		descOnly, _ := cmd.Flags().GetBool(flDescOnly)
 
 		tag := strings.Join(args, " ")
-		t, err := world.Tags.Find(tag)
+		t, err := content.Tags.Find(tag)
 		if err != nil {
 			fmt.Println(err)
 			return

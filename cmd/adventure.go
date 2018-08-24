@@ -24,7 +24,6 @@ import (
 	"fmt"
 
 	"github.com/nboughton/swnt/content"
-	"github.com/nboughton/swnt/content/adventure"
 	"github.com/spf13/cobra"
 )
 
@@ -48,7 +47,7 @@ var adventureCmd = &cobra.Command{
 			tag = content.Tags.Random()
 		}
 
-		fmt.Fprintln(tw, adventure.New(tag).String())
+		fmt.Fprintln(tw, content.NewAdventure(tag).String())
 		tw.Flush()
 	},
 }

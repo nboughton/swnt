@@ -24,7 +24,7 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/nboughton/swnt/content/beast"
+	"github.com/nboughton/swnt/content"
 	"github.com/nboughton/swnt/content/format"
 	"github.com/spf13/cobra"
 )
@@ -37,6 +37,7 @@ var beastCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		fmc, _ := cmd.Flags().GetString(flFormat)
 
+		b := content.NewBeast()
 		for _, f := range strings.Split(fmc, ",") {
 			fID, err := format.Find(f)
 			if err != nil {
@@ -44,7 +45,7 @@ var beastCmd = &cobra.Command{
 				return
 			}
 
-			fmt.Fprintf(tw, beast.New().Format(fID))
+			fmt.Fprintf(tw, b.Format(fID))
 			fmt.Fprintln(tw)
 			tw.Flush()
 		}

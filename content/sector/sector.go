@@ -62,14 +62,14 @@ func (s *Star) Format(t format.OutputType) string {
 	if len(s.Worlds) > 1 {
 		fmt.Fprintf(buf, format.Header(t, 3, "Other Worlds"))
 		for _, w := range s.Worlds[1:] {
-			fmt.Fprintf(buf, w.Format(t))
+			fmt.Fprintln(buf, w.Format(t))
 		}
 	}
 
 	if len(s.POIs) > 0 {
 		fmt.Fprintf(buf, format.Header(t, 3, "Points of Interest"))
 		for _, p := range s.POIs {
-			fmt.Fprintf(buf, p.Format(t))
+			fmt.Fprintln(buf, p.Format(t))
 		}
 	}
 

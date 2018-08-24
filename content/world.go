@@ -73,11 +73,20 @@ type Tag struct {
 	Places        rollt.List
 }
 
+// Format tag as type o
+func (t Tag) Format(o format.OutputType) string {
+	return format.Table(o, true, t.Name, [][]string{
+		{"Description", t.Desc},
+		{"Enemies", t.Enemies.String()},
+		{"Friends", t.Friends.String()},
+		{"Complications", t.Complications.String()},
+		{"Things", t.Things.String()},
+		{"Places", t.Places.String()},
+	})
+}
+
 func (t Tag) String() string {
-	return fmt.Sprintf(
-		"Name\t:\t%s\nDesc\t:\t%s\nEnemies\t:\t%s\nFriends\t:\t%s\nComplications\t:\t%s\nThings\t:\t%s\nPlaces\t:\t%s\n",
-		t.Name, t.Desc, t.Enemies, t.Friends, t.Complications, t.Things, t.Places,
-	)
+	return t.Format(format.TEXT)
 }
 
 // World represents a generated world
@@ -131,7 +140,7 @@ func (w World) Format(t format.OutputType) string {
 		{"Temperature", w.Temperature},
 		{"Biosphere", w.Biosphere},
 		{"Population", w.Population},
-		{"Culture", string(w.Culture)},
+		{"Culture", w.Culture.String()},
 		{"Tech Level", w.TechLevel},
 		{"Tags", ""},
 		{w.Tags[0].Name, w.Tags[0].Desc},

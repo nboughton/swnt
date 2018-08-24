@@ -103,7 +103,7 @@ func NewWorld(c culture.Culture, primary bool, exclude []string) World {
 
 	w := World{
 		Primary:     primary,
-		Name:        name.Names.ByCulture(c).Place.Roll(),
+		Name:        name.Person.ByCulture(c).Place.Roll(),
 		Culture:     c,
 		Tags:        [2]Tag{t1, t2},
 		Atmosphere:  worldTable.atmosphere.Roll(),
@@ -153,8 +153,6 @@ func (w World) Format(t format.OutputType) string {
 func (w World) String() string {
 	return w.Format(format.TEXT)
 }
-
-/*************** TABLES ***************/
 
 // Other represents origins of secondary population centers in a System
 var otherWorldTable = struct {

@@ -1,9 +1,11 @@
 package export
 
 import (
+	"bytes"
 	"fmt"
 	"io/ioutil"
 	"os"
+	"text/tabwriter"
 
 	"github.com/nboughton/swnt/content/format"
 	"github.com/nboughton/swnt/content/sector"
@@ -35,7 +37,13 @@ func (t *Text) Write() error {
 	}
 
 	for _, system := range t.Stars.Systems {
-		ioutil.WriteFile(starsDir+"/"+system.Name+".txt", []byte(system.Format(format.TEXT)), filePerm)
+		buf := new(bytes.Buffer)
+		tab := tabwriter.NewWriter(buf, 1, 2, 1, ' ', 0)
+
+		fmt.Fprint(tab, system.Format(format.TEXT))
+		tab.Flush()
+
+		ioutil.WriteFile(starsDir+"/"+system.Name+".txt", buf.Bytes(), filePerm)
 	}
 
 	mapDir := "Maps"

@@ -87,8 +87,8 @@ var beastFeaturesTable = struct {
 }{
 	// BasicAnimalFeatures is pretty fucking self-explanatory
 	rollt.Table{
-		Name: "Basic Animal Features",
-		ID:   "beast.BasicAnimalFeatures",
+		Name: "Basic Features",
+		ID:   "beast.BasicFeatures",
 		Dice: "1d10",
 		Items: []rollt.Item{
 			{Match: []int{1}, Text: "Amphibian, froggish or newtlike"},
@@ -100,7 +100,7 @@ var beastFeaturesTable = struct {
 			{Match: []int{7}, Text: "Spider, many-legged and fat"},
 			{Match: []int{8}, Text: "Exotic, made of wholly alien elements"},
 			{Match: []int{9, 10}, Text: "Mixed", Action: func() string {
-				tbl, _ := table.Registry.Get("beast.BasicAnimalFeatures")
+				tbl, _ := table.Registry.Get("beast.BasicFeatures")
 				tbl.Dice = "1d8"
 
 				res := make(map[string]bool)
@@ -186,12 +186,7 @@ var beastFeaturesTable = struct {
 		Items: []rollt.Item{
 			{Match: []int{1}, Text: "Teeth or mandibles"},
 			{Match: []int{2}, Text: "Claws"},
-			{Match: []int{3}, Text: "Poison", Action: func() string {
-				return fmt.Sprintf("\n\tEffect:\t%s\n\tOnset:\t%s\n\tDuration:\t%s",
-					poisonTable.Effect.Roll(),
-					poisonTable.Onset.Roll(),
-					poisonTable.Duration.Roll())
-			}},
+			{Match: []int{3}, Text: "Poison", Action: poisonAction},
 			{Match: []int{4}, Text: "Harmful discharge", Action: func() string {
 				return harmfulDischargesTable.Roll()
 			}},
@@ -282,7 +277,7 @@ var harmfulDischargesTable = rollt.Table{
 	Dice: "1d8",
 	Items: []rollt.Item{
 		{Match: []int{1}, Text: "Acidic spew doing its damage on a hit"},
-		{Match: []int{2}, Text: "Toxic spittle or cloud, use adjacent chart"},
+		{Match: []int{2}, Text: "Toxic spittle or cloud; ", Action: poisonAction},
 		{Match: []int{3}, Text: "Super-heated or super-chilled spew"},
 		{Match: []int{4}, Text: "Sonic drill or other disabling noise"},
 		{Match: []int{5}, Text: "Natural laser or plasma discharge"},
@@ -296,9 +291,9 @@ var harmfulDischargesTable = rollt.Table{
 
 // Poison p201 SWN:RE Free edition
 var poisonTable = struct {
-	Effect   rollt.Table
-	Onset    rollt.Table
-	Duration rollt.Table
+	effect   rollt.Table
+	onset    rollt.Table
+	duration rollt.Table
 }{
 	rollt.Table{
 		Name: "Poison",
@@ -339,4 +334,11 @@ var poisonTable = struct {
 			{Match: []int{6}, Text: "1d6 days"},
 		},
 	},
+}
+
+func poisonAction() string {
+	return fmt.Sprintf("in %s the target suffers from %s over %s.",
+		poisonTable.onset.Roll(),
+		poisonTable.effect.Roll(),
+		poisonTable.duration.Roll())
 }

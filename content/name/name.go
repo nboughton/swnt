@@ -32,8 +32,8 @@ func (t Tables) ByCulture(c culture.Culture) Table {
 	return Table{}
 }
 
-// Names represents rollable tables for Name generation
-var Names = Tables{
+// Person represents rollable tables for individuals names
+var Person = Tables{
 	Table{
 		Culture: culture.Arabic,
 		Male:    rollt.List{Items: []string{"Aamir", "Ayub", "Binyamin", "Efraim", "Ibrahim", "Ilyas", "Ismail", "Jibril", "Jumanah", "Kazi", "Lut", "Matta", "Mohammed", "Mubarak", "Mustafa", "Nazir", "Rahim", "Reza", "Sharif", "Taimur", "Usman", "Yakub", "Yusuf", "Zakariya", "Zubair"}},

@@ -104,7 +104,8 @@ func NewSector(rows, cols int, excludeTags []string, poiChance, otherWorldChance
 
 // UniqueName ensures rolls on the name.System table until it gets a name that is not currently in use.
 func (s *Stars) systemName() string {
-	n := name.System.Roll() // Try system first
+	//n := name.System.Roll() // Try system first
+	n := name.Generate(rand.Intn(4) + 3)
 	for {
 		if !s.nameUsed(n) {
 			return n

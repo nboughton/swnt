@@ -31,7 +31,7 @@ func NewCorporation() Corporation {
 func (c Corporation) Format(t format.OutputType) string {
 	buf := new(bytes.Buffer)
 
-	fmt.Fprintf(buf, format.Table(t, true, "Corporation", [][]string{
+	fmt.Fprintf(buf, format.Table(t, "Corporation", [][]string{
 		{corpTable.name.Name, fmt.Sprintf("%s %s", c.Name, c.Organization)},
 		{corpTable.business.Name, c.Business},
 		{corpTable.reputation.Name, c.ReputationAndRumor},

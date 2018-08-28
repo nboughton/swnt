@@ -47,23 +47,23 @@ func Header(t OutputType, size int, text string) string {
 
 // Table returns a formatted Table of type t. Headers are optional so that different bits of content
 // can be concatenated into a single table through multiple calls to Table. Bear in mind that Markdown
-// tables must start with a header though. If headers are omitted "name" can also be omitted.
-func Table(t OutputType, header bool, name string, rows [][]string) string {
+// tables must start with a header though.
+func Table(t OutputType, header string, rows [][]string) string {
 	buf, sep, rowTmpl := new(bytes.Buffer), "", ""
 
 	switch t {
 	case TEXT:
 		sep, rowTmpl = "\t:\t", "%s\n"
 
-		if header {
-			fmt.Fprintf(buf, "%s\n", name)
+		if len(header) > 0 {
+			fmt.Fprintf(buf, "%s\n", header)
 		}
 	case MARKDOWN:
 		sep, rowTmpl = " | ", "| %s |\n"
 
-		if header {
+		if len(header) > 0 {
 			cells := make([]string, len(rows[0]))
-			fmt.Fprintf(buf, "| %s %s |\n| %s --- |\n", name, strings.Join(cells, sep), strings.Join(cells, " --- |"))
+			fmt.Fprintf(buf, "| %s %s |\n| %s --- |\n", header, strings.Join(cells, sep), strings.Join(cells, " --- |"))
 		}
 	}
 

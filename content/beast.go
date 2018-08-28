@@ -60,7 +60,7 @@ func NewBeast() Beast {
 func (b Beast) Format(t format.OutputType) string {
 	buf := new(bytes.Buffer)
 
-	fmt.Fprintf(buf, format.Table(t, true, "Beast", [][]string{
+	fmt.Fprintf(buf, format.Table(t, "Beast", [][]string{
 		{b.Type, b.Behaviour},
 		{beastFeaturesTable.basicFeatures.Label(), b.Features},
 		{beastFeaturesTable.bodyPlan.Label(), b.BodyPlan},

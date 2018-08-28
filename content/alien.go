@@ -37,7 +37,7 @@ func NewAlien() Alien {
 func (a Alien) Format(t format.OutputType) string {
 	buf := new(bytes.Buffer)
 
-	fmt.Fprintf(buf, format.Table(t, true, "Alien", [][]string{
+	fmt.Fprintf(buf, format.Table(t, "Alien", [][]string{
 		{alienTable.body.Name, a.Body},
 		{alienTable.lense.Name, a.Lense},
 		{alienTable.socialStructure.Name, a.SocialStructure},

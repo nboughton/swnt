@@ -29,7 +29,7 @@ func NewEncounter(wilderness bool) Encounter {
 
 // Format e as output type t
 func (e Encounter) Format(t format.OutputType) string {
-	return format.Table(t, true, e.Type+" Encounter", e.Fields)
+	return format.Table(t, e.Type+" Encounter", e.Fields)
 }
 
 func (e Encounter) String() string {

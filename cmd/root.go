@@ -43,6 +43,7 @@ const (
 	flWilderness = "wilderness"
 	flTag        = "tag"
 	flTags       = "tags"
+	flLongTags   = "long-tags"
 )
 
 // RootCmd represents the base command when called without any subcommands

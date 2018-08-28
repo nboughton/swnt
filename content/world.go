@@ -92,6 +92,7 @@ func (t Tag) String() string {
 // World represents a generated world
 type World struct {
 	Primary      bool
+	FullTags     bool
 	Name         string
 	Culture      culture.Culture
 	Tags         [2]Tag
@@ -105,10 +106,11 @@ type World struct {
 	Contact      string
 }
 
-// NewWorld sets culture to culture.Any for a random culture and primary to false
-// to include relationship information
-func NewWorld(c culture.Culture, primary bool, exclude []string) World {
-	t1, t2 := selectTags(exclude)
+// NewWorld creates a new world. Set culture to culture.Any for a random culture and primary to false
+// to include relationship information. If tagNamesOnly is true then format output will not include full
+// tag text
+func NewWorld(primary bool, c culture.Culture, fullTags bool, excludeTags []string) World {
+	t1, t2 := selectTags(excludeTags)
 
 	w := World{
 		Primary:     primary,
@@ -142,10 +144,19 @@ func (w World) Format(t format.OutputType) string {
 		{"Population", w.Population},
 		{"Culture", w.Culture.String()},
 		{"Tech Level", w.TechLevel},
-		{"Tags", ""},
-		{w.Tags[0].Name, w.Tags[0].Desc},
-		{w.Tags[1].Name, w.Tags[1].Desc},
 	}))
+
+	if !w.FullTags {
+		fmt.Fprintf(buf, format.Table(t, false, "", [][]string{
+			{"Tags", fmt.Sprintf("%s, %s", w.Tags[0].Name, w.Tags[1].Name)},
+		}))
+	} else {
+		fmt.Fprintf(buf, format.Table(t, false, "", [][]string{
+			{"Tags", ""},
+			{w.Tags[0].Name, w.Tags[0].Desc},
+			{w.Tags[1].Name, w.Tags[1].Desc},
+		}))
+	}
 
 	if !w.Primary {
 		fmt.Fprintf(buf, format.Table(t, false, "", [][]string{

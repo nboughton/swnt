@@ -39,6 +39,7 @@ var worldCmd = &cobra.Command{
 		var (
 			ctr, _ = cmd.Flags().GetString(flCulture)
 			exc, _ = cmd.Flags().GetStringArray(flExclude)
+			flt, _ = cmd.Flags().GetBool(flLongTags)
 			fmc, _ = cmd.Flags().GetString(flFormat)
 			cID    culture.Culture
 			err    error
@@ -54,7 +55,7 @@ var worldCmd = &cobra.Command{
 			}
 		}
 
-		w := content.NewWorld(cID, false, exc)
+		w := content.NewWorld(false, cID, flt, exc)
 		for _, f := range strings.Split(fmc, ",") {
 			fID, err := format.Find(f)
 			if err != nil {
@@ -72,5 +73,6 @@ var worldCmd = &cobra.Command{
 func init() {
 	newCmd.AddCommand(worldCmd)
 	worldCmd.Flags().StringP(flCulture, "c", "", "Set Culture of world")
+	worldCmd.Flags().BoolP(flLongTags, "l", false, "Toggle full world tag info in output")
 	worldCmd.Flags().StringArrayP(flExclude, "x", []string{}, "Exclude tags (-x zombies -x \"regional hegemon\" etc)")
 }

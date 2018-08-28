@@ -46,6 +46,7 @@ var sectorCmd = &cobra.Command{
 		// get flags
 		var (
 			excludeTags, _      = cmd.Flags().GetStringArray(flExclude)
+			fullTags, _         = cmd.Flags().GetBool(flLongTags)
 			poiChance, _        = cmd.Flags().GetInt(flPoi)
 			otherWorldChance, _ = cmd.Flags().GetInt(flOW)
 			secHeight, _        = cmd.Flags().GetInt(flSecHeight)
@@ -59,7 +60,7 @@ var sectorCmd = &cobra.Command{
 		}
 
 		var (
-			secData = sector.NewSector(secHeight, secWidth, excludeTags, poiChance, otherWorldChance)
+			secData = sector.NewSector(secHeight, secWidth, excludeTags, fullTags, poiChance, otherWorldChance)
 			secName = genSectorName()
 		)
 
@@ -94,7 +95,7 @@ var sectorCmd = &cobra.Command{
 				return
 
 			case "r":
-				secData = sector.NewSector(secHeight, secWidth, excludeTags, poiChance, otherWorldChance)
+				secData = sector.NewSector(secHeight, secWidth, excludeTags, fullTags, poiChance, otherWorldChance)
 				secName = genSectorName()
 				fmt.Println(secName)
 				fmt.Println(export.Hexmap(secData, true, false))
@@ -117,6 +118,7 @@ func genSectorName() string {
 func init() {
 	newCmd.AddCommand(sectorCmd)
 	sectorCmd.Flags().StringArrayP(flExclude, "x", []string{}, "Exclude tags (-x zombies -x \"regional hegemon\" etc)")
+	sectorCmd.Flags().BoolP(flLongTags, "l", false, "Toggle full world tag info in output")
 	sectorCmd.Flags().IntP(flPoi, "p", 30, "Set % chance of a POI being generated for any given star in the sector")
 	sectorCmd.Flags().IntP(flOW, "o", 10, "Set % chance for a secondary world to be generated for any given star in the sector")
 	sectorCmd.Flags().IntP(flSecHeight, "e", 10, "Set height of sector in hexes")

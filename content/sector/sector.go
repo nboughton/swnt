@@ -26,7 +26,7 @@ type Star struct {
 }
 
 // NewStar generates a new Star struct to be added to the map
-func NewStar(row, col int, name string, exclude []string, poiChance, otherWorldChance int) *Star {
+func NewStar(row, col int, name string, exclude []string, fullTags bool, poiChance, otherWorldChance int) *Star {
 	ctr := culture.Random()
 
 	s := &Star{
@@ -34,13 +34,13 @@ func NewStar(row, col int, name string, exclude []string, poiChance, otherWorldC
 		Col:     col,
 		Culture: ctr,
 		Name:    name,
-		Worlds:  []content.World{content.NewWorld(ctr, true, exclude)},
+		Worlds:  []content.World{content.NewWorld(true, ctr, fullTags, exclude)},
 	}
 
 	// Cascading 10% chance of other worlds
 	for rand.Intn(100) < otherWorldChance {
 		ctr = culture.Random()
-		s.Worlds = append(s.Worlds, content.NewWorld(ctr, false, exclude))
+		s.Worlds = append(s.Worlds, content.NewWorld(false, ctr, fullTags, exclude))
 	}
 
 	// 30% chance of a Point of Interest
@@ -84,7 +84,7 @@ type Stars struct {
 
 // NewSector returns a blank Sector struct and generates tag information according to the guidelines
 // in pages 133 - 177 of Stars Without Number (Revised Edition).
-func NewSector(rows, cols int, excludeTags []string, poiChance, otherWorldChance int) *Stars {
+func NewSector(rows, cols int, excludeTags []string, fullTags bool, poiChance, otherWorldChance int) *Stars {
 	s := &Stars{
 		Rows: rows,
 		Cols: cols,
@@ -95,7 +95,7 @@ func NewSector(rows, cols int, excludeTags []string, poiChance, otherWorldChance
 
 	for row, col := rand.Intn(s.Rows), rand.Intn(s.Cols); len(s.Systems) <= stars; row, col = rand.Intn(s.Rows), rand.Intn(s.Cols) {
 		if !s.active(row, col) {
-			s.Systems = append(s.Systems, NewStar(row, col, s.systemName(), excludeTags, poiChance, otherWorldChance))
+			s.Systems = append(s.Systems, NewStar(row, col, s.systemName(), excludeTags, fullTags, poiChance, otherWorldChance))
 		}
 	}
 

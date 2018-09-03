@@ -93,6 +93,7 @@ func (s statBlockTable) Format(t format.OutputType) string {
 
 // StatBlocks for typical NPC combat encounters as per SWN pg195
 var StatBlocks = statBlockTable{
+	// Humans
 	{"Peaceful Human", 1, ac{10, ""}, atk{0, 1}, "Unarmed", "10m", 6, 1, 15, 0},
 	{"Martial Human", 1, ac{10, ""}, atk{1, 1}, "By weapon", "10m", 8, 1, 15, 0},
 	{"Veteran Fighter", 2, ac{14, ""}, atk{2, 1}, "By weapon +1", "10m", 9, 1, 14, 0},
@@ -112,6 +113,7 @@ var StatBlocks = statBlockTable{
 	{"Serial Killer", 6, ac{12, ""}, atk{8, 1}, "By weapon +3", "10m", 12, 3, 12, 0},
 	{"Skilled Professional", 1, ac{10, ""}, atk{0, 1}, "By weapon", "10m", 6, 2, 15, 0},
 	{"Warrior Tyrant", 8, ac{20, "powered"}, atk{10, 1}, "By weapon +3", "10m", 11, 3, 11, 0},
+	// Bots
 	{"Janitor Bot", 1, ac{14, ""}, atk{0, 0}, "N/A", "5m", 8, 1, 15, 1000},
 	{"Civilian Security Bot", 1, ac{15, ""}, atk{1, 1}, "1d8 stun", "10m", 12, 1, 15, 5000},
 	{"Repair Bot", 1, ac{14, ""}, atk{0, 1}, "1d6 tool", "10m", 8, 1, 15, 5000},
@@ -119,6 +121,7 @@ var StatBlocks = statBlockTable{
 	{"Companion Bot", 1, ac{12, ""}, atk{0, 1}, "1d2 unarmed", "10m", 6, 1, 15, 2500},
 	{"Soldier Bot", 2, ac{16, ""}, atk{1, 1}, "By weapon", "10m", 10, 1, 14, 10000},
 	{"Heavy Warbot", 6, ac{18, ""}, atk{8, 2}, "2d8 plasma", "15m", 10, 2, 12, 50000},
+	// Beasts
 	{"Small Vicious Beast", 0, ac{14, ""}, atk{1, 1}, "1d2", "10m", 7, 1, 15, 0},
 	{"Small Pack Hunter", 1, ac{13, ""}, atk{1, 1}, "1d4", "15m", 8, 1, 15, 0},
 	{"Large Pack Hunter", 2, ac{14, ""}, atk{2, 1}, "1d6", "15m", 9, 1, 14, 0},

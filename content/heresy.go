@@ -31,7 +31,7 @@ func NewHeresy() Heresy {
 func (h Heresy) Format(t format.OutputType) string {
 	buf := new(bytes.Buffer)
 
-	fmt.Fprintf(buf, format.Table(t, "Heresy", [][]string{
+	fmt.Fprintf(buf, format.Table(t, []string{"Heresy", ""}, [][]string{
 		{heresyTable.founder.Name, h.Founder},
 		{heresyTable.majorHeresy.Name, h.MajorHeresy},
 		{heresyTable.attitude.Name, h.Attitude},

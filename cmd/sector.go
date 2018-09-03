@@ -82,8 +82,12 @@ var sectorCmd = &cobra.Command{
 				}
 
 				for _, t := range strings.Split(exportTypes, ",") {
-					if ex := export.New(t, secName, secData); ex != nil {
-						if err := ex.Write(); err != nil {
+					if exporter, err := export.New(t, secName, secData); exporter != nil {
+						if err != nil {
+							log.Fatal(err)
+						}
+
+						if err = exporter.Write(); err != nil {
 							log.Fatal(err)
 						}
 					}
@@ -119,9 +123,9 @@ func init() {
 	newCmd.AddCommand(sectorCmd)
 	sectorCmd.Flags().StringArrayP(flExclude, "x", []string{}, "Exclude tags (-x zombies -x \"regional hegemon\" etc)")
 	sectorCmd.Flags().BoolP(flLongTags, "l", false, "Toggle full world tag info in output")
-	sectorCmd.Flags().IntP(flPoi, "p", 30, "Set % chance of a POI being generated for any given star in the sector")
-	sectorCmd.Flags().IntP(flOW, "o", 10, "Set % chance for a secondary world to be generated for any given star in the sector")
+	sectorCmd.Flags().IntP(flPoi, "p", 40, "Set % chance of a POI being generated for any given star in the sector")
+	sectorCmd.Flags().IntP(flOW, "o", 15, "Set % chance for a secondary world to be generated for any given star in the sector")
 	sectorCmd.Flags().IntP(flSecHeight, "e", 10, "Set height of sector in hexes")
 	sectorCmd.Flags().IntP(flSecWidth, "w", 8, "Set width of sector in hexes")
-	sectorCmd.Flags().String(flExport, "text,json", "Set export formats. Format types must be comma separated without spaces. Supported formats are text, json and hugo")
+	sectorCmd.Flags().String(flExport, "txt,json", "Set export formats. Format types must be comma separated without spaces. Supported formats are txt, json and hugo")
 }

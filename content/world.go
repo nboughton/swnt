@@ -75,7 +75,7 @@ type Tag struct {
 
 // Format tag as type o
 func (t Tag) Format(o format.OutputType) string {
-	return format.Table(o, t.Name, [][]string{
+	return format.Table(o, []string{t.Name, ""}, [][]string{
 		{"Description", t.Desc},
 		{"Enemies", t.Enemies.String()},
 		{"Friends", t.Friends.String()},
@@ -138,7 +138,7 @@ func NewWorld(primary bool, c culture.Culture, fullTags bool, excludeTags []stri
 func (w World) Format(t format.OutputType) string {
 	var buf = new(bytes.Buffer)
 
-	fmt.Fprintf(buf, format.Table(t, w.Name, [][]string{
+	fmt.Fprintf(buf, format.Table(t, []string{w.Name, ""}, [][]string{
 		{"Atmosphere", w.Atmosphere},
 		{"Temperature", w.Temperature},
 		{"Biosphere", w.Biosphere},
@@ -148,11 +148,11 @@ func (w World) Format(t format.OutputType) string {
 	}))
 
 	if !w.FullTags {
-		fmt.Fprintf(buf, format.Table(t, "", [][]string{
+		fmt.Fprintf(buf, format.Table(t, []string{}, [][]string{
 			{"Tags", fmt.Sprintf("%s, %s", w.Tags[0].Name, w.Tags[1].Name)},
 		}))
 	} else {
-		fmt.Fprintf(buf, format.Table(t, "", [][]string{
+		fmt.Fprintf(buf, format.Table(t, []string{}, [][]string{
 			{"Tags", ""},
 			{w.Tags[0].Name, w.Tags[0].Desc},
 			{w.Tags[1].Name, w.Tags[1].Desc},
@@ -160,7 +160,7 @@ func (w World) Format(t format.OutputType) string {
 	}
 
 	if !w.Primary {
-		fmt.Fprintf(buf, format.Table(t, "", [][]string{
+		fmt.Fprintf(buf, format.Table(t, []string{}, [][]string{
 			{"Origins", ""},
 			{otherWorldTable.origin.Name, w.Origin},
 			{otherWorldTable.relationship.Name, w.Relationship},

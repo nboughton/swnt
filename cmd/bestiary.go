@@ -22,50 +22,41 @@ package cmd
 
 import (
 	"fmt"
-	"os"
+	"strings"
 
+	"github.com/nboughton/swnt/content"
+	"github.com/nboughton/swnt/content/format"
 	"github.com/spf13/cobra"
 )
 
-const (
-	flExclude   = "exclude"
-	flFormat    = "format"
-	flColour    = "colour"
-	flPoi       = "poi-chance"
-	flOW        = "other-worlds-chance"
-	flSecHeight = "sector-height"
-	flSecWidth  = "sector-width"
-	flExport    = "export"
-
-	flWilderness = "wilderness"
-
-	flCulture = "culture"
-	flGender  = "gender"
-	flPatron  = "is-patron"
-
-	flDescOnly = "desc-only"
-	flTag      = "tag"
-	flTags     = "tags"
-	flLongTags = "long-tags"
-
-	flList   = "list"
-	flName   = "name"
-	flFilter = "filter"
-	flAll    = "all"
-)
-
-// RootCmd represents the base command when called without any subcommands
-var RootCmd = &cobra.Command{
-	Use:   "swnt",
-	Short: "A simple application for generating content for Stars Without Number",
+// bestiaryCmd represents the bestiary command
+var bestiaryCmd = &cobra.Command{
+	Use:   "bestiary",
+	Short: "List creature statblocks",
 	Long:  ``,
+	Run: func(cmd *cobra.Command, args []string) {
+		fmc, _ := cmd.Flags().GetString(flFormat)
+		flt, _ := cmd.Flags().GetStringArray(flFilter)
+
+		s := content.StatBlocks.Filter(flt...)
+		for _, f := range strings.Split(fmc, ",") {
+			fID, err := format.Find(f)
+			if err != nil {
+				fmt.Println(err)
+				return
+			}
+
+			fmt.Fprintf(tw, s.Format(fID))
+			fmt.Fprintln(tw)
+		}
+
+		tw.Flush()
+	},
 }
 
-// Execute adds all child commands to the root command and sets flags appropriately.
-// This is called by main.main(). It only needs to happen once to the rootCmd.
-func Execute() {
-	if err := RootCmd.Execute(); err != nil {
-		fmt.Println(err)
-		os.Exit(1)
-	}
+func init() {
+	RootCmd.AddCommand(bestiaryCmd)
+
+	bestiaryCmd.Flags().StringArrayP(flFilter, "l", []string{}, "Filter by name. I.e -l \"human\" -l \"pirate\"")
+	bestiaryCmd.Flags().StringP(flFormat, "f", "txt", "Set output format. (--format txt,md). Not all commands support this flag.")
 }

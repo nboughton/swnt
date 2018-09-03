@@ -36,8 +36,8 @@ func NewPlace(wilderness bool) Place {
 func (p Place) Format(t format.OutputType) string {
 	buf := new(bytes.Buffer)
 
-	fmt.Fprintf(buf, format.Table(t, "Place", p.Hazard))
-	fmt.Fprintf(buf, format.Table(t, "", [][]string{
+	fmt.Fprintf(buf, format.Table(t, []string{"Place", ""}, p.Hazard))
+	fmt.Fprintf(buf, format.Table(t, []string{}, [][]string{
 		{"Ongoings", p.Ongoings},
 		{"Reward", p.Reward},
 	}))

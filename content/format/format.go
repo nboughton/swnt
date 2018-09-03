@@ -7,26 +7,30 @@ import (
 )
 
 // OutputType defines identifiers for output style categories such as text and markdown
-type OutputType int
+type OutputType string
 
 // OutputType constants
 const (
-	TEXT OutputType = iota
-	MARKDOWN
+	TEXT     OutputType = "txt"
+	MARKDOWN OutputType = "md"
 )
 
-var types = map[string]OutputType{
-	"text":     TEXT,
-	"markdown": MARKDOWN,
+// Types of format output currently supported
+var Types = []OutputType{TEXT, MARKDOWN}
+
+func (o OutputType) String() string {
+	return string(o)
 }
 
 // Find attempts retrieve the OutputType value from string
-func Find(t string) (OutputType, error) {
-	if o, ok := types[strings.ToLower(t)]; ok {
-		return o, nil
+func Find(name string) (OutputType, error) {
+	for _, t := range Types {
+		if strings.ToLower(name) == t.String() {
+			return t, nil
+		}
 	}
 
-	return 0, fmt.Errorf("no such output type")
+	return "", fmt.Errorf("format not supported, available output types are: %s", Types)
 }
 
 // Header formats and returns a header in format t, header sizes are defined in HTML/MARKDOWN terms with 1 being the largest
@@ -48,22 +52,26 @@ func Header(t OutputType, size int, text string) string {
 // Table returns a formatted Table of type t. Headers are optional so that different bits of content
 // can be concatenated into a single table through multiple calls to Table. Bear in mind that Markdown
 // tables must start with a header though.
-func Table(t OutputType, header string, rows [][]string) string {
+func Table(t OutputType, headers []string, rows [][]string) string {
 	buf, sep, rowTmpl := new(bytes.Buffer), "", ""
+
+	if len(rows) == 0 {
+		return "no table data found"
+	}
 
 	switch t {
 	case TEXT:
 		sep, rowTmpl = "\t:\t", "%s\n"
 
-		if len(header) > 0 {
-			fmt.Fprintf(buf, "%s\n", header)
+		if len(headers) > 0 {
+			fmt.Fprintf(buf, "%s\n", strings.Join(headers, sep))
 		}
 	case MARKDOWN:
 		sep, rowTmpl = " | ", "| %s |\n"
 
-		if len(header) > 0 {
+		if len(headers) > 0 {
 			cells := make([]string, len(rows[0]))
-			fmt.Fprintf(buf, "| %s %s |\n| %s --- |\n", header, strings.Join(cells, sep), strings.Join(cells, " --- |"))
+			fmt.Fprintf(buf, "| %s |\n| %s --- |\n", strings.Join(headers, " | "), strings.Join(cells, " --- |"))
 		}
 	}
 

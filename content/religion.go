@@ -35,7 +35,7 @@ func NewReligion() Religion {
 func (r Religion) Format(t format.OutputType) string {
 	buf := new(bytes.Buffer)
 
-	fmt.Fprintf(buf, format.Table(t, "Religion", [][]string{
+	fmt.Fprintf(buf, format.Table(t, []string{"Religion", ""}, [][]string{
 		{religionTable.origin.Name, r.OriginTradition},
 		{religionTable.evolution.Name, r.Evolution},
 		{religionTable.leadership.Name, r.Leadership},

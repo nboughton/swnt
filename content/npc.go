@@ -25,7 +25,7 @@ func NewPatron() Patron {
 
 // Format patron data as type t
 func (p Patron) Format(t format.OutputType) string {
-	return format.Table(t, "Patron", p.Fields)
+	return format.Table(t, []string{"Patron", ""}, p.Fields)
 }
 
 // NPC represents an NPC
@@ -92,12 +92,12 @@ func NewNPC(ctr culture.Culture, g gender.Gender, isPatron bool) NPC {
 func (n NPC) Format(t format.OutputType) string {
 	buf := new(bytes.Buffer)
 
-	fmt.Fprintf(buf, format.Table(t, n.Name, [][]string{
+	fmt.Fprintf(buf, format.Table(t, []string{n.Name, ""}, [][]string{
 		{"Culture", n.Culture.String()},
 		{"Gender", n.Gender.String()},
 	}))
-	fmt.Fprintf(buf, format.Table(t, "", n.Fields))
-	fmt.Fprintf(buf, format.Table(t, "", [][]string{
+	fmt.Fprintf(buf, format.Table(t, []string{}, n.Fields))
+	fmt.Fprintf(buf, format.Table(t, []string{}, [][]string{
 		{"Hooks", ""},
 		{npcHooksTable.manner.Name, n.Hooks.Manner},
 		{npcHooksTable.outcome.Name, n.Hooks.Outcome},

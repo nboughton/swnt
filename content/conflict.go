@@ -29,8 +29,8 @@ func NewConflict() Conflict {
 func (c Conflict) Format(t format.OutputType) string {
 	buf := new(bytes.Buffer)
 
-	fmt.Fprintf(buf, format.Table(t, "Conflict", c.Problem))
-	fmt.Fprintf(buf, format.Table(t, "", [][]string{
+	fmt.Fprintf(buf, format.Table(t, []string{"Conflict", ""}, c.Problem))
+	fmt.Fprintf(buf, format.Table(t, []string{}, [][]string{
 		{"Twist", c.Twist},
 		{"Restraint", c.Restraint},
 	}))

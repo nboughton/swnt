@@ -1,6 +1,7 @@
 package export
 
 import (
+	"fmt"
 	"os"
 	"strings"
 
@@ -19,27 +20,27 @@ type Exporter interface {
 }
 
 // New returns a new Exporter. Export types currently supported are: hugo and text
-func New(exportType, name string, data *sector.Stars) Exporter {
+func New(exportType, name string, data *sector.Stars) (Exporter, error) {
 	switch exportType {
 	case "hugo":
 		return &Hugo{
 			Name:  name,
 			Stars: data,
-		}
+		}, nil
 
-	case "text":
+	case "txt":
 		return &Text{
 			Name:  name,
 			Stars: data,
-		}
+		}, nil
 	case "json":
 		return &JSON{
 			Name:  name,
 			Stars: data,
-		}
+		}, nil
 	}
 
-	return nil
+	return nil, fmt.Errorf("no Exporter found for [%s], available options are [%s]", exportType, []string{"hugo", "txt", "json"})
 }
 
 // Hexmap returns the ASCII representation of a Sector map

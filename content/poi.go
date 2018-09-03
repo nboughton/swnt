@@ -32,7 +32,7 @@ func NewPOI() POI {
 func (p POI) Format(t format.OutputType) string {
 	buf := new(bytes.Buffer)
 
-	fmt.Fprintf(buf, format.Table(t, p.Point, [][]string{
+	fmt.Fprintf(buf, format.Table(t, []string{p.Point, ""}, [][]string{
 		{poiTable.Headers[1], p.Occupied},
 		{poiTable.Headers[2], p.Situation},
 	}))

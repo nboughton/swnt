@@ -26,14 +26,42 @@ To make full use of swnt's hugo export function for generated sectors you'll als
 
 ## Usage
 
-swnt is mostly for rolling on tables and generating content such as sectors, npcs, points of interest, quick encounters etc:
-
-    swnt new sector
-
-new sector takes a few options that you might want to play around with:
+swnt is mostly for rolling on tables and generating content such as sectors, npcs, points of interest, quick encounters etc using the "new" sub-command:
 
 ```
-swnt new sector -h
+$ swnt new -h
+Generate content
+
+Usage:
+  swnt new [command]
+
+Available Commands:
+  adventure   Generate an Adventure seed
+  alien       Generate an Alien
+  beast       Generate a Beast
+  conflict    Generate a Conflict/Problem
+  corporation Generate a Corporation
+  culture     Generate a culture
+  encounter   Generate a quick encounter
+  heresy      Generate a Heresy
+  npc         Generate a NPC
+  place       Generate a place
+  poi         Generate a Point of Interest
+  religion    Generate a Religion
+  sector      Create the skeleton of a Sector
+  world       Generate a secondary World for a Sector cell
+
+Flags:
+  -f, --format string   Set output format. (--format txt,md). Not all commands support this flag. (default "txt")
+  -h, --help            help for new
+
+Use "swnt new [command] --help" for more information about a command.
+```
+
+However it's fairly like the command users will want to play with most is "new sector":
+
+```
+$ swnt new sector -h
 Create the skeleton of a Sector
 
 Usage:
@@ -41,12 +69,16 @@ Usage:
 
 Flags:
   -x, --exclude stringArray       Exclude tags (-x zombies -x "regional hegemon" etc)
-      --export string             Set export formats. (--export text,hugo,json) format types must be comma separated without spaces. (default "text")
+      --export string             Set export formats. Format types must be comma separated without spaces. Supported formats are txt, json and hugo (default "txt,json")
   -h, --help                      help for sector
-  -o, --other-worlds-chance int   Set % chance for a secondary world to be generated for any given star in the sector (default 10)
-  -p, --poi-chance int            Set % chance of a POI being generated for any given star in the sector (default 30)
+  -l, --long-tags                 Toggle full world tag info in output
+  -o, --other-worlds-chance int   Set % chance for a secondary world to be generated for any given star in the sector (default 15)
+  -p, --poi-chance int            Set % chance of a POI being generated for any given star in the sector (default 40)
   -e, --sector-height int         Set height of sector in hexes (default 10)
   -w, --sector-width int          Set width of sector in hexes (default 8)
+
+Global Flags:
+  -f, --format string   Set output format. (--format txt,md). Not all commands support this flag. (default "txt")
 ```
 
 Note new sector doesn't support the --format flag as export formats are covered by the export flag and output differently.
@@ -59,7 +91,7 @@ All commands can be queried for their available options with the -h flag. For ex
 
 
 ```
-[nick@gubbins swnt]$ swnt -h
+$ swnt -h
 A simple application for generating content for Stars Without Number
 
 Usage:

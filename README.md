@@ -5,9 +5,9 @@ While the code is MIT licensed, all roll table content (except the name.System t
 
 ## Features
 
-* Can generate sectors up to 99x99 hexes
-* Can export sectors as
-* * plain text (with directroy structure)
+* Generate sectors up to 99x99 hexes
+* Export sectors as
+* * plain text (with directory structure)
 * * a hugo site using a fork of the docdock theme. This includes indexing and text search support
 * * JSON
 * Has generators for pretty much all tables in the Free edition of Stars Without Number (I don't think I missed any, let me know if I did)
@@ -26,7 +26,7 @@ To make full use of swnt's hugo export function for generated sectors you'll als
 
 ## Usage
 
-At present all commands are for generating content. Most useful is likely to be the Sector generator. Generating a new sector is done by issuing the following command:
+swnt is mostly for rolling on tables and generating content such as sectors, npcs, points of interest, quick encounters etc:
 
     swnt new sector
 
@@ -59,36 +59,26 @@ All commands can be queried for their available options with the -h flag. For ex
 
 
 ```
-swnt new -h
-Generate content
+[nick@gubbins swnt]$ swnt -h
+A simple application for generating content for Stars Without Number
 
 Usage:
-  swnt new [command]
+  swnt [command]
 
 Available Commands:
-  adventure   Generate an Adventure seed
-  alien       Generate an Alien
-  beast       Generate a Beast
-  conflict    Generate a Conflict/Problem
-  corporation Generate a Corporation
-  culture     Generate a culture
-  encounter   Generate a quick encounter
-  heresy      Generate a Heresy
-  npc         Generate a NPC
-  place       Generate a place
-  poi         Generate a Point of Interest
-  religion    Generate a Religion
-  sector      Create the skeleton of a Sector
-  world       Generate a secondary World for a Sector cell
+  bestiary    List creature statblocks
+  help        Help about any command
+  new         Generate content
+  react       Make a reaction roll for an NPC
+  show        Print the text of a world tag, table text will be added in future
 
 Flags:
-  -f, --format string   Set output format. (--format text,markdown). Not all commands support this flag. (default "text")
-  -h, --help            help for new
+  -h, --help   help for swnt
 
-Use "swnt new [command] --help" for more information about a command.
+Use "swnt [command] --help" for more information about a command.
 ```
 
-Most sub-commands of "new" support markdown as an output option. This makes it easier to copy and paste content straight into a Hugo exported sector.
+Most sub-commands of "new" (and the bestiary) support markdown as an output option with the -f (--format) flag. This makes it easier to copy and paste content straight into a Hugo exported sector.
 
 ## FAQ
 

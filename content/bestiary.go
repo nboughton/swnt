@@ -64,6 +64,7 @@ func (a atk) String() string {
 
 type statBlockTable []statBlock
 
+// Filter returns a filtered statblock using the terms supplied. Blocks are filtered on name and type.
 func (s statBlockTable) Filter(terms ...string) statBlockTable {
 	if len(terms) == 0 {
 		return s
@@ -83,6 +84,7 @@ func (s statBlockTable) Filter(terms ...string) statBlockTable {
 	return out
 }
 
+// Format StatBlock s as OutputType t
 func (s statBlockTable) Format(t format.OutputType) string {
 	rows := [][]string{}
 

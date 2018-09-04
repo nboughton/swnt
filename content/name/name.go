@@ -1,3 +1,4 @@
+// Package name provides tables and a generator for NPC and place names
 package name
 
 import (
@@ -32,8 +33,8 @@ func (t tables) ByCulture(c culture.Culture) table {
 	return table{}
 }
 
-// Person represents rollable tables for individuals names
-var Person = tables{
+// Table represents rollable tables for individuals names
+var Table = tables{
 	table{
 		Culture: culture.Arabic,
 		Male:    rollt.List{Items: []string{"Aamir", "Ayub", "Binyamin", "Efraim", "Ibrahim", "Ilyas", "Ismail", "Jibril", "Jumanah", "Kazi", "Lut", "Matta", "Mohammed", "Mubarak", "Mustafa", "Nazir", "Rahim", "Reza", "Sharif", "Taimur", "Usman", "Yakub", "Yusuf", "Zakariya", "Zubair"}},

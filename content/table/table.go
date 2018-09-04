@@ -1,3 +1,5 @@
+// Package table expands on github.com/nboughton/rollt to provide some custom table types that are
+// routinely used in SWN Free Edition
 package table
 
 import (

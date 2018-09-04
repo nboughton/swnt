@@ -1,3 +1,4 @@
+// Package culture provides reference types for cultural bases found in SWN Free edition
 package culture
 
 import (

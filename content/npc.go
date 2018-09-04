@@ -70,7 +70,7 @@ func NewNPC(ctr culture.Culture, g gender.Gender, isPatron bool) NPC {
 		n.Patron = NewPatron()
 	}
 
-	nm := name.Person.ByCulture(ctr)
+	nm := name.Table.ByCulture(ctr)
 	switch g {
 	case gender.Male:
 		n.Name = fmt.Sprintf("%s %s", nm.Male.Roll(), nm.Surname.Roll())

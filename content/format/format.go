@@ -1,3 +1,4 @@
+// Package format provides formatting functions for text output
 package format
 
 import (

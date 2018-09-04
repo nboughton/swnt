@@ -1,3 +1,4 @@
+// Package export provides Exporter types for writing project directories
 package export
 
 import (
@@ -19,7 +20,7 @@ type Exporter interface {
 	Write() error
 }
 
-// New returns a new Exporter. Export types currently supported are: hugo and text
+// New returns a new Exporter. Export types currently supported are: hugo, txt and json
 func New(exportType, name string, data *sector.Stars) (Exporter, error) {
 	switch exportType {
 	case "hugo":

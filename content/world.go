@@ -115,7 +115,7 @@ func NewWorld(primary bool, c culture.Culture, fullTags bool, excludeTags []stri
 	w := World{
 		Primary:     primary,
 		FullTags:    fullTags,
-		Name:        name.Person.ByCulture(c).Place.Roll(),
+		Name:        name.Table.ByCulture(c).Place.Roll(),
 		Culture:     c,
 		Tags:        [2]Tag{t1, t2},
 		Atmosphere:  worldTable.atmosphere.Roll(),

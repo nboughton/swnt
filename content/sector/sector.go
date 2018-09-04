@@ -1,3 +1,4 @@
+// Package sector builds on other table packages to generate a complete sector
 package sector
 
 import (

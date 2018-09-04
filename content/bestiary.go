@@ -74,6 +74,7 @@ func (s statBlockTable) Filter(terms ...string) statBlockTable {
 		for _, term := range terms {
 			if strings.Contains(strings.ToLower(row.Name), strings.ToLower(term)) {
 				out = append(out, row)
+				break
 			}
 		}
 	}

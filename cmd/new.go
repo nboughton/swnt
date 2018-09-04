@@ -28,7 +28,7 @@ import (
 )
 
 // Tabwriter for formatting
-var tw = tabwriter.NewWriter(os.Stdout, 1, 2, 2, ' ', 0)
+var tw = tabwriter.NewWriter(os.Stdout, 1, 2, 1, ' ', 0)
 
 // newCmd represents the create command
 var newCmd = &cobra.Command{

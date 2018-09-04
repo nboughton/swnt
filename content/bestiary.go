@@ -9,7 +9,7 @@ import (
 
 // statBlock data for a beast/bot/npc
 type statBlock struct {
-	Type   string // Not shown but used in filtering
+	Type   string
 	Name   string
 	HD     int
 	AC     ac

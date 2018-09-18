@@ -22,53 +22,48 @@ package cmd
 
 import (
 	"fmt"
-	"os"
+	"log"
+	"strings"
 
+	"github.com/nboughton/go-utils/json/file"
+	"github.com/nboughton/swnt/content/sector"
+	"github.com/nboughton/swnt/export"
 	"github.com/spf13/cobra"
 )
 
-const (
-	flExclude   = "exclude"
-	flFormat    = "format"
-	flColour    = "colour"
-	flPoi       = "poi-chance"
-	flOW        = "other-worlds-chance"
-	flSecHeight = "sector-height"
-	flSecWidth  = "sector-width"
-	flExport    = "export"
-	flDensity   = "density"
-
-	flFile = "file"
-
-	flWilderness = "wilderness"
-
-	flCulture = "culture"
-	flGender  = "gender"
-	flPatron  = "is-patron"
-
-	flDescOnly = "desc-only"
-	flTag      = "tag"
-	flTags     = "tags"
-	flLongTags = "long-tags"
-
-	flList   = "list"
-	flName   = "name"
-	flFilter = "filter"
-	flAll    = "all"
-)
-
-// RootCmd represents the base command when called without any subcommands
-var RootCmd = &cobra.Command{
-	Use:   "swnt",
-	Short: "A simple application for generating content for Stars Without Number",
+// exportCmd represents the export command
+var exportCmd = &cobra.Command{
+	Use:   "export",
+	Short: "Export a json dump to hugo or text",
 	Long:  ``,
+	Run: func(cmd *cobra.Command, args []string) {
+		jsonFile, _ := cmd.Flags().GetString(flFile)
+		exportTypes, _ := cmd.Flags().GetString(flExport)
+
+		secName := strings.Replace(jsonFile, ".json", "", -1)
+
+		secData := new(sector.Stars)
+		if err := file.Scan(jsonFile, &secData); err != nil {
+			fmt.Println("Error reading file. You may need to reformat the JSON data to make it more easily readable.", err)
+			return
+		}
+
+		for _, t := range strings.Split(exportTypes, ",") {
+			if exporter, err := export.New(t, secName, secData); exporter != nil {
+				if err != nil {
+					log.Fatal(err)
+				}
+
+				if err = exporter.Write(); err != nil {
+					log.Fatal(err)
+				}
+			}
+		}
+	},
 }
 
-// Execute adds all child commands to the root command and sets flags appropriately.
-// This is called by main.main(). It only needs to happen once to the rootCmd.
-func Execute() {
-	if err := RootCmd.Execute(); err != nil {
-		fmt.Println(err)
-		os.Exit(1)
-	}
+func init() {
+	RootCmd.AddCommand(exportCmd)
+	exportCmd.Flags().StringP(flFile, "i", "", "Path to json file")
+	exportCmd.Flags().StringP(flExport, "x", "hugo,txt", "Set export format")
 }

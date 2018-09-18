@@ -52,7 +52,21 @@ var sectorCmd = &cobra.Command{
 			secHeight, _        = cmd.Flags().GetInt(flSecHeight)
 			secWidth, _         = cmd.Flags().GetInt(flSecWidth)
 			exportTypes, _      = cmd.Flags().GetString(flExport)
+			density, _          = cmd.Flags().GetString(flDensity)
 		)
+
+		dVal := sector.AVERAGE
+		switch density {
+		case "sparse":
+			dVal = sector.SPARSE
+		case "average":
+			dVal = sector.AVERAGE
+		case "dense":
+			dVal = sector.DENSE
+		default:
+			fmt.Printf("Unknown density value [%s], use sparse, average or dense\n", density)
+			return
+		}
 
 		if secHeight < 2 || secHeight > 99 || secWidth < 2 || secWidth > 99 {
 			fmt.Println("Sectors larger than 99, or smaller than 2, hexes in either direction are not supported")
@@ -60,7 +74,7 @@ var sectorCmd = &cobra.Command{
 		}
 
 		var (
-			secData = sector.NewSector(secHeight, secWidth, excludeTags, fullTags, poiChance, otherWorldChance)
+			secData = sector.NewSector(secHeight, secWidth, excludeTags, fullTags, poiChance, otherWorldChance, dVal)
 			secName = genSectorName()
 		)
 
@@ -99,7 +113,7 @@ var sectorCmd = &cobra.Command{
 				return
 
 			case "r":
-				secData = sector.NewSector(secHeight, secWidth, excludeTags, fullTags, poiChance, otherWorldChance)
+				secData = sector.NewSector(secHeight, secWidth, excludeTags, fullTags, poiChance, otherWorldChance, dVal)
 				secName = genSectorName()
 				fmt.Println(secName)
 				fmt.Println(export.Hexmap(secData, true, false))
@@ -128,4 +142,5 @@ func init() {
 	sectorCmd.Flags().IntP(flSecHeight, "e", 10, "Set height of sector in hexes")
 	sectorCmd.Flags().IntP(flSecWidth, "w", 8, "Set width of sector in hexes")
 	sectorCmd.Flags().String(flExport, "txt,json", "Set export formats. Format types must be comma separated without spaces. Supported formats are txt, json and hugo")
+	sectorCmd.Flags().StringP(flDensity, "d", "average", "Set star density in sector. Options are sparse, average or dense")
 }

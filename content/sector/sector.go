@@ -83,16 +83,36 @@ type Stars struct {
 	Systems    []*Star
 }
 
+// Density of star systems in a sector
+type Density int
+
+// Consts for star density
+const (
+	SPARSE Density = iota
+	AVERAGE
+	DENSE
+)
+
 // NewSector returns a blank Sector struct and generates tag information according to the guidelines
 // in pages 133 - 177 of Stars Without Number (Revised Edition).
-func NewSector(rows, cols int, excludeTags []string, fullTags bool, poiChance, otherWorldChance int) *Stars {
+func NewSector(rows, cols int, excludeTags []string, fullTags bool, poiChance, otherWorldChance int, density Density) *Stars {
 	s := &Stars{
 		Rows: rows,
 		Cols: cols,
 	}
 
+	dVal := 0
+	switch density {
+	case SPARSE:
+		dVal = 8
+	case AVERAGE:
+		dVal = 4
+	case DENSE:
+		dVal = 2
+	}
+
 	cells := s.Rows * s.Cols
-	stars := (rand.Intn(cells/4) / 2) + (cells / 4)
+	stars := (rand.Intn(cells/4) / 2) + (cells / dVal)
 
 	for row, col := rand.Intn(s.Rows), rand.Intn(s.Cols); len(s.Systems) <= stars; row, col = rand.Intn(s.Rows), rand.Intn(s.Cols) {
 		if !s.active(row, col) {

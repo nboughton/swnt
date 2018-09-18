@@ -36,6 +36,7 @@ const (
 	flSecHeight = "sector-height"
 	flSecWidth  = "sector-width"
 	flExport    = "export"
+	flDensity   = "density"
 
 	flWilderness = "wilderness"
 

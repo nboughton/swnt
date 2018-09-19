@@ -24,7 +24,7 @@ yay -Syu swnt
 
 ### Other Linux Distributions
 
-You can build swnt yourself or use the binary release from the releases. 
+You can build swnt yourself or use the binary release from the [releases page](https://github.com/nboughton/swnt/releases). 
 
 **Building from source**
 

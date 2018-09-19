@@ -56,5 +56,4 @@ var encounterCmd = &cobra.Command{
 func init() {
 	newCmd.AddCommand(encounterCmd)
 	encounterCmd.Flags().BoolP(flWilderness, "w", false, "Set encounter type to Wilderness (default is Urban)")
-	encounterCmd.Flags().StringP(flFormat, "f", "text", "Set output format. (--format text,markdown)")
 }

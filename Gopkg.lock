@@ -26,12 +26,12 @@
   version = "v0.0.9"
 
 [[projects]]
-  digest = "1:d4d17353dbd05cb52a2a52b7fe1771883b682806f68db442b436294926bbfafb"
+  digest = "1:0981502f9816113c9c8c4ac301583841855c8cf4da8c72f696b3ebedf6d0e4e5"
   name = "github.com/mattn/go-isatty"
   packages = ["."]
   pruneopts = "UT"
-  revision = "0360b2af4f38e8d38c7fce2a9f4e702702d73a39"
-  version = "v0.0.3"
+  revision = "6ca4dbf54d38eea1a992b3c722a76a5d1c4cb25c"
+  version = "v0.0.4"
 
 [[projects]]
   digest = "1:ba15f8d399132143f377443adce348e85304cefd905b807af02f681ac0e45df2"
@@ -43,11 +43,11 @@
 
 [[projects]]
   branch = "master"
-  digest = "1:1581877c707d7cc3b539a2970e5f0f36a5e5aa4d74c4e68c59e5d144081896d9"
+  digest = "1:fdd63e265e8817afbfa04707d04b4fca7b314dab192b16ea2c450610d42691af"
   name = "github.com/nboughton/go-utils"
   packages = ["json/file"]
   pruneopts = "UT"
-  revision = "da711cf99a02ae0433ddf7983ebe8fe8c03a8568"
+  revision = "07d9bebb22c260046ddabc58b53779b84a5187f2"
 
 [[projects]]
   digest = "1:42d5a9e62b2ab6b8957c777d7325cc31460528d8c33c3b2fc48d66e72e067ad6"
@@ -75,11 +75,11 @@
 
 [[projects]]
   branch = "master"
-  digest = "1:05662433b3a13c921587a6e622b5722072edff83211efd1cd79eeaeedfd83f07"
+  digest = "1:824ea4aea5f0f50d4e4e139e4a3d7528f70b388dd9162c8ce310eb04581a7d84"
   name = "golang.org/x/sys"
   packages = ["unix"]
   pruneopts = "UT"
-  revision = "1c9583448a9c3aa0f9a6a5241bf73c0bd8aafded"
+  revision = "ee1b12c67af419cf5a9be3bdbeea7fc1c5f32f11"
 
 [solve-meta]
   analyzer-name = "dep"

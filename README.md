@@ -14,13 +14,25 @@ While the code is MIT licensed, all roll table content (except the name.System t
   
 ## Installation
 
+### Arch Linux
+
+swnt is available from the AUR at https://aur.archlinux.org/packages/swnt/ or via your favourite AUR helper. Personally I use yay.
+
+```
+yay -Syu swnt
+```
+
+### Other Linux Distributions
+You can build swnt yourself or use the binary release from the releases. 
+
+**Building from source**
+
 You will need the [go compiler](https://golang.org/) to install swnt. Once installed just run
 
     go get github.com/nboughton/swnt
     go install github.com/nboughton/swnt
 
-swnt should build on other platforms but I'm not able to test them so I can't guarantee it'll work as expected on anything other than linux. At some point I'll provide
-a binary download and probably an AUR package for Arch Linux.
+swnt should build on other platforms but I'm not able to test them so I can't guarantee it'll work as expected on anything other than linux.
 
 To make full use of swnt's hugo export function for generated sectors you'll also need [Hugo](https://gohugo.io)
 

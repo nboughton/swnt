@@ -68,6 +68,7 @@ Usage:
   swnt new sector [flags]
 
 Flags:
+  -d, --density string            Set star density in sector. Options are sparse, average or dense (default "average")
   -x, --exclude stringArray       Exclude tags (-x zombies -x "regional hegemon" etc)
       --export string             Set export formats. Format types must be comma separated without spaces. Supported formats are txt, json and hugo (default "txt,json")
   -h, --help                      help for sector

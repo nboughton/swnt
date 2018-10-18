@@ -13,6 +13,10 @@ import (
 	"github.com/nboughton/swnt/content/table"
 )
 
+func init() {
+	table.Registry.Add(npcTable.D10.(rollt.Table))
+}
+
 // Patron is a Patron
 type Patron struct {
 	Fields [][]string
@@ -438,19 +442,29 @@ var npcTable = table.OneRoll{
 			"Military, soldier, enforcer, law officer",
 		},
 	},
-	D10: rollt.List{
+	D10: rollt.Table{
 		Name: "Biggest Problem",
-		Items: []string{
-			"They have significant debt or money woes",
-			"A loved one is in trouble; reroll for it",
-			"Romantic failure with a desired person",
-			"Drug or behavioral addiction",
-			"Their superior dislikes or resents them",
-			"They have a persistent sickness",
-			"They hate their job or life situation",
-			"Someone dangerous is targeting them",
-			"They’re pursuing a disastrous purpose",
-			"They have no problems worth mentioning",
+		ID:   "npc.BiggestProblem",
+		Dice: "1d10",
+		Items: []rollt.Item{
+			{Match: []int{1}, Text: "They have significant debt or money woes"},
+			{Match: []int{2}, Text: "A loved one is in trouble", Action: func() string {
+				tbl, _ := table.Registry.Get("npc.BiggestProblem")
+
+				var res string
+				for res = tbl.Roll(); res != tbl.Items[1].Text; res = tbl.Roll() {
+					return res
+				}
+				return ""
+			}},
+			{Match: []int{3}, Text: "Romantic failure with a desired person"},
+			{Match: []int{4}, Text: "Drug or behavioral addiction"},
+			{Match: []int{5}, Text: "Their superior dislikes or resents them"},
+			{Match: []int{6}, Text: "They have a persistent sickness"},
+			{Match: []int{7}, Text: "They hate their job or life situation"},
+			{Match: []int{8}, Text: "Someone dangerous is targeting them"},
+			{Match: []int{9}, Text: "They’re pursuing a disastrous purpose"},
+			{Match: []int{10}, Text: "They have no problems worth mentioning"},
 		},
 	},
 	D12: rollt.List{

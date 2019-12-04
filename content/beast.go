@@ -6,7 +6,7 @@ import (
 	"math/rand"
 	"strings"
 
-	"github.com/nboughton/rollt"
+	"github.com/nboughton/go-roll"
 	"github.com/nboughton/swnt/content/format"
 	"github.com/nboughton/swnt/content/table"
 )
@@ -78,19 +78,19 @@ func (b Beast) String() string {
 }
 
 var beastFeaturesTable = struct {
-	basicFeatures rollt.Table
-	bodyPlan      rollt.Table
-	limbNovelty   rollt.Table
-	skinNovelty   rollt.Table
-	mainWeapon    rollt.Table
-	size          rollt.Table
+	basicFeatures roll.Table
+	bodyPlan      roll.Table
+	limbNovelty   roll.Table
+	skinNovelty   roll.Table
+	mainWeapon    roll.Table
+	size          roll.Table
 }{
 	// BasicAnimalFeatures is pretty fucking self-explanatory
-	rollt.Table{
+	roll.Table{
 		Name: "Basic Features",
 		ID:   "beast.BasicFeatures",
 		Dice: "1d10",
-		Items: []rollt.Item{
+		Items: []roll.TableItem{
 			{Match: []int{1}, Text: "Amphibian, froggish or newtlike"},
 			{Match: []int{2}, Text: "Bird, winged and feathered"},
 			{Match: []int{3}, Text: "Fish, scaled and torpedo-bodied"},
@@ -119,11 +119,11 @@ var beastFeaturesTable = struct {
 	},
 
 	// BodyPlan p201 SWN:RE Free edition
-	rollt.Table{
+	roll.Table{
 		Name: "Body Plan",
 		ID:   "beast.BodyPlan",
 		Dice: "1d6",
-		Items: []rollt.Item{
+		Items: []roll.TableItem{
 			{Match: []int{1}, Text: "Humanoid"},
 			{Match: []int{2}, Text: "Quadruped"},
 			{Match: []int{3}, Text: "Many-legged"},
@@ -149,11 +149,11 @@ var beastFeaturesTable = struct {
 	},
 
 	// LimbNovelty p201 SWN:RE Free edition
-	rollt.Table{
+	roll.Table{
 		Name: "Limb Novelty",
 		ID:   "beast.LimbNovelty",
 		Dice: "1d6",
-		Items: []rollt.Item{
+		Items: []roll.TableItem{
 			{Match: []int{1}, Text: "Wings"},
 			{Match: []int{2}, Text: "Many joints"},
 			{Match: []int{3}, Text: "Tentacles"},
@@ -164,11 +164,11 @@ var beastFeaturesTable = struct {
 	},
 
 	// SkinNovelty p201 SWN:RE Free edition
-	rollt.Table{
+	roll.Table{
 		Name: "Skin Novelty",
 		ID:   "beast.SkinNovelty",
 		Dice: "1d6",
-		Items: []rollt.Item{
+		Items: []roll.TableItem{
 			{Match: []int{1}, Text: "Hard shell"},
 			{Match: []int{2}, Text: "Exoskeleton"},
 			{Match: []int{3}, Text: "Odd texture"},
@@ -179,11 +179,11 @@ var beastFeaturesTable = struct {
 	},
 
 	// MainWeapon p201 SWN:RE Free edition
-	rollt.Table{
+	roll.Table{
 		Name: "Main Weapon",
 		ID:   "beast.MainWeapon",
 		Dice: "1d6",
-		Items: []rollt.Item{
+		Items: []roll.TableItem{
 			{Match: []int{1}, Text: "Teeth or mandibles"},
 			{Match: []int{2}, Text: "Claws"},
 			{Match: []int{3}, Text: "Poison", Action: poisonAction},
@@ -196,11 +196,11 @@ var beastFeaturesTable = struct {
 	},
 
 	// Size p201 SWN:RE Free edition
-	rollt.Table{
+	roll.Table{
 		Name: "Size",
 		ID:   "beast.Size",
 		Dice: "1d6",
-		Items: []rollt.Item{
+		Items: []roll.TableItem{
 			{Match: []int{1}, Text: "Cat-sized"},
 			{Match: []int{2}, Text: "Wolf-sized"},
 			{Match: []int{3}, Text: "Calf-sized"},
@@ -215,15 +215,15 @@ var beastFeaturesTable = struct {
 
 // Predator p201 SWN:RE Free edition
 var beastBehaviourTable = struct {
-	predator  rollt.Table
-	prey      rollt.Table
-	scavenger rollt.Table
+	predator  roll.Table
+	prey      roll.Table
+	scavenger roll.Table
 }{
-	rollt.Table{
+	roll.Table{
 		Name: "Predator",
 		ID:   "beast.Predator",
 		Dice: "1d8",
-		Items: []rollt.Item{
+		Items: []roll.TableItem{
 			{Match: []int{1}, Text: "Hunts in kin-group packs"},
 			{Match: []int{2}, Text: "Favors ambush attacks"},
 			{Match: []int{3}, Text: "Cripples prey and waits for death"},
@@ -236,11 +236,11 @@ var beastBehaviourTable = struct {
 	},
 
 	// Prey p201 SWN:RE Free edition
-	rollt.Table{
+	roll.Table{
 		Name: "Prey",
 		ID:   "beast.Prey",
 		Dice: "1d8",
-		Items: []rollt.Item{
+		Items: []roll.TableItem{
 			{Match: []int{1}, Text: "Moves in vigilant herds"},
 			{Match: []int{2}, Text: "Exists in small family groups"},
 			{Match: []int{3}, Text: "They all team up on a single foe"},
@@ -253,11 +253,11 @@ var beastBehaviourTable = struct {
 	},
 
 	// Scavenger p201 SWN:RE Free edition
-	rollt.Table{
+	roll.Table{
 		Name: "Scavenger",
 		ID:   "beast.Scavenger",
 		Dice: "1d8",
-		Items: []rollt.Item{
+		Items: []roll.TableItem{
 			{Match: []int{1}, Text: "Never attacks unwounded prey"},
 			{Match: []int{2}, Text: "Uses other beasts as harriers"},
 			{Match: []int{3}, Text: "Always flees if significantly hurt"},
@@ -271,11 +271,11 @@ var beastBehaviourTable = struct {
 }
 
 // HarmfulDischarges p201 SWN:RE Free edition
-var harmfulDischargesTable = rollt.Table{
+var harmfulDischargesTable = roll.Table{
 	Name: "HarmfulDischarges",
 	ID:   "beast.HarmfulDischarges",
 	Dice: "1d8",
-	Items: []rollt.Item{
+	Items: []roll.TableItem{
 		{Match: []int{1}, Text: "Acidic spew doing its damage on a hit"},
 		{Match: []int{2}, Text: "Toxic spittle or cloud; ", Action: poisonAction},
 		{Match: []int{3}, Text: "Super-heated or super-chilled spew"},
@@ -291,15 +291,15 @@ var harmfulDischargesTable = rollt.Table{
 
 // Poison p201 SWN:RE Free edition
 var poisonTable = struct {
-	effect   rollt.Table
-	onset    rollt.Table
-	duration rollt.Table
+	effect   roll.Table
+	onset    roll.Table
+	duration roll.Table
 }{
-	rollt.Table{
+	roll.Table{
 		Name: "Poison",
 		ID:   "beast.Poison",
 		Dice: "1d6",
-		Items: []rollt.Item{
+		Items: []roll.TableItem{
 			{Match: []int{1}, Text: "Death"},
 			{Match: []int{2}, Text: "Paralysis"},
 			{Match: []int{3}, Text: "1d4 dmg per onset interval"},
@@ -308,11 +308,11 @@ var poisonTable = struct {
 			{Match: []int{6}, Text: "Hallucinations"},
 		},
 	},
-	rollt.Table{
+	roll.Table{
 		Name: "Onset",
 		ID:   "beast.Onset",
 		Dice: "1d6",
-		Items: []rollt.Item{
+		Items: []roll.TableItem{
 			{Match: []int{1}, Text: "Instant"},
 			{Match: []int{2}, Text: "1 round"},
 			{Match: []int{3}, Text: "1d6 rounds"},
@@ -321,11 +321,11 @@ var poisonTable = struct {
 			{Match: []int{6}, Text: "1 hour"},
 		},
 	},
-	rollt.Table{
+	roll.Table{
 		Name: "Duration",
 		ID:   "beast.Duration",
 		Dice: "1d6",
-		Items: []rollt.Item{
+		Items: []roll.TableItem{
 			{Match: []int{1}, Text: "1d6 rounds"},
 			{Match: []int{2}, Text: "1 minute"},
 			{Match: []int{3}, Text: "10 minutes"},

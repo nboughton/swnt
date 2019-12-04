@@ -4,7 +4,7 @@ import (
 	"bytes"
 	"fmt"
 
-	"github.com/nboughton/rollt"
+	"github.com/nboughton/go-roll"
 	"github.com/nboughton/swnt/content/format"
 )
 
@@ -46,13 +46,13 @@ func (h Heresy) string() string {
 }
 
 var heresyTable = struct {
-	founder     rollt.List
-	majorHeresy rollt.List
-	attitude    rollt.List
-	quirk       rollt.List
+	founder     roll.List
+	majorHeresy roll.List
+	attitude    roll.List
+	quirk       roll.List
 }{
 	// Founder SWN Revised Free Edition p194
-	rollt.List{
+	roll.List{
 		Name: "Founder",
 		Items: []string{
 			"Defrocked clergy: founded by a cleric outcast from the faith.",
@@ -67,7 +67,7 @@ var heresyTable = struct {
 	},
 
 	// MajorHeresy SWN Revised Free Edition p194
-	rollt.List{
+	roll.List{
 		Name: "Major Heresy",
 		Items: []string{
 			"Manichaeanism: the sect believes in harsh austerities and rejection of matter as something profane and evil",
@@ -86,7 +86,7 @@ var heresyTable = struct {
 	},
 
 	// Attitude SWN Revised Free Edition p194
-	rollt.List{
+	roll.List{
 		Name: "Attitude",
 		Items: []string{
 			"Filial: the sect honors and respects the orthodox faith, but feels it is substantially in error",
@@ -103,7 +103,7 @@ var heresyTable = struct {
 	},
 
 	// Quirk SWN Revised Free Edition p194
-	rollt.List{
+	roll.List{
 		Name: "Quirk",
 		Items: []string{
 			"Clergy of only one gender",

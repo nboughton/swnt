@@ -4,7 +4,7 @@ import (
 	"bytes"
 	"fmt"
 
-	"github.com/nboughton/rollt"
+	"github.com/nboughton/go-roll"
 	"github.com/nboughton/swnt/content/format"
 )
 
@@ -45,13 +45,13 @@ func (c Corporation) String() string {
 }
 
 var corpTable = struct {
-	name         rollt.List
-	organization rollt.List
-	business     rollt.List
-	reputation   rollt.List
+	name         roll.List
+	organization roll.List
+	business     roll.List
+	reputation   roll.List
 }{
 	// Name SWN Revised Free Edition p192
-	rollt.List{
+	roll.List{
 		Name: "Name",
 		Items: []string{
 			"Ad Astra",
@@ -83,7 +83,7 @@ var corpTable = struct {
 	},
 
 	// Organization SWN Revised Free Edition p192
-	rollt.List{
+	roll.List{
 		Name: "Organization",
 		Items: []string{
 			"Alliance",
@@ -115,7 +115,7 @@ var corpTable = struct {
 	},
 
 	// Business SWN Revised Free Edition p192
-	rollt.List{
+	roll.List{
 		Name: "Business",
 		Items: []string{
 			"Aeronautics",
@@ -172,7 +172,7 @@ var corpTable = struct {
 	},
 
 	// ReputationAndRumor SWN Revised Free Edition p192
-	rollt.List{
+	roll.List{
 		Name: "Reputation and Rumors",
 		Items: []string{
 			"Reckless with the lives of their employees",

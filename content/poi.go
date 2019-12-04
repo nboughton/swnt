@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"math/rand"
 
-	"github.com/nboughton/rollt"
+	"github.com/nboughton/go-roll"
 	"github.com/nboughton/swnt/content/format"
 	"github.com/nboughton/swnt/content/table"
 )
@@ -53,7 +53,7 @@ var poiTable = table.ThreePart{
 	Tables: []table.ThreePartSubTable{
 		{
 			Name: "Deep-space station",
-			SubTable1: rollt.List{
+			SubTable1: roll.List{
 				Items: []string{
 					"Dangerously odd transhumans",
 					"Freeze-dried ancient corpses",
@@ -62,7 +62,7 @@ var poiTable = table.ThreePart{
 					"Deranged but brilliant scientist",
 				},
 			},
-			SubTable2: rollt.List{
+			SubTable2: roll.List{
 				Items: []string{
 					"Systems breaking down",
 					"Foreign sabotage attempt",
@@ -74,7 +74,7 @@ var poiTable = table.ThreePart{
 		},
 		{
 			Name: "Asteroid base",
-			SubTable1: rollt.List{
+			SubTable1: roll.List{
 				Items: []string{
 					"Zealous religious sectarians",
 					"Failed rebels from another world",
@@ -83,7 +83,7 @@ var poiTable = table.ThreePart{
 					"Pirates masquerading as otherwise",
 				},
 			},
-			SubTable2: rollt.List{
+			SubTable2: roll.List{
 				Items: []string{
 					"Life support is threatened",
 					"Base needs a new asteroid",
@@ -95,7 +95,7 @@ var poiTable = table.ThreePart{
 		},
 		{
 			Name: "Remote moon base",
-			SubTable1: rollt.List{
+			SubTable1: roll.List{
 				Items: []string{
 					"Unlucky corporate researchers",
 					"Reclusive hermit genius",
@@ -104,7 +104,7 @@ var poiTable = table.ThreePart{
 					"Lonely overseers and robot miners",
 				},
 			},
-			SubTable2: rollt.List{
+			SubTable2: roll.List{
 				Items: []string{
 					"Something dark has awoken",
 					"Criminals trying to take over",
@@ -116,7 +116,7 @@ var poiTable = table.ThreePart{
 		},
 		{
 			Name: "Ancient orbital ruin",
-			SubTable1: rollt.List{
+			SubTable1: roll.List{
 				Items: []string{
 					"Robots of dubious sentience",
 					"Trigger-happy scavengers",
@@ -125,7 +125,7 @@ var poiTable = table.ThreePart{
 					"Heirs of the original alien builders",
 				},
 			},
-			SubTable2: rollt.List{
+			SubTable2: roll.List{
 				Items: []string{
 					"Trying to stop it awakening",
 					"Meddling with strange tech",
@@ -137,7 +137,7 @@ var poiTable = table.ThreePart{
 		},
 		{
 			Name: "Research base",
-			SubTable1: rollt.List{
+			SubTable1: roll.List{
 				Items: []string{
 					"Experiments that have gotten loose",
 					"Scientists from a major local corp",
@@ -146,7 +146,7 @@ var poiTable = table.ThreePart{
 					"Aliens studying the human locals",
 				},
 			},
-			SubTable2: rollt.List{
+			SubTable2: roll.List{
 				Items: []string{
 					"Perilous research underway",
 					"Hideously immoral research",
@@ -158,7 +158,7 @@ var poiTable = table.ThreePart{
 		},
 		{
 			Name: "Asteroid belt",
-			SubTable1: rollt.List{
+			SubTable1: roll.List{
 				Items: []string{
 					"Grizzled belter mine laborers",
 					"Ancient automated guardian drones",
@@ -167,7 +167,7 @@ var poiTable = table.ThreePart{
 					"Lonely military patrol base staff",
 				},
 			},
-			SubTable2: rollt.List{
+			SubTable2: roll.List{
 				Items: []string{
 					"Ruptured rock released a peril",
 					"Foreign spy ships hide there",
@@ -179,7 +179,7 @@ var poiTable = table.ThreePart{
 		},
 		{
 			Name: "Gas giant mine",
-			SubTable1: rollt.List{
+			SubTable1: roll.List{
 				Items: []string{
 					"Miserable gas-miner slaves or serfs",
 					"Strange robots and their overseers",
@@ -188,7 +188,7 @@ var poiTable = table.ThreePart{
 					"Impoverished separatist group",
 				},
 			},
-			SubTable2: rollt.List{
+			SubTable2: roll.List{
 				Items: []string{
 					"Things are emerging below",
 					"They need vital supplies",
@@ -200,7 +200,7 @@ var poiTable = table.ThreePart{
 		},
 		{
 			Name: "Refueling station",
-			SubTable1: rollt.List{
+			SubTable1: roll.List{
 				Items: []string{
 					"Half-crazed hermit caretaker",
 					"Sordid purveyors of decadent fun",
@@ -209,7 +209,7 @@ var poiTable = table.ThreePart{
 					"Brainless automated vendors",
 				},
 			},
-			SubTable2: rollt.List{
+			SubTable2: roll.List{
 				Items: []string{
 					"A ship is in severe distress",
 					"Pirates have taken over",

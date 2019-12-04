@@ -6,7 +6,7 @@ import (
 	"strings"
 
 	"github.com/fatih/color"
-	"github.com/nboughton/rollt"
+	"github.com/nboughton/go-roll"
 )
 
 // Adventure represents the elements of an Adventure outline
@@ -58,7 +58,7 @@ func (a Adventure) String() string {
 }
 
 // Seed table
-var adventureSeedTable = rollt.List{
+var adventureSeedTable = roll.List{
 	Items: []string{
 		"An Enemy seeks to rob a Friend of some precious Thing that he has desired for some time.",
 		"A Thing has been discovered on property owned by a Friend, but a Complication risks its destruction.",

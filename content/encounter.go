@@ -1,7 +1,7 @@
 package content
 
 import (
-	"github.com/nboughton/rollt"
+	"github.com/nboughton/go-roll"
 	"github.com/nboughton/swnt/content/format"
 	"github.com/nboughton/swnt/content/table"
 )
@@ -38,7 +38,7 @@ func (e Encounter) String() string {
 
 // Urban represents the OneRoll tables for rolling quick encounters
 var urbanEncounterTable = table.OneRoll{
-	D4: rollt.List{
+	D4: roll.List{
 		Name: "What's the Conflict About?",
 		Items: []string{
 			"Money, extortion, payment due, debts",
@@ -47,7 +47,7 @@ var urbanEncounterTable = table.OneRoll{
 			"Politics, religion, or other ideology",
 		},
 	},
-	D6: rollt.List{
+	D6: roll.List{
 		Name: "General Venue of the Event",
 		Items: []string{
 			"In the middle of the street",
@@ -58,7 +58,7 @@ var urbanEncounterTable = table.OneRoll{
 			"At a mass-transit station",
 		},
 	},
-	D8: rollt.List{
+	D8: roll.List{
 		Name: "Why are the PCs Involved?",
 		Items: []string{
 			"A sympathetic participant appeals to them",
@@ -71,7 +71,7 @@ var urbanEncounterTable = table.OneRoll{
 			"Responsibility is somehow pinned on them",
 		},
 	},
-	D10: rollt.List{
+	D10: roll.List{
 		Name: "What's the Nature of the Event?",
 		Items: []string{
 			"A parade or festival is being disrupted",
@@ -86,7 +86,7 @@ var urbanEncounterTable = table.OneRoll{
 			"A religious ceremony is being disrupted",
 		},
 	},
-	D12: rollt.List{
+	D12: roll.List{
 		Name: "What Antagonists are Involved?",
 		Items: []string{
 			"A local bully and their thugs",
@@ -103,7 +103,7 @@ var urbanEncounterTable = table.OneRoll{
 			"A confused foreigner or backwoodsman",
 		},
 	},
-	D20: rollt.List{
+	D20: roll.List{
 		Name: "Relevant Urban Features",
 		Items: []string{
 			"Heavy traffic running through the place",
@@ -132,7 +132,7 @@ var urbanEncounterTable = table.OneRoll{
 
 // Wilderness represents the OneRoll tables for generating Wilderness Encounters
 var wildernessEncounterTable = table.OneRoll{
-	D4: rollt.List{
+	D4: roll.List{
 		Name: "Initial Encounter Range",
 		Items: []string{
 			"Visible from a long distance away",
@@ -141,7 +141,7 @@ var wildernessEncounterTable = table.OneRoll{
 			"Noticed only when adjacent to the event",
 		},
 	},
-	D6: rollt.List{
+	D6: roll.List{
 		Name: "Weather and Lighting",
 		Items: []string{
 			"Takes place in daylight and clear weather",
@@ -152,7 +152,7 @@ var wildernessEncounterTable = table.OneRoll{
 			"Night, with terrible weather and wind",
 		},
 	},
-	D8: rollt.List{
+	D8: roll.List{
 		Name: "Basic Nature of the Encounter",
 		Items: []string{
 			"Attack by pack of hostiles",
@@ -165,7 +165,7 @@ var wildernessEncounterTable = table.OneRoll{
 			"Meet hostiles that aren’t immediately so",
 		},
 	},
-	D10: rollt.List{
+	D10: roll.List{
 		Name: "Types of Friendly Creatures",
 		Items: []string{
 			"Affable but reclusive hermit",
@@ -180,7 +180,7 @@ var wildernessEncounterTable = table.OneRoll{
 			"Impoverished social exile",
 		},
 	},
-	D12: rollt.List{
+	D12: roll.List{
 		Name: "Types of Hostile Creatures",
 		Items: []string{
 			"Bandits in their wilderness hideout",
@@ -197,7 +197,7 @@ var wildernessEncounterTable = table.OneRoll{
 			"Confidence man seeking to gull the PCs",
 		},
 	},
-	D20: rollt.List{
+	D20: roll.List{
 		Name: "Specific Nearby Feature of Relevance",
 		Items: []string{
 			"Overgrown homestead",

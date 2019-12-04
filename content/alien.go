@@ -6,7 +6,7 @@ import (
 	"math/rand"
 	"strings"
 
-	"github.com/nboughton/rollt"
+	"github.com/nboughton/go-roll"
 	"github.com/nboughton/swnt/content/format"
 	"github.com/nboughton/swnt/content/table"
 )
@@ -51,16 +51,16 @@ func (a Alien) String() string {
 }
 
 var alienTable = struct {
-	body            rollt.Table
-	lense           rollt.Table
-	socialStructure rollt.Table
+	body            roll.Table
+	lense           roll.Table
+	socialStructure roll.Table
 }{
 	// Body SWN Revised Free Edition p203
-	rollt.Table{
+	roll.Table{
 		Name: "Body",
 		ID:   "alien.Body",
 		Dice: "1d6",
-		Items: []rollt.Item{
+		Items: []roll.TableItem{
 			{Match: []int{1}, Text: "Avian, bat-like, pterodactylian"},
 			{Match: []int{2}, Text: "Reptilian, amphibian, draconic"},
 			{Match: []int{3}, Text: "Insectile, beetle-like, spiderish, wasp-like"},
@@ -86,10 +86,10 @@ var alienTable = struct {
 	},
 
 	// Lense from SWN Revised Free Edition p205
-	rollt.Table{
+	roll.Table{
 		Name: "Lense",
 		Dice: "1d20",
-		Items: []rollt.Item{
+		Items: []roll.TableItem{
 			{Match: []int{1}, Text: "Collectivity"},
 			{Match: []int{2}, Text: "Curiosity"},
 			{Match: []int{3}, Text: "Despair"},
@@ -114,11 +114,11 @@ var alienTable = struct {
 	},
 
 	// SocialStructure from SWN Revised Free Edition p207
-	rollt.Table{
+	roll.Table{
 		Name: "Social Structure",
 		ID:   "alien.SocialStructure",
 		Dice: "1d8",
-		Items: []rollt.Item{
+		Items: []roll.TableItem{
 			{Match: []int{1}, Text: "Democratic"},
 			{Match: []int{2}, Text: "Monarchic"},
 			{Match: []int{3}, Text: "Tribal"},

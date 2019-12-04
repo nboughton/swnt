@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"math/rand"
 
-	"github.com/nboughton/rollt"
+	"github.com/nboughton/go-roll"
 	"github.com/nboughton/swnt/content/format"
 	"github.com/nboughton/swnt/content/table"
 )
@@ -51,12 +51,12 @@ func (r Religion) String() string {
 /*************** TABLES ***************/
 
 var religionTable = struct {
-	evolution  rollt.List
-	origin     rollt.List
-	leadership rollt.Table
+	evolution  roll.List
+	origin     roll.List
+	leadership roll.Table
 }{
 	// Evolution SWN Revised Free Edition p193
-	rollt.List{
+	roll.List{
 		Name: "Evolution",
 		Items: []string{
 			"New holy book. Someone in the faith’s past penned or discovered a text that is now taken to be holy writ and the expressed will of the divine.",
@@ -71,7 +71,7 @@ var religionTable = struct {
 	},
 
 	// OriginTradition SWN Revised Free Edition p193
-	rollt.List{
+	roll.List{
 		Name: "Origin",
 		Items: []string{
 			"Paganism",
@@ -90,11 +90,11 @@ var religionTable = struct {
 	},
 
 	// Leadership SWN Revised Free Edition p193
-	rollt.Table{
+	roll.Table{
 		Name: "Leadership",
 		ID:   "religion.Leadership",
 		Dice: "1d6",
-		Items: []rollt.Item{
+		Items: []roll.TableItem{
 			{Match: []int{1, 2}, Text: "Patriarch/Matriarch. A single leader determines doctrine for the entire religion, possibly in consultation with other clerics."},
 			{Match: []int{3, 4}, Text: "Council. A group of the oldest and most revered clergy determine the course of the faith."},
 			{Match: []int{5}, Text: "Democracy. Every member has an equal voice in matters of faith, with doctrine usually decided at regular church- wide councils."},

@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"math/rand"
 
-	"github.com/nboughton/rollt"
+	"github.com/nboughton/go-roll"
 	"github.com/nboughton/swnt/content/culture"
 	"github.com/nboughton/swnt/content/format"
 	"github.com/nboughton/swnt/content/gender"
@@ -14,7 +14,7 @@ import (
 )
 
 func init() {
-	table.Registry.Add(npcTable.D10.(rollt.Table))
+	table.Registry.Add(npcTable.D10.(roll.Table))
 }
 
 // Patron is a Patron
@@ -125,10 +125,10 @@ func (n NPC) String() string {
 }
 
 // Reaction of possible reaction rolls for NPCs
-var Reaction = rollt.Table{
+var Reaction = roll.Table{
 	Name: "Reaction Roll Results",
 	Dice: "2d6",
-	Items: []rollt.Item{
+	Items: []roll.TableItem{
 		{Match: []int{2}, Text: "Hostile, reacting negatively as is plausible"},
 		{Match: []int{3, 4, 5}, Text: "Negative, unfriendly and unhelpful"},
 		{Match: []int{6, 7, 8}, Text: "Neutral, reacting predictably or warily"},
@@ -138,15 +138,15 @@ var Reaction = rollt.Table{
 }
 
 var npcHooksTable = struct {
-	manner     rollt.List
-	outcome    rollt.List
-	motivation rollt.List
-	want       rollt.List
-	power      rollt.List
-	hook       rollt.List
+	manner     roll.List
+	outcome    roll.List
+	motivation roll.List
+	want       roll.List
+	power      roll.List
+	hook       roll.List
 }{
 	// Manner table
-	rollt.List{
+	roll.List{
 		Name: "Initial Manner",
 		Items: []string{
 			"Ingratiating and cloying",
@@ -173,7 +173,7 @@ var npcHooksTable = struct {
 	},
 
 	// Outcome table
-	rollt.List{
+	roll.List{
 		Name: "Default Deal Outcome",
 		Items: []string{
 			"They’ll screw the PCs over even at their own cost",
@@ -200,7 +200,7 @@ var npcHooksTable = struct {
 	},
 
 	// Motivation table
-	rollt.List{
+	roll.List{
 		Name: "Motivation",
 		Items: []string{
 			"An ambition for greater social status",
@@ -227,7 +227,7 @@ var npcHooksTable = struct {
 	},
 
 	// Want table
-	rollt.List{
+	roll.List{
 		Name: "Want",
 		Items: []string{
 			"Bring them an exotic piece of tech",
@@ -254,7 +254,7 @@ var npcHooksTable = struct {
 	},
 
 	// Power table
-	rollt.List{
+	roll.List{
 		Name: "Power",
 		Items: []string{
 			"They’re just really appealing and sympathetic to PCs",
@@ -281,7 +281,7 @@ var npcHooksTable = struct {
 	},
 
 	// Hook table
-	rollt.List{
+	roll.List{
 		Name: "Hook",
 		Items: []string{
 			"A particular odd style of dress",
@@ -310,7 +310,7 @@ var npcHooksTable = struct {
 
 // PatronTable represents the tables to roll on to create an adventure Patron
 var patronTable = table.OneRoll{
-	D4: rollt.List{
+	D4: roll.List{
 		Name: "Patron Eagerness to Hire",
 		Items: []string{
 			"Cautious, but can be convinced to hire",
@@ -319,7 +319,7 @@ var patronTable = table.OneRoll{
 			"Desperate, might offer what they can’t pay",
 		},
 	},
-	D6: rollt.List{
+	D6: roll.List{
 		Name: "Patron Trustworthiness",
 		Items: []string{
 			"They intend to totally screw the PCs",
@@ -330,7 +330,7 @@ var patronTable = table.OneRoll{
 			"They’ll pay more than they promised",
 		},
 	},
-	D8: rollt.List{
+	D8: roll.List{
 		Name: "Basic Challenge of the Job",
 		Items: []string{
 			"Kill somebody who might deserve it",
@@ -343,7 +343,7 @@ var patronTable = table.OneRoll{
 			"Guard an object being transported",
 		},
 	},
-	D10: rollt.List{
+	D10: roll.List{
 		Name: "Main Countervailing Force",
 		Items: []string{
 			"A treacherous employer or subordinate",
@@ -358,7 +358,7 @@ var patronTable = table.OneRoll{
 			"The locals are against the patron",
 		},
 	},
-	D12: rollt.List{
+	D12: roll.List{
 		Name: "Potential Non-Cash Rewards",
 		Items: []string{
 			"Government official favors owed",
@@ -375,7 +375,7 @@ var patronTable = table.OneRoll{
 			"Illegal but valuable weapons or gear",
 		},
 	},
-	D20: rollt.List{
+	D20: roll.List{
 		Name: "Complication to the Job",
 		Items: []string{
 			"An ambush is laid somewhere",
@@ -404,7 +404,7 @@ var patronTable = table.OneRoll{
 
 // NPCTable represents the tables to roll on to create an NPC
 var npcTable = table.OneRoll{
-	D4: rollt.List{
+	D4: roll.List{
 		Name: "Age",
 		Items: []string{
 			"Unusually young or old for their role",
@@ -413,10 +413,10 @@ var npcTable = table.OneRoll{
 			"Middle-aged or elderly",
 		},
 	},
-	D6: rollt.Table{
+	D6: roll.Table{
 		Name: "Background",
 		Dice: "1d6",
-		Items: []rollt.Item{
+		Items: []roll.TableItem{
 			{Match: []int{1}, Text: "The local underclass or poorest natives"},
 			{Match: []int{2}, Text: "Common laborers or cube workers"},
 			{Match: []int{3}, Text: "Aspiring bourgeoise or upper class"},
@@ -424,12 +424,12 @@ var npcTable = table.OneRoll{
 			{Match: []int{5}, Text: "Minority or foreigners"},
 			{Match: []int{6}, Text: "Offworlders or exotics"},
 		},
-		Reroll: rollt.Reroll{
+		Reroll: roll.TableReroll{
 			Dice:  "1d4",
 			Match: []int{5, 6},
 		},
 	},
-	D8: rollt.List{
+	D8: roll.List{
 		Name: "Role in Society",
 		Items: []string{
 			"Criminal, thug, thief, swindler",
@@ -442,11 +442,11 @@ var npcTable = table.OneRoll{
 			"Military, soldier, enforcer, law officer",
 		},
 	},
-	D10: rollt.Table{
+	D10: roll.Table{
 		Name: "Biggest Problem",
 		ID:   "npc.BiggestProblem",
 		Dice: "1d10",
-		Items: []rollt.Item{
+		Items: []roll.TableItem{
 			{Match: []int{1}, Text: "They have significant debt or money woes"},
 			{Match: []int{2}, Text: "A loved one is in trouble", Action: func() string {
 				tbl, _ := table.Registry.Get("npc.BiggestProblem")
@@ -467,7 +467,7 @@ var npcTable = table.OneRoll{
 			{Match: []int{10}, Text: "They have no problems worth mentioning"},
 		},
 	},
-	D12: rollt.List{
+	D12: roll.List{
 		Name: "Greatest Desire",
 		Items: []string{
 			"They want a particular romantic partner",
@@ -484,7 +484,7 @@ var npcTable = table.OneRoll{
 			"They have everything they want from life",
 		},
 	},
-	D20: rollt.List{
+	D20: roll.List{
 		Name: "Most Obvious Character Trait",
 		Items: []string{
 			"Ambition",

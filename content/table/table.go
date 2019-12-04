@@ -1,4 +1,4 @@
-// Package table expands on github.com/nboughton/rollt to provide some custom table types that are
+// Package table expands on github.com/nboughton/roll to provide some custom table types that are
 // routinely used in SWN Free Edition
 package table
 
@@ -7,11 +7,11 @@ import (
 	"math/rand"
 	"time"
 
-	"github.com/nboughton/rollt"
+	"github.com/nboughton/go-roll"
 )
 
 // Registry of tables
-var Registry = rollt.NewRegistry()
+var Registry = roll.NewTableRegistry()
 
 func init() {
 	rand.Seed(time.Now().UnixNano())
@@ -47,8 +47,8 @@ func (t ThreePart) String() string {
 // ThreePartSubTable represent the subtables of a ThreePart
 type ThreePartSubTable struct {
 	Name      string
-	SubTable1 rollt.Able
-	SubTable2 rollt.Able
+	SubTable1 roll.Tabler
+	SubTable2 roll.Tabler
 }
 
 // String satisfies the Stringer interface for threePartSubTables
@@ -58,12 +58,12 @@ func (t ThreePartSubTable) String() string {
 
 // OneRoll represents the oft used one-roll systems spread throughout SWN
 type OneRoll struct {
-	D4  rollt.Able
-	D6  rollt.Able
-	D8  rollt.Able
-	D10 rollt.Able
-	D12 rollt.Able
-	D20 rollt.Able
+	D4  roll.Tabler
+	D6  roll.Tabler
+	D8  roll.Tabler
+	D10 roll.Tabler
+	D12 roll.Tabler
+	D20 roll.Tabler
 }
 
 // Roll performs all rolls for a OneRoll and returns the results

@@ -4,7 +4,7 @@ import (
 	"bytes"
 	"fmt"
 
-	"github.com/nboughton/rollt"
+	"github.com/nboughton/go-roll"
 	"github.com/nboughton/swnt/content/format"
 	"github.com/nboughton/swnt/content/table"
 )
@@ -50,13 +50,13 @@ func (p Place) String() string {
 }
 
 var placeTable = struct {
-	reward       rollt.List
-	ongoingsCiv  rollt.List
-	ongoingsWild rollt.List
+	reward       roll.List
+	ongoingsCiv  roll.List
+	ongoingsWild roll.List
 	hazard       table.ThreePart
 }{
 	// Reward roll reward
-	rollt.List{
+	roll.List{
 		Items: []string{
 			"Large cache of credits",
 			"Precious cultural artifact",
@@ -83,7 +83,7 @@ var placeTable = struct {
 
 	// Ongoings roll ongoings
 	// civ
-	rollt.List{
+	roll.List{
 		Items: []string{
 			"Local festival going on",
 			"Angry street protests",
@@ -109,7 +109,7 @@ var placeTable = struct {
 	},
 
 	// wild
-	rollt.List{
+	roll.List{
 		Items: []string{
 			"Bandits have moved in",
 			"Flooding swept through",
@@ -140,7 +140,7 @@ var placeTable = struct {
 		Tables: []table.ThreePartSubTable{
 			{
 				Name: "Social",
-				SubTable1: rollt.List{
+				SubTable1: roll.List{
 					Items: []string{
 						"An explosively temperamental VIP",
 						"An unknown but critical social taboo",
@@ -149,7 +149,7 @@ var placeTable = struct {
 						"A frame job hung on the PCs",
 					},
 				},
-				SubTable2: rollt.List{
+				SubTable2: roll.List{
 					Items: []string{
 						"An allied NPC breaks ties",
 						"An enemy is alerted to them",
@@ -161,7 +161,7 @@ var placeTable = struct {
 			},
 			{
 				Name: "Legal",
-				SubTable1: rollt.List{
+				SubTable1: roll.List{
 					Items: []string{
 						"A regulation unknown to the PCs",
 						"A tax or confiscation",
@@ -170,7 +170,7 @@ var placeTable = struct {
 						"A state agent conscripts PC help",
 					},
 				},
-				SubTable2: rollt.List{
+				SubTable2: roll.List{
 					Items: []string{
 						"Substantial monetary fine",
 						"Imprisonment for the party",
@@ -182,7 +182,7 @@ var placeTable = struct {
 			},
 			{
 				Name: "Environmental",
-				SubTable1: rollt.List{
+				SubTable1: roll.List{
 					Items: []string{
 						"Heavy background radiation",
 						"A planetary sickness foreigners get",
@@ -191,7 +191,7 @@ var placeTable = struct {
 						"Unpredictable psychic power field",
 					},
 				},
-				SubTable2: rollt.List{
+				SubTable2: roll.List{
 					Items: []string{
 						"Catch a lingering disease",
 						"Suffer bodily harm",
@@ -203,7 +203,7 @@ var placeTable = struct {
 			},
 			{
 				Name: "Trap",
-				SubTable1: rollt.List{
+				SubTable1: roll.List{
 					Items: []string{
 						"Alarm system attached to a trap",
 						"Snare left for local animals",
@@ -212,7 +212,7 @@ var placeTable = struct {
 						"New occupant’s defensive trap",
 					},
 				},
-				SubTable2: rollt.List{
+				SubTable2: roll.List{
 					Items: []string{
 						"Something set on fire",
 						"Guards are summoned",
@@ -224,7 +224,7 @@ var placeTable = struct {
 			},
 			{
 				Name: "Animal",
-				SubTable1: rollt.List{
+				SubTable1: roll.List{
 					Items: []string{
 						"Dangerous local swarm vermin",
 						"A big predator lair",
@@ -233,7 +233,7 @@ var placeTable = struct {
 						"Monstrous beast sleeps or is torpid",
 					},
 				},
-				SubTable2: rollt.List{
+				SubTable2: roll.List{
 					Items: []string{
 						"They have a ranged attack",
 						"They’re venomous",
@@ -245,7 +245,7 @@ var placeTable = struct {
 			},
 			{
 				Name: "Sentient",
-				SubTable1: rollt.List{
+				SubTable1: roll.List{
 					Items: []string{
 						"A group hostile to intruders",
 						"Trickster thieves and con-men",
@@ -254,7 +254,7 @@ var placeTable = struct {
 						"Another area-clearing group",
 					},
 				},
-				SubTable2: rollt.List{
+				SubTable2: roll.List{
 					Items: []string{
 						"Immediate combat",
 						"Treacherous feigned friend",
@@ -266,7 +266,7 @@ var placeTable = struct {
 			},
 			{
 				Name: "Decay",
-				SubTable1: rollt.List{
+				SubTable1: roll.List{
 					Items: []string{
 						"Crumbling floor or ceiling",
 						"Waste or heating tubes rupture",
@@ -275,7 +275,7 @@ var placeTable = struct {
 						"Power plant is unstable",
 					},
 				},
-				SubTable2: rollt.List{
+				SubTable2: roll.List{
 					Items: []string{
 						"Ruptures to release a peril",
 						"Toxic or radioactive debris",
@@ -287,7 +287,7 @@ var placeTable = struct {
 			},
 			{
 				Name: "PC-induced",
-				SubTable1: rollt.List{
+				SubTable1: roll.List{
 					Items: []string{
 						"Activating a system causes a disaster",
 						"Catastrophic plan proposed by NPCs",
@@ -296,7 +296,7 @@ var placeTable = struct {
 						"Leaving a thing open brings calamity",
 					},
 				},
-				SubTable2: rollt.List{
+				SubTable2: roll.List{
 					Items: []string{
 						"Horrible vermin are admitted",
 						"Local system goes berserk",

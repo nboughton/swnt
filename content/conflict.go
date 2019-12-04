@@ -4,7 +4,7 @@ import (
 	"bytes"
 	"fmt"
 
-	"github.com/nboughton/rollt"
+	"github.com/nboughton/go-roll"
 	"github.com/nboughton/swnt/content/format"
 	"github.com/nboughton/swnt/content/table"
 )
@@ -43,12 +43,12 @@ func (c Conflict) string() string {
 }
 
 var conflictTable = struct {
-	restraint rollt.List
-	twist     rollt.List
+	restraint roll.List
+	twist     roll.List
 	problem   table.ThreePart
 }{
 	// Restraint represents possible conflict restraints
-	rollt.List{
+	roll.List{
 		Items: []string{
 			"The government is cracking down on the conflict",
 			"One side seems invincibly stronger to the other",
@@ -74,7 +74,7 @@ var conflictTable = struct {
 	},
 
 	// Twist represents possible adventure twists
-	rollt.List{
+	roll.List{
 		Items: []string{
 			"There’s a very sharp time limit for any resolution",
 			"The sympathetic side is actually a bunch of bastards",
@@ -105,7 +105,7 @@ var conflictTable = struct {
 		Tables: []table.ThreePartSubTable{
 			{
 				Name: "Money",
-				SubTable1: rollt.List{
+				SubTable1: roll.List{
 					Items: []string{
 						"Money is owed to a ruthless creditor",
 						"Money was stolen from someone",
@@ -114,7 +114,7 @@ var conflictTable = struct {
 						"Money is offered from an evil source",
 					},
 				},
-				SubTable2: rollt.List{
+				SubTable2: roll.List{
 					Items: []string{
 						"Organized crime wants it",
 						"Corrupt officials want it",
@@ -126,7 +126,7 @@ var conflictTable = struct {
 			},
 			{
 				Name: "Revenge",
-				SubTable1: rollt.List{
+				SubTable1: roll.List{
 					Items: []string{
 						"Someone was murdered",
 						"Someone was stripped of rank",
@@ -135,7 +135,7 @@ var conflictTable = struct {
 						"Someone was framed for a crime",
 					},
 				},
-				SubTable2: rollt.List{
+				SubTable2: roll.List{
 					Items: []string{
 						"It was wholly justified",
 						"The wrong person is targeted",
@@ -147,7 +147,7 @@ var conflictTable = struct {
 			},
 			{
 				Name: "Power",
-				SubTable1: rollt.List{
+				SubTable1: roll.List{
 					Items: []string{
 						"An influential political leader",
 						"A stern community elder",
@@ -156,7 +156,7 @@ var conflictTable = struct {
 						"A criminal boss or outcast leader",
 					},
 				},
-				SubTable2: rollt.List{
+				SubTable2: roll.List{
 					Items: []string{
 						"They’ve betrayed their own",
 						"Someone’s gunning for them",
@@ -168,7 +168,7 @@ var conflictTable = struct {
 			},
 			{
 				Name: "Natural Danger",
-				SubTable1: rollt.List{
+				SubTable1: roll.List{
 					Items: []string{
 						"A cyclical planetary phenomenon",
 						"A sudden natural disaster",
@@ -177,7 +177,7 @@ var conflictTable = struct {
 						"Formerly-unknown planetary peril",
 					},
 				},
-				SubTable2: rollt.List{
+				SubTable2: roll.List{
 					Items: []string{
 						"Anti-helpful bureaucrats",
 						"Religious zealots panic",
@@ -189,7 +189,7 @@ var conflictTable = struct {
 			},
 			{
 				Name: "Religion",
-				SubTable1: rollt.List{
+				SubTable1: roll.List{
 					Items: []string{
 						"Sects that hate each other bitterly",
 						"Zealot reformers forcing new things",
@@ -198,7 +198,7 @@ var conflictTable = struct {
 						"Corrupt and decadent institutions",
 					},
 				},
-				SubTable2: rollt.List{
+				SubTable2: roll.List{
 					Items: []string{
 						"Charismatic new leader",
 						"Mandatory state religion",
@@ -210,7 +210,7 @@ var conflictTable = struct {
 			},
 			{
 				Name: "Ideology",
-				SubTable1: rollt.List{
+				SubTable1: roll.List{
 					Items: []string{
 						"A universally-despised fringe group",
 						"Terrorists with widespread support",
@@ -219,7 +219,7 @@ var conflictTable = struct {
 						"Ruthless ascendant political group",
 					},
 				},
-				SubTable2: rollt.List{
+				SubTable2: roll.List{
 					Items: []string{
 						"Terrorist attack",
 						"Street rioting",
@@ -231,7 +231,7 @@ var conflictTable = struct {
 			},
 			{
 				Name: "Ethnicity",
-				SubTable1: rollt.List{
+				SubTable1: roll.List{
 					Items: []string{
 						"A traditionally subordinate group",
 						"An ethnic group from offworld",
@@ -240,7 +240,7 @@ var conflictTable = struct {
 						"Two groups that hate each other",
 					},
 				},
-				SubTable2: rollt.List{
+				SubTable2: roll.List{
 					Items: []string{
 						"Forced immigration",
 						"Official ethnic ghettos",
@@ -252,7 +252,7 @@ var conflictTable = struct {
 			},
 			{
 				Name: "Resources",
-				SubTable1: rollt.List{
+				SubTable1: roll.List{
 					Items: []string{
 						"There’s a cache of illegal materials",
 						"A hidden strike of rare resources",
@@ -261,7 +261,7 @@ var conflictTable = struct {
 						"A resource is desperately necessary",
 					},
 				},
-				SubTable2: rollt.List{
+				SubTable2: roll.List{
 					Items: []string{
 						"Someone thinks they own it",
 						"The state is looking for it",

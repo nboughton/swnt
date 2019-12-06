@@ -127,7 +127,7 @@ func (n NPC) String() string {
 // Reaction of possible reaction rolls for NPCs
 var Reaction = roll.Table{
 	Name: "Reaction Roll Results",
-	Dice: "2d6",
+	Dice: roll.Dice{N: 2, Die: roll.D6},
 	Items: []roll.TableItem{
 		{Match: []int{2}, Text: "Hostile, reacting negatively as is plausible"},
 		{Match: []int{3, 4, 5}, Text: "Negative, unfriendly and unhelpful"},
@@ -415,7 +415,7 @@ var npcTable = table.OneRoll{
 	},
 	D6: roll.Table{
 		Name: "Background",
-		Dice: "1d6",
+		Dice: roll.Dice{N: 1, Die: roll.D6},
 		Items: []roll.TableItem{
 			{Match: []int{1}, Text: "The local underclass or poorest natives"},
 			{Match: []int{2}, Text: "Common laborers or cube workers"},
@@ -425,7 +425,7 @@ var npcTable = table.OneRoll{
 			{Match: []int{6}, Text: "Offworlders or exotics"},
 		},
 		Reroll: roll.TableReroll{
-			Dice:  "1d4",
+			Dice:  roll.Dice{N: 1, Die: roll.D4},
 			Match: []int{5, 6},
 		},
 	},
@@ -445,7 +445,7 @@ var npcTable = table.OneRoll{
 	D10: roll.Table{
 		Name: "Biggest Problem",
 		ID:   "npc.BiggestProblem",
-		Dice: "1d10",
+		Dice: roll.Dice{N: 1, Die: roll.D10},
 		Items: []roll.TableItem{
 			{Match: []int{1}, Text: "They have significant debt or money woes"},
 			{Match: []int{2}, Text: "A loved one is in trouble", Action: func() string {

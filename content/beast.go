@@ -9,6 +9,7 @@ import (
 	"github.com/nboughton/go-roll"
 	"github.com/nboughton/swnt/content/format"
 	"github.com/nboughton/swnt/content/table"
+	"github.com/nboughton/swnt/dice"
 )
 
 func init() {
@@ -89,7 +90,7 @@ var beastFeaturesTable = struct {
 	roll.Table{
 		Name: "Basic Features",
 		ID:   "beast.BasicFeatures",
-		Dice: "1d10",
+		Dice: roll.Dice{N: 1, Die: roll.D10},
 		Items: []roll.TableItem{
 			{Match: []int{1}, Text: "Amphibian, froggish or newtlike"},
 			{Match: []int{2}, Text: "Bird, winged and feathered"},
@@ -101,7 +102,7 @@ var beastFeaturesTable = struct {
 			{Match: []int{8}, Text: "Exotic, made of wholly alien elements"},
 			{Match: []int{9, 10}, Text: "Mixed", Action: func() string {
 				tbl, _ := table.Registry.Get("beast.BasicFeatures")
-				tbl.Dice = "1d8"
+				tbl.Dice = roll.Dice{N: 1, Die: roll.D8}
 
 				res := make(map[string]bool)
 				for len(res) < 2 {
@@ -122,7 +123,7 @@ var beastFeaturesTable = struct {
 	roll.Table{
 		Name: "Body Plan",
 		ID:   "beast.BodyPlan",
-		Dice: "1d6",
+		Dice: roll.Dice{N: 1, Die: roll.D6},
 		Items: []roll.TableItem{
 			{Match: []int{1}, Text: "Humanoid"},
 			{Match: []int{2}, Text: "Quadruped"},
@@ -131,7 +132,7 @@ var beastFeaturesTable = struct {
 			{Match: []int{5}, Text: "Amorphous"},
 			{Match: []int{6}, Text: "", Action: func() string {
 				tbl, _ := table.Registry.Get("beast.BodyPlan")
-				tbl.Dice = "1d5"
+				tbl.Dice = roll.Dice{N: 1, Die: dice.D5}
 
 				types, res := 2, make(map[string]bool)
 				for len(res) < types {
@@ -152,7 +153,7 @@ var beastFeaturesTable = struct {
 	roll.Table{
 		Name: "Limb Novelty",
 		ID:   "beast.LimbNovelty",
-		Dice: "1d6",
+		Dice: roll.Dice{N: 1, Die: roll.D6},
 		Items: []roll.TableItem{
 			{Match: []int{1}, Text: "Wings"},
 			{Match: []int{2}, Text: "Many joints"},
@@ -167,7 +168,7 @@ var beastFeaturesTable = struct {
 	roll.Table{
 		Name: "Skin Novelty",
 		ID:   "beast.SkinNovelty",
-		Dice: "1d6",
+		Dice: roll.Dice{N: 1, Die: roll.D6},
 		Items: []roll.TableItem{
 			{Match: []int{1}, Text: "Hard shell"},
 			{Match: []int{2}, Text: "Exoskeleton"},
@@ -182,7 +183,7 @@ var beastFeaturesTable = struct {
 	roll.Table{
 		Name: "Main Weapon",
 		ID:   "beast.MainWeapon",
-		Dice: "1d6",
+		Dice: roll.Dice{N: 1, Die: roll.D6},
 		Items: []roll.TableItem{
 			{Match: []int{1}, Text: "Teeth or mandibles"},
 			{Match: []int{2}, Text: "Claws"},
@@ -199,7 +200,7 @@ var beastFeaturesTable = struct {
 	roll.Table{
 		Name: "Size",
 		ID:   "beast.Size",
-		Dice: "1d6",
+		Dice: roll.Dice{N: 1, Die: roll.D6},
 		Items: []roll.TableItem{
 			{Match: []int{1}, Text: "Cat-sized"},
 			{Match: []int{2}, Text: "Wolf-sized"},
@@ -222,7 +223,7 @@ var beastBehaviourTable = struct {
 	roll.Table{
 		Name: "Predator",
 		ID:   "beast.Predator",
-		Dice: "1d8",
+		Dice: roll.Dice{N: 1, Die: roll.D8},
 		Items: []roll.TableItem{
 			{Match: []int{1}, Text: "Hunts in kin-group packs"},
 			{Match: []int{2}, Text: "Favors ambush attacks"},
@@ -239,7 +240,7 @@ var beastBehaviourTable = struct {
 	roll.Table{
 		Name: "Prey",
 		ID:   "beast.Prey",
-		Dice: "1d8",
+		Dice: roll.Dice{N: 1, Die: roll.D8},
 		Items: []roll.TableItem{
 			{Match: []int{1}, Text: "Moves in vigilant herds"},
 			{Match: []int{2}, Text: "Exists in small family groups"},
@@ -256,7 +257,7 @@ var beastBehaviourTable = struct {
 	roll.Table{
 		Name: "Scavenger",
 		ID:   "beast.Scavenger",
-		Dice: "1d8",
+		Dice: roll.Dice{N: 1, Die: roll.D8},
 		Items: []roll.TableItem{
 			{Match: []int{1}, Text: "Never attacks unwounded prey"},
 			{Match: []int{2}, Text: "Uses other beasts as harriers"},
@@ -274,7 +275,7 @@ var beastBehaviourTable = struct {
 var harmfulDischargesTable = roll.Table{
 	Name: "HarmfulDischarges",
 	ID:   "beast.HarmfulDischarges",
-	Dice: "1d8",
+	Dice: roll.Dice{N: 1, Die: roll.D8},
 	Items: []roll.TableItem{
 		{Match: []int{1}, Text: "Acidic spew doing its damage on a hit"},
 		{Match: []int{2}, Text: "Toxic spittle or cloud; ", Action: poisonAction},
@@ -298,7 +299,7 @@ var poisonTable = struct {
 	roll.Table{
 		Name: "Poison",
 		ID:   "beast.Poison",
-		Dice: "1d6",
+		Dice: roll.Dice{N: 1, Die: roll.D6},
 		Items: []roll.TableItem{
 			{Match: []int{1}, Text: "Death"},
 			{Match: []int{2}, Text: "Paralysis"},
@@ -311,7 +312,7 @@ var poisonTable = struct {
 	roll.Table{
 		Name: "Onset",
 		ID:   "beast.Onset",
-		Dice: "1d6",
+		Dice: roll.Dice{N: 1, Die: roll.D6},
 		Items: []roll.TableItem{
 			{Match: []int{1}, Text: "Instant"},
 			{Match: []int{2}, Text: "1 round"},
@@ -324,7 +325,7 @@ var poisonTable = struct {
 	roll.Table{
 		Name: "Duration",
 		ID:   "beast.Duration",
-		Dice: "1d6",
+		Dice: roll.Dice{N: 1, Die: roll.D6},
 		Items: []roll.TableItem{
 			{Match: []int{1}, Text: "1d6 rounds"},
 			{Match: []int{2}, Text: "1 minute"},

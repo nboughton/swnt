@@ -7,6 +7,7 @@ import (
 	"time"
 
 	"github.com/nboughton/go-roll"
+	"github.com/nboughton/swnt/dice"
 )
 
 var badPrefix = regexp.MustCompile(`[cflmnr][^aeiouyh]`)
@@ -41,7 +42,7 @@ func Generate(ln int) string {
 
 var vl = roll.Table{
 	Name: "vowels",
-	Dice: "10d5",
+	Dice: roll.Dice{N: 10, Die: dice.D5},
 	Items: []roll.TableItem{
 		{Match: []int{10}, Text: "ii"},
 		{Match: []int{11}, Text: "yu"},
@@ -89,7 +90,7 @@ var vl = roll.Table{
 
 var con = roll.Table{
 	Name: "consonants",
-	Dice: "10d5",
+	Dice: roll.Dice{N: 10, Die: dice.D5},
 	Items: []roll.TableItem{
 		{Match: []int{10}, Text: "tt"},
 		{Match: []int{11}, Text: "rr"},

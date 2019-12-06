@@ -231,7 +231,7 @@ var worldTable = struct {
 }{
 	// Atmosphere List
 	roll.Table{
-		Dice: "2d6",
+		Dice: roll.Dice{N: 2, Die: roll.D6},
 		Items: []roll.TableItem{
 			{Match: []int{2}, Text: "Corrosive, damaging to foreign objects"},
 			{Match: []int{3}, Text: "Inert gas, useless for respiration"},
@@ -245,7 +245,7 @@ var worldTable = struct {
 
 	// Biosphere List
 	roll.Table{
-		Dice: "2d6",
+		Dice: roll.Dice{N: 2, Die: roll.D6},
 		Items: []roll.TableItem{
 			{Match: []int{2}, Text: "Remnant biosphere"},
 			{Match: []int{3}, Text: "Microbial life forms exist"},
@@ -259,7 +259,7 @@ var worldTable = struct {
 
 	// Temperature List
 	roll.Table{
-		Dice: "2d6",
+		Dice: roll.Dice{N: 2, Die: roll.D6},
 		Items: []roll.TableItem{
 			{Match: []int{2}, Text: "Frozen, locked in perpetual ice"},
 			{Match: []int{3}, Text: "Cold, dominated by glaciers and tundra"},
@@ -273,7 +273,7 @@ var worldTable = struct {
 
 	// TechLevel List
 	roll.Table{
-		Dice: "2d6",
+		Dice: roll.Dice{N: 2, Die: roll.D6},
 		Items: []roll.TableItem{
 			{Match: []int{2}, Text: "TL0, neolithic-level technology"},
 			{Match: []int{3}, Text: "TL1, medieval technology"},
@@ -287,7 +287,7 @@ var worldTable = struct {
 
 	// Population List
 	roll.Table{
-		Dice: "2d6",
+		Dice: roll.Dice{N: 2, Die: roll.D6},
 		Items: []roll.TableItem{
 			{Match: []int{2}, Text: "Failed colony"},
 			{Match: []int{3}, Text: "Outpost"},

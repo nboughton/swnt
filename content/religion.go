@@ -8,6 +8,7 @@ import (
 	"github.com/nboughton/go-roll"
 	"github.com/nboughton/swnt/content/format"
 	"github.com/nboughton/swnt/content/table"
+	"github.com/nboughton/swnt/dice"
 )
 
 func init() {
@@ -93,14 +94,14 @@ var religionTable = struct {
 	roll.Table{
 		Name: "Leadership",
 		ID:   "religion.Leadership",
-		Dice: "1d6",
+		Dice: roll.Dice{N: 1, Die: roll.D6},
 		Items: []roll.TableItem{
 			{Match: []int{1, 2}, Text: "Patriarch/Matriarch. A single leader determines doctrine for the entire religion, possibly in consultation with other clerics."},
 			{Match: []int{3, 4}, Text: "Council. A group of the oldest and most revered clergy determine the course of the faith."},
 			{Match: []int{5}, Text: "Democracy. Every member has an equal voice in matters of faith, with doctrine usually decided at regular church- wide councils."},
 			{Match: []int{6}, Text: "No universal leadership", Action: func() string {
 				tbl, _ := table.Registry.Get("religion.Leadership")
-				tbl.Dice = "1d5"
+				tbl.Dice = roll.Dice{N: 1, Die: dice.D5}
 
 				if rand.Intn(6)+1 == 6 {
 					return ""

@@ -9,6 +9,7 @@ import (
 	"github.com/nboughton/go-roll"
 	"github.com/nboughton/swnt/content/format"
 	"github.com/nboughton/swnt/content/table"
+	"github.com/nboughton/swnt/dice"
 )
 
 func init() {
@@ -59,7 +60,7 @@ var alienTable = struct {
 	roll.Table{
 		Name: "Body",
 		ID:   "alien.Body",
-		Dice: "1d6",
+		Dice: roll.Dice{N: 1, Die: roll.D6},
 		Items: []roll.TableItem{
 			{Match: []int{1}, Text: "Avian, bat-like, pterodactylian"},
 			{Match: []int{2}, Text: "Reptilian, amphibian, draconic"},
@@ -68,7 +69,7 @@ var alienTable = struct {
 			{Match: []int{5}, Text: "Exotic, composed of some novel substance"},
 			{Match: []int{6}, Text: "Hybrid of two or more types", Action: func() string {
 				tbl, _ := table.Registry.Get("alien.Body")
-				tbl.Dice = "1d5"
+				tbl.Dice = roll.Dice{N: 1, Die: dice.D5}
 
 				types, res := 2+rand.Intn(4), make(map[string]bool)
 				for len(res) < types {
@@ -88,7 +89,7 @@ var alienTable = struct {
 	// Lense from SWN Revised Free Edition p205
 	roll.Table{
 		Name: "Lense",
-		Dice: "1d20",
+		Dice: roll.Dice{N: 1, Die: roll.D20},
 		Items: []roll.TableItem{
 			{Match: []int{1}, Text: "Collectivity"},
 			{Match: []int{2}, Text: "Curiosity"},
@@ -117,7 +118,7 @@ var alienTable = struct {
 	roll.Table{
 		Name: "Social Structure",
 		ID:   "alien.SocialStructure",
-		Dice: "1d8",
+		Dice: roll.Dice{N: 1, Die: roll.D8},
 		Items: []roll.TableItem{
 			{Match: []int{1}, Text: "Democratic"},
 			{Match: []int{2}, Text: "Monarchic"},
@@ -131,7 +132,7 @@ var alienTable = struct {
 
 func actionSocialStructure() string {
 	tbl, _ := table.Registry.Get("alien.SocialStructure")
-	tbl.Dice = "1d4"
+	tbl.Dice = roll.Dice{N: 1, Die: roll.D4}
 
 	types, res := 2+rand.Intn(3), make(map[string]bool)
 	for len(res) < types {

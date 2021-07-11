@@ -3,11 +3,10 @@ module github.com/nboughton/swnt
 go 1.13
 
 require (
-	github.com/fatih/color v1.7.0
-	github.com/mattn/go-colorable v0.1.4 // indirect
-	github.com/mattn/go-isatty v0.0.10 // indirect
-	github.com/nboughton/go-roll v0.0.15
-	github.com/nboughton/go-utils v0.0.0-20190619145535-d1fe1c39566f
-	github.com/spf13/cobra v0.0.5
-	golang.org/x/sys v0.0.0-20191204072324-ce4227a45e2e // indirect
+	github.com/fatih/color v1.12.0
+	github.com/mattn/go-isatty v0.0.13 // indirect
+	github.com/nboughton/go-roll v0.0.17
+	github.com/nboughton/go-utils v0.0.0-20200108161841-5007e997f484
+	github.com/spf13/cobra v1.2.1
+	golang.org/x/sys v0.0.0-20210630005230-0f9fa26af87c // indirect
 )
